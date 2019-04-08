@@ -1,0 +1,28 @@
+#import "./OfficeDetailFragment.gql"
+query OFFICES_PAGE(
+  $first: Int = 10
+  $last: Int
+  $after: Cursor
+  $before: Cursor
+  $orderBy: [OfficesOrderBy!] = [CREATED_AT_DESC]
+) {
+  offices(
+    orderBy: $orderBy
+    first: $first
+    last: $last
+    after: $after
+    before: $before
+  ) {
+    totalCount
+
+    nodes {
+      ...OfficeDetail
+    }
+    pageInfo {
+      endCursor
+      startCursor
+      hasPreviousPage
+      hasNextPage
+    }
+  }
+}

@@ -1,0 +1,8 @@
+#import "./LocationDetailFragment.gql"
+mutation UPDATE_LOCATION_MUTATION($input: UpdateLocationInput!) {
+  updateLocation(input: $input) {
+    location {
+      ...LocationDetail
+    }
+  }
+}

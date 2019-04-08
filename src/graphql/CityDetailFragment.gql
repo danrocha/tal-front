@@ -1,0 +1,12 @@
+fragment CityDetail on City {
+  id
+  name
+  countryIsocode
+  countryByCountryIsocode {
+    iso
+    name
+  }
+  locations {
+    totalCount
+  }
+}

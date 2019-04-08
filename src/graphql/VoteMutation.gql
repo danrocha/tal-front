@@ -1,0 +1,9 @@
+mutation vote($officeId: Int!, $userUid: String!) {
+  vote(input: { vOfficeId: $officeId, vUserUid: $userUid }) {
+    officeVote {
+      id
+      officeId
+      userUid
+    }
+  }
+}

@@ -1,0 +1,49 @@
+#import "./LocationDetailFragment.gql"
+
+mutation AddOfficeMutation(
+  $name: String!
+  $website: String
+  $countryName: String!
+  $countryCode: String!
+  $regionName: String
+  $regionCode: String
+  $city: JSON
+  $cityName: String!
+  $cityGeonameId: Int
+  $route: String
+  $streetNumber: String
+  $postalCode: String
+  $lat: Float!
+  $lng: Float!
+  $formattedAddress: String!
+  $addressComponents: JSON!
+  $internationalPhoneNumber: String
+  $googlePlaceId: String
+) {
+  addOffice(
+    input: {
+      vName: $name
+      vWebsite: $website
+      vCountryName: $countryName
+      vCountryCode: $countryCode
+      vRegionName: $regionName
+      vRegionCode: $regionCode
+      vCity: $city
+      vCityName: $cityName
+      vCityGeonameId: $cityGeonameId
+      vRoute: $route
+      vStreetNumber: $streetNumber
+      vPostalCode: $postalCode
+      vLat: $lat
+      vLng: $lng
+      vFormattedAddress: $formattedAddress
+      vAddressComponents: $addressComponents
+      vInternationalPhoneNumber: $internationalPhoneNumber
+      vGoogleplaceid: $googlePlaceId
+    }
+  ) {
+    location {
+      ...LocationDetail
+    }
+  }
+}

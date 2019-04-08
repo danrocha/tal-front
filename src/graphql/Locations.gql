@@ -1,0 +1,32 @@
+#import "./LocationDetailFragment.gql"
+
+query LOCATIONS(
+  $first: Int = 10
+  $last: Int
+  $after: Cursor
+  $before: Cursor
+  $condition: LocationCondition = {}
+  $filter: LocationFilter
+  $orderBy: [LocationsOrderBy!] = [CREATED_AT_DESC]
+) {
+  locations(
+    first: $first
+    last: $last
+    after: $after
+    before: $before
+    condition: $condition
+    filter: $filter
+    orderBy: $orderBy
+  ) {
+    totalCount
+    nodes {
+      ...LocationDetail
+    }
+    pageInfo {
+      endCursor
+      startCursor
+      hasPreviousPage
+      hasNextPage
+    }
+  }
+}

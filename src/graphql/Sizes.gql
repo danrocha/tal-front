@@ -1,0 +1,10 @@
+query Sizes($orderBy: [SizesOrderBy!] = [ORDER_ASC]) {
+  sizes(orderBy: $orderBy) {
+    nodes {
+      id
+      nameShort
+      nameLong
+      description
+    }
+  }
+}

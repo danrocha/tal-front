@@ -1,0 +1,10 @@
+#import "./CityDetailFragment.gql"
+
+query Cities($orderBy: [CitiesOrderBy!] = [COUNTRY_ISOCODE_ASC]) {
+  cities(orderBy: $orderBy) {
+    totalCount
+    nodes {
+      ...CityDetail
+    }
+  }
+}

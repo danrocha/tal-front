@@ -1,0 +1,50 @@
+fragment OfficeDetail on Office {
+  id
+  name
+  website
+  description
+  yearFounded
+  sizeNumber
+  sizeId
+  size {
+    id
+    nameShort
+    nameLong
+    description
+  }
+  officeTypologies {
+    nodes {
+      id
+      typology {
+        id
+        name
+        description
+      }
+    }
+  }
+  locations {
+    nodes {
+      formattedAddress
+      city {
+        id
+        name
+        countryByCountryIsocode {
+          name
+          iso
+        }
+      }
+      coordinates {
+        x
+        y
+      }
+    }
+  }
+  officeVotes {
+    totalCount
+    nodes {
+      id
+      officeId
+      userUid
+    }
+  }
+}

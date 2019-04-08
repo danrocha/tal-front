@@ -1,0 +1,58 @@
+@tailwind base;
+
+@tailwind components;
+
+body {
+  @apply font-sans;
+  @apply text-base;
+  @apply text-gray-900;
+  @apply bg-white;
+}
+h2 {
+  @apply text-4xl font-bold;
+}
+h3 {
+  @apply text-2xl font-bold;
+}
+/*** FORMS */
+.btn,
+.btn:focus {
+  @apply px-2 py-1 font-mono text-yellow-900 uppercase tracking-wider text-sm border-b border-yellow-800;
+}
+.btn:hover {
+  @apply shadow-md;
+}
+.btn-secondary {
+  @apply border border-yellow-500 bg-white;
+}
+.btn-primary {
+  @apply bg-yellow-500;
+}
+.btn-disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+.input {
+  @apply bg-white appearance-none border border-gray-400 text-gray-900 leading-tight rounded;
+}
+.input:focus {
+  @apply outline-none bg-white border-yellow-500 shadow-inner;
+}
+
+.input-large {
+  @apply py-2 px-2 w-full;
+}
+
+.label {
+  @apply uppercase text-xs text-gray-500 tracking-wider;
+}
+/*** LINKS */
+.link {
+  @apply border-b-2 cursor-pointer border-transparent no-underline text-gray-900;
+}
+.link:hover {
+  @apply border-yellow-500;
+}
+
+@import '../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css';
+
+@tailwind utilities;

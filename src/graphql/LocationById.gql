@@ -1,0 +1,7 @@
+#import "./LocationDetailFragment.gql"
+
+query LOCATION_BY_ID($id: Int!) {
+  locationById(id: $id) {
+    ...LocationDetail
+  }
+}

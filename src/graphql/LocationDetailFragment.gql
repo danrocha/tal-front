@@ -1,0 +1,38 @@
+#import "./OfficeDetailFragment.gql"
+#import "./CityDetailFragment.gql"
+
+fragment LocationDetail on Location {
+  id
+  name
+  description
+  yearFounded
+  website
+  formattedAddress
+  route
+  streetNumber
+  postalCode
+  internationalPhoneNumber
+  sizeId
+  size {
+    id
+    nameShort
+    nameLong
+    description
+  }
+  sizeNumber
+  email
+  coordinates {
+    x
+    y
+  }
+  city {
+    ...CityDetail
+  }
+  countryByCountryIsocode {
+    iso
+    name
+  }
+  office {
+    ...OfficeDetail
+  }
+}

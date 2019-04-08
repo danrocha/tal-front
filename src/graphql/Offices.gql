@@ -1,0 +1,10 @@
+#import "./OfficeDetailFragment.gql"
+query OFFICES($orderBy: [OfficesOrderBy!] = [CREATED_AT_DESC]) {
+  offices(orderBy: $orderBy) {
+    totalCount
+
+    nodes {
+      ...OfficeDetail
+    }
+  }
+}

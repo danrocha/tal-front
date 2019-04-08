@@ -1,0 +1,10 @@
+#import "./TypologyDetailFragment.gql"
+
+query Typologies($orderBy: [TypologiesOrderBy!] = [NAME_ASC]) {
+  typologies(orderBy: $orderBy) {
+    totalCount
+    nodes {
+      ...TypologyDetail
+    }
+  }
+}
