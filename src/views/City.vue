@@ -1,25 +1,23 @@
 <template>
   <div v-if="!city || !locations" class="pt-8 container mx-auto md:w-1/2 lg:w-1/3 md:mr-6 md:ml-56">
-    <vcl-list/>
+    <vcl-list />
   </div>
   <div v-else class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
-    <vue-headful :title="`Offices in ${city.name} - TAL`"/>
+    <vue-headful :title="`Offices in ${city.name} - TAL`" />
     <div id="city-page">
       <h2 class="text-4xl font-bold">
         <span class="font-normal">{{ locations.totalCount }} offices in</span>
         {{ city.name }}
-        <span
-          class="font-normal text-gray-500 ml-1"
-        >{{ city.countryByCountryIsocode.iso }}</span>
+        <span class="font-normal text-gray-500 ml-1">{{ city.countryByCountryIsocode.iso }}</span>
       </h2>
 
       <aside class="w-64">
-        <office-list-controls/>
+        <office-list-controls />
       </aside>
       <!-- LIST -->
       <main role="main" class="w-full">
         <div v-if="$apollo.queries.locations.loading" class="p-6 w-1/2">
-          <vcl-list/>
+          <vcl-list />
         </div>
         <div v-else-if="$apollo.queries.locations.error" class="p-6">
           <!-- TODO: add styled error -->
@@ -28,15 +26,16 @@
         <div id="locations-result" v-else-if="locations" class="flex flex-col h-full">
           <div v-if="isFiltered && displayLocations.length === 0" class="text-gray-700 text-sm">
             <p class="mb-2">
-              Oops, no offices match these filters! However, some offices still have incomplete information.
-              <br>You can include them in your filter by checking the option
+              Oops, no offices match these filters! However, some offices still have incomplete
+              information.
+              <br />You can include them in your filter by checking the option
               <strong>Include incomplete entries</strong> on the right.
             </p>
             <p>
               <button class="btn" @click="clearFilters" base-type="secondary">clear filters</button>
             </p>
           </div>
-          <office-list-alt :locations="displayLocations" :pagination="false" :ordering="true"/>
+          <office-list-alt :locations="displayLocations" :pagination="false" :ordering="true" />
         </div>
         <div v-else class="no-result apollo">No result :(</div>
       </main>
@@ -84,9 +83,11 @@ export default {
         this.city = data.cities.nodes.find(city => {
           return (
             this.kebabCase(city.name) === this.city_name &&
-            this.kebabCase(city.countryByCountryIsocode.iso) ===
-              this.country_iso
+            this.kebabCase(city.countryByCountryIsocode.iso) === this.country_iso
           );
+        });
+        this['location/setLocationQueryFilter']({
+          cityId: { in: this.city.id },
         });
       },
     },
@@ -94,13 +95,13 @@ export default {
       query: LOCATIONS,
       variables() {
         return {
-          first: null,
-          last: null,
-          after: null,
-          before: null,
-          orderBy: this.orderBy,
-          condition: {},
-          filter: this.filter,
+          first: this.locationQueryVariables.first,
+          last: this.locationQueryVariables.last,
+          after: this.locationQueryVariables.after,
+          before: this.locationQueryVariables.before,
+          orderBy: this.locationQueryVariables.orderBy,
+          condition: this.locationQueryVariables.condition,
+          filter: this.locationQueryVariables.filter,
         };
       },
       result() {
@@ -110,39 +111,28 @@ export default {
   },
   computed: {
     ...mapState({
-      orderBy: state => state.location.orderBy,
       selectedLocation: state => state.location.selectedLocation,
       typologyFilter: state => state.location.typologyFilter,
       sizeFilter: state => state.location.sizeFilter,
       yearFilter: state => state.location.yearFilter,
       includeIncomplete: state => state.location.includeIncomplete,
+      locationQueryVariables: state => state.location.locationQueryVariables,
     }),
-    filter() {
-      if (this.city) {
-        return { cityId: { in: this.city.id } };
-      }
-      return { id: { notIn: [] } };
-    },
     isFiltered() {
       return (
-        this.typologyFilter.length > 0 ||
-        this.sizeFilter.length > 0 ||
-        this.yearFilter.length > 0
+        this.typologyFilter.length > 0 || this.sizeFilter.length > 0 || this.yearFilter.length > 0
       );
     },
   },
 
   methods: {
-    ...mapActions(['location/clearFilters']),
+    ...mapActions(['location/clearFilters', 'location/setLocationQueryFilter']),
     clearFilters() {
       this['location/clearFilters']();
     },
     filterLocations() {
       return this.filterTypologies(
-        this.filterSizes(
-          this.filterYears(this.locations.nodes, this.yearFilter),
-          this.sizeFilter
-        ),
+        this.filterSizes(this.filterYears(this.locations.nodes, this.yearFilter), this.sizeFilter),
         this.typologyFilter
       );
     },
