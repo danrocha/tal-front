@@ -1,7 +1,7 @@
 <template>
   <!-- LIST -->
-  <div id="office-list">
-    <office-list-item-alt v-for="location in locations" :location="location" :key="location.id"/>
+  <div id="office-list" class="-mt-8">
+    <office-list-item-alt v-for="location in locations" :location="location" :key="location.id" />
   </div>
 </template>
 
@@ -41,15 +41,6 @@ export default {
       selectedLocation: state => state.location.selectedLocation,
       orderBy: state => state.location.orderBy,
     }),
-  },
-  watch: {
-    selectedLocation(id) {
-      if (id)
-        VueScrollTo.scrollTo(`#location-${id}`, 500, {
-          container: '#sidebar',
-          force: false,
-        });
-    },
   },
 };
 </script>
