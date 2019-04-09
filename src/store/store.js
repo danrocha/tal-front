@@ -7,7 +7,7 @@ import * as location from '@/store/modules/location.js';
 Vue.use(Vuex);
 
 const FIRST_STEP = 1;
-const ITEMS_PER_PAGE = 20;
+//const ITEMS_PER_PAGE = null;
 
 const modules = {
   user,
@@ -23,17 +23,17 @@ const state = {
     manual: false,
     hasWebsite: false,
   },
-  paginationInfo: {
+  /* paginationInfo: {
     first: ITEMS_PER_PAGE,
     last: null,
     after: null,
     before: null,
     pageNumber: 1,
-  },
+  }, */
   filterCity: [],
   largeMap: false,
   mapZoomLevel: 13,
-  itemsPerPage: ITEMS_PER_PAGE,
+  itemsPerPage: null,
 };
 
 const mutations = {
@@ -86,9 +86,9 @@ const mutations = {
   SET_MAP_ZOOM_LEVEL(state, zoomLevel) {
     state.mapZoomLevel = zoomLevel;
   },
-  SET_PAGINATION_INFO(state, paginationInfo) {
+  /* SET_PAGINATION_INFO(state, paginationInfo) {
     state.paginationInfo = paginationInfo;
-  },
+  }, */
 };
 
 const getters = {
@@ -136,9 +136,9 @@ const actions = {
   toggleMapSize({ commit }) {
     commit('TOGGLE_MAP_SIZE');
   },
-  setPaginationInfo({ commit }, paginationInfo) {
+  /* setPaginationInfo({ commit }, paginationInfo) {
     commit('SET_PAGINATION_INFO', paginationInfo);
-  },
+  }, */
 };
 
 export default new Vuex.Store({

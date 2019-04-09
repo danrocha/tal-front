@@ -1,20 +1,33 @@
 export const namespaced = true;
 
+const ITEMS_PER_PAGE = null;
+
 export const state = {
   selectedLocation: null,
-  orderBy: 'CREATED_AT_DESC',
   typologyFilter: [],
   sizeFilter: [],
   yearFilter: [],
   includeIncomplete: false,
   filtered: false,
+  locationQueryVariables: {
+    first: ITEMS_PER_PAGE,
+    last: null,
+    after: null,
+    before: null,
+    orderBy: 'CREATED_AT_DESC',
+    condition: {},
+    filter: { id: { notIn: [] } },
+  },
 };
 export const mutations = {
   SET_LOCATION(state, location) {
     state.selectedLocation = location;
   },
-  SET_ORDER_BY(state, orderBy) {
-    state.orderBy = orderBy;
+  SET_LOCATION_QUERY_ORDER_BY(state, orderBy) {
+    state.locationQueryVariables.orderBy = orderBy;
+  },
+  SET_LOCATION_QUERY_FILTER(state, filter) {
+    state.locationQueryVariables.filter = filter;
   },
   SET_TYPOLOGY_FILTER(state, typologyFilter) {
     state.typologyFilter = typologyFilter;
@@ -34,8 +47,11 @@ export const actions = {
   setLocation({ commit }, location) {
     commit('SET_LOCATION', location);
   },
-  setOrderBy({ commit }, orderBy) {
-    commit('SET_ORDER_BY', orderBy);
+  setLocationQueryOrderBy({ commit }, orderBy) {
+    commit('SET_LOCATION_QUERY_ORDER_BY', orderBy);
+  },
+  setLocationQueryFilter({ commit }, filter) {
+    commit('SET_LOCATION_QUERY_FILTER', filter);
   },
   setTypologyFilter({ commit }, typologyFilter) {
     commit('SET_TYPOLOGY_FILTER', typologyFilter);
