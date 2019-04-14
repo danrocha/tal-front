@@ -14,6 +14,8 @@
 
 <script>
 import { mapState } from 'vuex';
+import { onLogin } from '../vue-apollo';
+
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
@@ -38,6 +40,7 @@ export default {
   destroyed() {
     this.fbUiApp.reset();
   },
+
   watch: {
     user(auth) {
       if (auth) {

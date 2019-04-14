@@ -7,7 +7,7 @@ import upperFirst from 'lodash.upperfirst';
 import camelCase from 'lodash.camelcase';
 import vueHeadful from 'vue-headful';
 import FontAwesomeIcon from './plugins/FontAwesomeIcon';
-import { createProvider } from './vue-apollo';
+import { createProvider, onLogin, onLogout } from './vue-apollo';
 import { sync } from 'vuex-router-sync';
 import { FBApp, FBUIApp } from './plugins/firebaseConfig';
 
@@ -31,23 +31,19 @@ requireComponent.keys().forEach(fileName => {
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('vue-headful', vueHeadful);
 
+const apolloProvider = createProvider();
 // Firebase auth
-const AUTH_TOKEN = 'id_token';
 
 FBApp.auth().onAuthStateChanged(user => {
+  // change logic to somwhere else? its calling every time...
+  console.log('onAuthStateChanged user', user);
   store.dispatch('user/setUser', user);
   if (user) {
-    // set id token;
     user.getIdToken(/* forceRefresh */ true).then(idToken => {
-      if (typeof localStorage !== 'undefined') {
-        localStorage.setItem(AUTH_TOKEN, idToken);
-      }
+      onLogin(apolloProvider.defaultClient, idToken);
     });
   } else {
-    // remove id token
-    if (typeof localStorage !== 'undefined') {
-      localStorage.removeItem(AUTH_TOKEN);
-    }
+    onLogout(apolloProvider.defaultClient);
   }
 });
 store.dispatch('user/setFbApp', FBApp);
@@ -61,6 +57,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  apolloProvider: createProvider(),
+  apolloProvider,
   render: h => h(App),
 }).$mount('#app');
