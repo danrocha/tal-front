@@ -52,6 +52,25 @@ const router = new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "AddOffice" */ '../views/AddOffice.vue'),
     },
+    {
+      path: '/dashboard',
+      redirect: { name: 'favorites' },
+    },
+    {
+      path: '/dashboard/favorites',
+      name: 'favorites',
+      props: { section: 'favorites' },
+      beforeEnter: AuthGuard,
+      component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
+    },
+    {
+      path: '/dashboard/settings',
+      name: 'settings',
+      props: { section: 'settings' },
+
+      beforeEnter: AuthGuard,
+      component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
+    },
 
     {
       path: '/auth',
