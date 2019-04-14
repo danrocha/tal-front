@@ -4,7 +4,7 @@
     <!-- LOGO -->
     <div id="logo">
       <router-link to="/" tag="span" class="cursor-pointer">
-        <the-logo/>
+        <the-logo />
       </router-link>
     </div>
     <!-- menu left -->
@@ -25,9 +25,9 @@
       </div>
       <!-- menu right -->
       <div>
-        <a v-if="user.user" href="#" @click="toggleDropdown" class="inline-block">
-          <img v-if="user.user.photoURL" :src="user.user.photoURL" class="h-8 w-8 rounded-full">
-          <i v-else class="fas fa-user"></i>
+        <a v-if="user" href="#" @click="toggleDropdown" class="inline-block">
+          <img v-if="user.photoURL" :src="user.photoURL" class="h-8 w-8 rounded-full" />
+          <font-awesome-icon v-else icon="user"></font-awesome-icon>
         </a>
         <ul
           v-if="dropdown"
@@ -36,26 +36,35 @@
         >
           <li class="mb-2 pb-2 border-b">
             Logged in as
-            <br>
-            <strong>{{ user.user.displayName }}</strong>
+            <br />
+            <strong>{{ user.displayName }}</strong>
+          </li>
+          <li class="mb-2 pb-2 border-b">
+            <router-link to="/dashboard" class="link">Dashboard</router-link>
+
+            <div v-if="userFavorites.length > 0" class="flex items-center text-gray-600">
+              <font-awesome-icon icon="heart" class="text-yellow-500"></font-awesome-icon>
+              &times;{{ userFavorites.length }}
+            </div>
           </li>
           <!-- <li class="mb-2">Settings</li> -->
           <li>
             <a href="#" @click="logout" class="link">Logout</a>
           </li>
         </ul>
-        <router-link v-if="!user.user" to="/auth" class="font-mono link">LOGIN</router-link>
+        <router-link v-if="!user" to="/auth" class="font-mono link">LOGIN</router-link>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { mixin as clickaway } from 'vue-clickaway';
 import TheLogo from '@/components/TheLogo.vue';
+import USER_FAVORITES from '../graphql/UserFavorites.gql';
 
 export default {
   name: 'TheMainMenu',
@@ -66,10 +75,15 @@ export default {
   data() {
     return {
       dropdown: false,
+      skipFetchFavorites: true,
     };
   },
   computed: {
-    ...mapState(['user', ['user'], 'route']),
+    ...mapState({
+      user: state => state.user.user,
+      route: state => state.route,
+      userFavorites: state => state.user.userFavorites,
+    }),
     home() {
       return this.$route.name === 'home';
     },
@@ -81,12 +95,32 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['user/setUserFavorites']),
     toggleDropdown() {
       this.dropdown = !this.dropdown;
     },
     async logout() {
       await firebase.auth().signOut();
       this.dropdown = false;
+    },
+    fetchUserFavorites() {
+      this.$apollo
+        .query({
+          query: USER_FAVORITES,
+        })
+        .then(({ data }) => {
+          this['user/setUserFavorites'](data.userFavorites.nodes);
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    },
+  },
+  watch: {
+    user() {
+      if (this.user) {
+        this.fetchUserFavorites();
+      }
     },
   },
 };

@@ -1,0 +1,7 @@
+mutation deleteUserFavoriteById($input: DeleteUserFavoriteByIdInput!) {
+  deleteUserFavoriteById(input: $input) {
+    userFavorite {
+      id
+    }
+  }
+}

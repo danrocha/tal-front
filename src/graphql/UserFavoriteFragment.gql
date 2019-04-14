@@ -1,0 +1,10 @@
+#import "./LocationDetailFragment.gql"
+
+fragment UserFavorite on UserFavorite {
+  id
+  userUid
+  locationId
+  location {
+    ...LocationDetail
+  }
+}

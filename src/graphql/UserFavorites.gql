@@ -1,0 +1,9 @@
+#import "./UserFavoriteFragment.gql"
+{
+  userFavorites {
+    totalCount
+    nodes {
+      ...UserFavorite
+    }
+  }
+}

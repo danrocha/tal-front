@@ -45,6 +45,7 @@
             <li>Details</li>
             <li>Save to favorites</li>
           </ul>
+          <favorite-control :location="location" />
         </div>
       </div>
     </div>
@@ -56,11 +57,13 @@ import { mapState, mapActions } from 'vuex';
 import formatUrl from '@/mixins/formatUrl';
 import kebabCase from '@/mixins/kebabCase';
 import VoteControl from '@/components/VoteControl.vue';
+import FavoriteControl from '@/components/FavoriteControl.vue';
 export default {
   name: 'OfficeListItemAlt',
   mixins: [formatUrl, kebabCase],
   components: {
     VoteControl,
+    FavoriteControl,
   },
   props: {
     location: {

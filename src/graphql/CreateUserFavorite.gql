@@ -1,0 +1,9 @@
+#import "./UserFavoriteFragment.gql"
+
+mutation createUserFavorite($input: CreateUserFavoriteInput!) {
+  createUserFavorite(input: $input) {
+    userFavorite {
+      ...UserFavorite
+    }
+  }
+}

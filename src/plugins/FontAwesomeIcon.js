@@ -23,6 +23,7 @@ import {
   faEdit,
   faCaretUp,
   faArrowLeft,
+  faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
