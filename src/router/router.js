@@ -71,6 +71,12 @@ const router = new Router({
       beforeEnter: AuthGuard,
       component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
     },
+    {
+      path: '/admin',
+      name: 'Admin',
+      //beforeEnter: AuthGuard,
+      component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin.vue'),
+    },
 
     {
       path: '/auth',
