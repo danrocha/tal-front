@@ -47,7 +47,10 @@ h3 {
 }
 /*** LINKS */
 .link {
-  @apply border-b-2 cursor-pointer border-transparent no-underline text-gray-900;
+  @apply border-b-2 cursor-pointer border-transparent no-underline;
+}
+.link-inline {
+  @apply border-gray-500;
 }
 .link:hover {
   @apply border-yellow-500;

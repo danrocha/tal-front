@@ -1,14 +1,14 @@
 <template>
   <div class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
-    <vue-headful title="About - TAL"/>
+    <vue-headful title="About - TAL" />
     <div class="flex items-center">
       <div class="w-1/2">
         <h2>What's this?</h2>
         <p>
           Its all started with a
-          <strong>simple spreadsheet</strong> with a list of architecture
-          practices around the world, shared between friends. Every time someone we knew was looking for
-          a job, we pointed them to the list.
+          <strong>simple spreadsheet</strong> with a list of architecture practices around the
+          world, shared between friends. Every time someone we knew was looking for a job, we
+          pointed them to the list.
         </p>
         <p>
           We quickly saw the potential to make this an awesome resource for our fellow architects,
@@ -16,35 +16,36 @@
         </p>
         <p>
           From the beginning we wanted to make it
-          <strong>crowd-sourced</strong>. A list for us, by us.
-          It would turn it into a living organism, with much more life and information than a simple
-          curated list.
+          <strong>crowd-sourced</strong>. A list for us, by us. It would turn it into a living
+          organism, with much more life and information than a simple curated list.
         </p>
       </div>
       <div class="w-1/3">
-        <img src="../assets/images/about/ideas.png" alt="Team Work">
+        <img src="../assets/images/about/ideas.png" alt="Team Work" />
       </div>
     </div>
     <div class="flex items-start pt-32">
       <div class="w-1/3 mr-6">
-        <img src="../assets/images/about/teamwork.png" alt="Team Work">
+        <img src="../assets/images/about/teamwork.png" alt="Team Work" />
       </div>
       <div class="w-1/2">
         <h2 class="pt-8">What's the goal?</h2>
         <p>
-          As a start, we just want to give it back to the architecture community. We know how hard it is
-          to find jobs in our area, so we want to help you find the offices you'll want to apply to.
+          As a start, we just want to give it back to the architecture community. We know how hard
+          it is to find jobs in our area, so we want to help you find the offices you'll want to
+          apply to.
         </p>
         <p>
           Ultimately, we would love to create a
           <strong>community</strong> around this list. Check our
           <a
-            class="link"
+            class="link link-inline"
             href="https://trello.com/b/w2ifjdkO/tal-roadmap"
             target="_blank"
-          >public roadmap</a>
-          for some of the many ideas floating around, and to see what we are currently up to. You can
-          also help out by voting or getting in touch!
+            >public roadmap</a
+          >
+          for some of the many ideas floating around, and to see what we are currently up to. You
+          can also help out by voting or getting in touch!
         </p>
         <p>
           You can also subscribe to our little newsletter. We'll promise only to bother you about
@@ -72,9 +73,9 @@
               <div id="mergeRow-gdpr" class="mt-4">
                 <div class="content__gdpr text-sm">
                   <base-label>Marketing Permissions (GDPR)</base-label>
-                  <p
-                    class="text-sm"
-                  >Please select all the ways you would like to hear from The Architecture List:</p>
+                  <p class="text-sm">
+                    Please select all the ways you would like to hear from The Architecture List:
+                  </p>
                   <fieldset class="flex justify-start flex-col" name="interestgroup_field">
                     <label class="flex items-center" for="gdpr_8717">
                       <input
@@ -84,7 +85,7 @@
                         value="Y"
                         class="av-checkbox gdpr"
                         checked
-                      >
+                      />
                       <span class="pl-2">Email</span>
                     </label>
                     <label class="flex items-center" for="gdpr_8721">
@@ -95,25 +96,24 @@
                         value="Y"
                         class="av-checkbox gdpr"
                         checked
-                      >
+                      />
                       <span class="pl-2">Direct Mail</span>
                     </label>
                   </fieldset>
                   <p>
-                    You can unsubscribe at any time by clicking the link in the footer of our emails.
-                    For information about our privacy practices, please visit our
-                    <router-link to="privacy" class="link">Privacy Policy</router-link>.
+                    You can unsubscribe at any time by clicking the link in the footer of our
+                    emails. For information about our privacy practices, please visit our
+                    <router-link to="privacy" class="link link-inline">Privacy Policy</router-link>.
                   </p>
                 </div>
                 <div class="content__gdprLegal">
                   <p class="text-sm">
                     We use Mailchimp as our marketing platform. By clicking below to subscribe, you
-                    acknowledge that your information will be transferred to Mailchimp for processing.
-                    <a
-                      href="https://mailchimp.com/legal/"
-                      target="_blank"
-                      class="link"
-                    >Learn more about Mailchimp's privacy practices here.</a>
+                    acknowledge that your information will be transferred to Mailchimp for
+                    processing.
+                    <a href="https://mailchimp.com/legal/" target="_blank" class="link link-inline"
+                      >Learn more about Mailchimp's privacy practices here.</a
+                    >
                   </p>
                 </div>
               </div>
@@ -124,7 +124,7 @@
                   name="b_220ad385d5f90b6e7c5e808ba_33a8852c1b"
                   tabindex="-1"
                   value
-                >
+                />
               </div>
               <div class="clear">
                 <button
@@ -134,7 +134,9 @@
                   value="Subscribe"
                   name="subscribe"
                   id="mc-embedded-subscribe"
-                >Subscribe</button>
+                >
+                  Subscribe
+                </button>
               </div>
             </div>
           </form>
@@ -154,27 +156,26 @@
         <ul>
           <li>
             If you know an office,
-            <router-link class="link" to="add">add it to the list</router-link>
+            <router-link class="link link-inline" to="add">add it to the list</router-link>
           </li>
           <li>
             If you see an office you are a fan of,
-            <strong>vote it up</strong> to help it with its
-            ranking
+            <strong>vote it up</strong> to help it with its ranking
           </li>
           <li>If you see some incorrect information, it should be easy to fix it</li>
         </ul>
       </div>
       <div class="w-1/3">
-        <img src="../assets/images/about/help.png" alt="Team Work">
+        <img src="../assets/images/about/help.png" alt="Team Work" />
       </div>
     </div>
     <div class="flex justify-start pt-32">
       <div class="flex w-1/3 justify-center">
         <div class="w-1/2 px-2 mx-2">
-          <img class src="../assets/images/about/daniel.jpg">
+          <img class src="../assets/images/about/daniel.jpg" />
         </div>
         <div class="w-1/2 px-2 mx-2">
-          <img class src="../assets/images/about/antoine.jpg">
+          <img class src="../assets/images/about/antoine.jpg" />
         </div>
       </div>
       <div class="w-1/2">
@@ -182,32 +183,21 @@
 
         <p>
           We are
-          <a class="link" href="http://richardantoine.de/" target="_blank">Antoine</a> and
-          <a class="link" href="http://ddrocha.com/" target="_blank">Daniel</a>, French and Brazilian
-          architects based in Berlin. We met long ago via
-          <a
-            class="link"
-            href="https://www.couchsurfing.com/"
-            target="_blank"
-          >Couchsurfing</a>, ended
-          up working at the same office, and now we are trying to create this together. Antoine is
-          currently working fulltime at
-          <a
-            class="link"
-            href="http://studioo.cc/"
-            target="_blank"
-          >studio o</a>, and Daniel is an
-          associate architect at
-          <a
-            class="link"
-            href="http://henn.com"
-            target="_blank"
-          >HENN Berlin</a>.
+          <a class="link link-inline" href="http://richardantoine.de/" target="_blank">Antoine</a>
+          and <a class="link link-inline" href="http://ddrocha.com/" target="_blank">Daniel</a>,
+          French and Brazilian architects based in Berlin. We met long ago via
+          <a class="link link-inline" href="https://www.couchsurfing.com/" target="_blank"
+            >Couchsurfing</a
+          >, ended up working at the same office, and now we are trying to create this together.
+          Antoine is currently working fulltime at
+          <a class="link link-inline" href="http://studioo.cc/" target="_blank">studio o</a>, and
+          Daniel is an associate architect at
+          <a class="link link-inline" href="http://henn.com" target="_blank">HENN Berlin</a>.
         </p>
       </div>
     </div>
     <div class="pt-32">
-      <tos-privacy-links class="border-t"/>
+      <tos-privacy-links class="border-t" />
     </div>
   </div>
 </template>
