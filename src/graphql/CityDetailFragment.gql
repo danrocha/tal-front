@@ -9,4 +9,11 @@ fragment CityDetail on City {
   locations {
     totalCount
   }
+  coordinates {
+    x
+    y
+  }
+  region {
+    longName
+  }
 }
