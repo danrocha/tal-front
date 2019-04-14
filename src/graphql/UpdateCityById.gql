@@ -1,0 +1,9 @@
+#import "./CityDetailFragment.gql"
+
+mutation updateCityById($input: UpdateCityByIdInput!) {
+  updateCityById(input: $input) {
+    city {
+      ...CityDetail
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  currentUser {
+    uid
+    isAdmin
+  }
+}
