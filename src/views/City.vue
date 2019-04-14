@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!city || !locations" class="pt-8 container mx-auto md:w-1/2 lg:w-1/3 md:mr-6 md:ml-56">
+  <div v-if="$apollo.loading" class="pt-8 container mx-auto md:w-1/2 lg:w-1/3 md:mr-6 md:ml-56">
     <vcl-list />
   </div>
   <div v-else class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
