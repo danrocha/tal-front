@@ -1,6 +1,9 @@
 <template>
-  <div v-if="$apollo.loading" class="pt-8 container mx-auto md:w-1/2 lg:w-1/3 md:mr-6 md:ml-56">
-    <vcl-list />
+  <div
+    v-if="$apollo.queries.locations.loading || $apollo.queries.cities.loading"
+    class="pt-8 container mx-auto md:w-1/2 lg:w-1/3 md:mr-6 md:ml-56"
+  >
+    <vcl-list/>
   </div>
   <div v-else class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
     <vue-headful :title="`Offices in ${city.name} - TAL`" />
