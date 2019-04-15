@@ -100,10 +100,10 @@ export async function onLogout(apolloClient) {
     localStorage.removeItem(AUTH_TOKEN);
   }
   if (apolloClient.wsClient) restartWebsockets(apolloClient.wsClient);
-  /* try {
+  try {
     await apolloClient.resetStore();
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log('%cError on cache reset (logout)', 'color: orange;', e.message);
-  } */
+  }
 }
