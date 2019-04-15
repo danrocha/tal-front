@@ -21,6 +21,20 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "City" */ '../views/City.vue'),
     },
     {
+      path: '/:country_iso/:city_name/:location_id/:office_name',
+      name: 'office_details',
+      props: true,
+      component: () => import(/* webpackChunkName: "OfficeDetails" */ '../views/OfficeDetails.vue'),
+    },
+    {
+      path: '/:country_iso/:city_name/:location_id/:office_name/edit',
+      name: 'office_details_edit',
+      props: true,
+      beforeEnter: AuthGuard,
+      component: () =>
+        import(/* webpackChunkName: "OfficeDetailsEdit" */ '../views/OfficeDetailsEdit.vue'),
+    },
+    {
       path: '/about',
       name: 'about',
       component: () => import(/* webpackChunkName: "About" */ '../views/About.vue'),
@@ -64,20 +78,6 @@ const router = new Router({
       name: 'auth',
       props: true,
       component: () => import(/* webpackChunkName: "Auth" */ '../views/Auth.vue'),
-    },
-    {
-      path: '/:country_iso/:city_name/:location_id/:office_name',
-      name: 'office_details',
-      props: true,
-      component: () => import(/* webpackChunkName: "OfficeDetails" */ '../views/OfficeDetails.vue'),
-    },
-    {
-      path: '/:country_iso/:city_name/:location_id/:office_name/edit',
-      name: 'office_details_edit',
-      props: true,
-      beforeEnter: AuthGuard,
-      component: () =>
-        import(/* webpackChunkName: "OfficeDetailsEdit" */ '../views/OfficeDetailsEdit.vue'),
     },
     {
       path: '/network-issue',
