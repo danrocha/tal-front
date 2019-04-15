@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import kebabCase from '../mixins/kebabCase';
 const mbxClient = require('@mapbox/mapbox-sdk');
 const baseClient = mbxClient({
@@ -62,9 +61,9 @@ export default {
       return `background: center / cover no-repeat url("${this.mapTileUrl}");`;
     },
     cityPageUrl() {
-      return `/${this.kebabCase(this.city.countryByCountryIsocode.iso)}/${this.kebabCase(
-        this.city.name
-      )}`;
+      return `/${this.kebabCase(
+        this.city.countryByCountryIsocode.iso
+      )}/${this.kebabCase(this.city.name)}`;
     },
   },
   methods: {
