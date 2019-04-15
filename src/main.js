@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router/router';
 import store from './store/store';
-import VueGeolocation from 'vue-browser-geolocation';
+//import VueGeolocation from 'vue-browser-geolocation';
 import upperFirst from 'lodash.upperfirst';
 import camelCase from 'lodash.camelcase';
 import vueHeadful from 'vue-headful';
@@ -50,7 +50,7 @@ store.dispatch('user/setFbApp', FBApp);
 store.dispatch('user/setFbUiApp', FBUIApp);
 
 sync(store, router);
-Vue.use(VueGeolocation);
+//Vue.use(VueGeolocation);
 
 Vue.config.productionTip = false;
 
