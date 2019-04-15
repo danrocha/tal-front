@@ -4,6 +4,7 @@
       @click.stop="toggleFavorite"
       class="text-lg"
       :class="favorited ? 'text-yellow-500' : 'text-gray-500'"
+      v-tooltip="{ content: favorited ? 'remove' : 'save', trigger: 'hover' }"
     >
       <font-awesome-icon icon="heart"></font-awesome-icon>
     </button>

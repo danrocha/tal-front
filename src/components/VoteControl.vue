@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-col items-center justify-center">
     <div>
-      <a class="mt-0 pt-0 cursor-pointer" @click.stop="vote">
-        <span v-if="voted" class="text-yellow-500">
-          <font-awesome-icon icon="caret-up"></font-awesome-icon>
-        </span>
-        <span v-else class="text-gray-900">
-          <font-awesome-icon icon="caret-up"></font-awesome-icon>
-        </span>
+      <a
+        class="mt-0 pt-0 cursor-pointer text-lg"
+        :class="voted ?  'text-yellow-500': 'text-gray-900'"
+        @click.stop="vote"
+        v-tooltip="{ content: voted ? 'unvote' : 'vote', trigger: 'hover' }"
+      >
+        <font-awesome-icon icon="caret-up"></font-awesome-icon>
       </a>
     </div>
     <div>

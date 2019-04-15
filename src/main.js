@@ -7,6 +7,7 @@ import upperFirst from 'lodash.upperfirst';
 import camelCase from 'lodash.camelcase';
 import vueHeadful from 'vue-headful';
 import FontAwesomeIcon from './plugins/FontAwesomeIcon';
+import VTooltip from 'v-tooltip';
 import { createProvider, onLogin, onLogout } from './vue-apollo';
 import { sync } from 'vuex-router-sync';
 import { FBApp, FBUIApp } from './plugins/firebaseConfig';
@@ -51,6 +52,7 @@ store.dispatch('user/setFbUiApp', FBUIApp);
 
 sync(store, router);
 //Vue.use(VueGeolocation);
+Vue.use(VTooltip);
 
 Vue.config.productionTip = false;
 

@@ -29,6 +29,7 @@
     "tiptap-extensions": "^1.14.0",
     "typeface-ubuntu": "0.0.65",
     "typeface-ubuntu-mono": "0.0.72",
+    "v-tooltip": "^2.0.1",
     "vue": "^2.6.6",
     "vue-apollo": "^3.0.0-beta.11",
     "vue-browser-geolocation": "^1.5.0",
