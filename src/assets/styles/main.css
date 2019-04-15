@@ -1,12 +1,12 @@
 @tailwind base;
 
 @tailwind components;
-
+body,
+html {
+  @apply w-full h-full;
+}
 body {
-  @apply font-sans;
-  @apply text-base;
-  @apply text-gray-900;
-  @apply bg-white;
+  @apply font-sans text-base text-gray-900 bg-white;
 }
 h2 {
   @apply text-4xl font-bold;
@@ -153,6 +153,7 @@ h3 {
   opacity: 1;
   transition: opacity 0.15s;
 }
+
 @import '../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css';
 
 @tailwind utilities;
