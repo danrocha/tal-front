@@ -15,7 +15,6 @@
 import { mapState, mapActions } from 'vuex';
 import CREATE_USER_FAVORITE from '@/graphql/CreateUserFavorite.gql';
 import DELETE_USER_FAVORITE_BY_ID from '@/graphql/DeleteUserFavoriteById.gql';
-//import LOCATIONS from '@/graphql/Locations.gql';
 import USER_FAVORITES from '../graphql/UserFavorites.gql';
 
 export default {
@@ -26,20 +25,31 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      userFavorites: [],
+      favorited: false,
+    };
+  },
   computed: {
     ...mapState({
       user: state => state.user.user,
-      userFavorites: state => state.user.userFavorites,
       locationQueryVariables: state => state.location.locationQueryVariables,
     }),
-    favorited() {
-      if (this.userFavorites) {
-        return this.userFavorites.find(favorite => favorite.locationId === this.location.id);
-      }
-      return false;
+  },
+  apollo: {
+    userFavorites: {
+      query: USER_FAVORITES,
+      skip() {
+        return !this.user;
+      },
+      update(data) {
+        this.favorited = data.userFavorites.nodes.find(
+          favorite => favorite.locationId === this.location.id
+        );
+      },
     },
   },
-
   methods: {
     ...mapActions(['user/addUserFavorite', 'user/removeUserFavoriteById']),
     toggleFavorite() {
@@ -51,7 +61,6 @@ export default {
       }
       //const userUid = this.user.uid;
       const favorited = this.favorited;
-      const userUid = this.user.uid;
       const locationId = this.location.id;
       if (favorited) {
         this.$apollo
@@ -65,9 +74,6 @@ export default {
             refetchQueries: [
               {
                 query: USER_FAVORITES,
-                variables: {
-                  userUid,
-                },
               },
             ],
           })
@@ -97,9 +103,6 @@ export default {
             refetchQueries: [
               {
                 query: USER_FAVORITES,
-                variables: {
-                  userUid,
-                },
               },
             ],
           })
@@ -122,5 +125,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>
