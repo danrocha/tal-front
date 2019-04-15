@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     selectCity() {
-      this.$router.push(this.cityPageUrl);
+      this.$router.push({ path: this.cityPageUrl });
     },
   },
 };
