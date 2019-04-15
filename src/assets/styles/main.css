@@ -52,7 +52,7 @@ h3 {
 .link-inline {
   @apply border-gray-500;
 }
-.link:hover {
+.link:hover, .link-active {
   @apply border-yellow-500;
 }
 
