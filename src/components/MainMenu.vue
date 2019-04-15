@@ -4,7 +4,7 @@
     <!-- LOGO -->
     <div id="logo">
       <router-link to="/" tag="span" class="cursor-pointer">
-        <the-logo />
+        <logo/>
       </router-link>
     </div>
     <!-- menu left -->
@@ -21,12 +21,12 @@
         </base-button>
       </div>
       <div class="flex-none">
-        <router-link to="/about" class="link font-mono mr-6">ABOUT</router-link>
+        <router-link to="/about" class="link font-mono mr-6"  active-class="link-active">ABOUT</router-link>
       </div>
       <!-- menu right -->
-      <div>
-        <a v-if="user" href="#" @click="toggleDropdown" class="inline-block">
-          <img v-if="user.photoURL" :src="user.photoURL" class="h-8 w-8 rounded-full" />
+      <div v-if="user">
+        <a href="#" @click="toggleDropdown" class="inline-block">
+          <img v-if="user.photoURL" :src="user.photoURL" class="h-8 w-8 rounded-full">
           <font-awesome-icon v-else icon="user"></font-awesome-icon>
         </a>
         <ul
@@ -36,22 +36,37 @@
         >
           <li class="mb-2 pb-2 border-b">
             Logged in as
-            <br />
+            <br>
             <strong>{{ user.displayName }}</strong>
           </li>
           <li class="mb-2 pb-2 border-b">
-            <router-link to="/dashboard" class="link">Dashboard</router-link>
-
-            <div v-if="userFavorites.length > 0" class="flex items-center text-gray-600">
-              <font-awesome-icon icon="heart" class="text-yellow-500"></font-awesome-icon>
-              &times;{{ userFavorites.length }}
-            </div>
+            <router-link to="/dashboard" class="link" @click="toggleDropdown"  active-class="link-active">Dashboard</router-link>
+            <apollo-query
+              :query="require('../graphql/UserFavorites.gql')"
+              :skip="user === undefined"
+            >
+              <template slot-scope="{ result: { data } }">
+                <div v-if="data">
+                  <div
+                    v-if="data.userFavorites.nodes.length > 0"
+                    class="flex items-center text-gray-600"
+                  >
+                    <font-awesome-icon icon="heart" class="text-yellow-500"></font-awesome-icon>
+                    &times;{{ data.userFavorites.totalCount }}
+                  </div>
+                </div>
+              </template>
+            </apollo-query>
           </li>
           <!-- <li class="mb-2">Settings</li> -->
           <li>
-            <a href="#" @click="logout" class="link">Logout</a>
+            <logout>
+                  <a slot-scope="{logout}" href="#" @click="logout" class="link">Logout</a>
+              </logout>
           </li>
         </ul>
+      </div>
+      <div class="flex-none">
         <router-link v-if="!user" to="/auth" class="font-mono link">LOGIN</router-link>
       </div>
     </div>
@@ -59,30 +74,27 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import { mapState } from 'vuex';
 import { mixin as clickaway } from 'vue-clickaway';
-import TheLogo from '@/components/TheLogo.vue';
-import USER_FAVORITES from '../graphql/UserFavorites.gql';
+import Logo from '@/components/Logo.vue';
+import Logout from '@/components/Logout.vue';
 
 export default {
-  name: 'TheMainMenu',
+  name: 'MainMenu',
   mixins: [clickaway],
   components: {
-    TheLogo,
+    Logo,
+    Logout,
   },
   data() {
     return {
       dropdown: false,
-      skipFetchFavorites: true,
     };
   },
   computed: {
     ...mapState({
       user: state => state.user.user,
       route: state => state.route,
-      userFavorites: state => state.user.userFavorites,
     }),
     home() {
       return this.$route.name === 'home';
@@ -95,32 +107,8 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['user/setUserFavorites']),
     toggleDropdown() {
       this.dropdown = !this.dropdown;
-    },
-    async logout() {
-      await firebase.auth().signOut();
-      this.dropdown = false;
-    },
-    fetchUserFavorites() {
-      this.$apollo
-        .query({
-          query: USER_FAVORITES,
-        })
-        .then(({ data }) => {
-          this['user/setUserFavorites'](data.userFavorites.nodes);
-        })
-        .catch(e => {
-          console.error(e);
-        });
-    },
-  },
-  watch: {
-    user() {
-      if (this.user) {
-        this.fetchUserFavorites();
-      }
     },
   },
 };
