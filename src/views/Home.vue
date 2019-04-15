@@ -1,12 +1,14 @@
 <template>
   <div id="home-content" class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
-    <vue-headful title="The Architecture List"/>
+    <vue-headful title="The Architecture List" />
     <div class="mb-8">
-      <h1 class="text-4xl mb-2">Welcome to The Architecture List</h1>
+      <h1 class="text-4xl mb-2">
+        Welcome to
+        <span class="font-bold">The Architecture List</span>
+      </h1>
       <p class="leading-normal">
         The world's first crowdsourced list of architecture offices.
-        <br>To help
-        <strong>you</strong> find the right ones.
+        <br />To help <strong>you</strong> find the right ones.
       </p>
     </div>
     <div class="md:w-1/2">
@@ -21,7 +23,7 @@
     <div class="pt-8">
       <!-- Loading -->
       <div v-if="$apollo.queries.cities.loading" class="p-6 w-1/2">
-        <vcl-list/>
+        <vcl-list />
       </div>
 
       <!-- Error -->
@@ -37,13 +39,17 @@
               v-if="sort === 'COUNTRY_ISOCODE_ASC'"
               class="link uppercase tracking-wider"
               @click="sort = 'NAME_ASC'"
-            >A-Z</button>
+            >
+              A-Z
+            </button>
             <strong v-else>A-Z</strong> /
             <button
               v-if="sort === 'NAME_ASC'"
               class="link uppercase tracking-wider"
               @click="sort = 'COUNTRY_ISOCODE_ASC'"
-            >By Country</button>
+            >
+              By Country
+            </button>
             <strong v-else>By Country</strong>
           </p>
         </div>
@@ -55,10 +61,10 @@
               class="uppercase tracking-wider my-8 pt-1 border-t border-yellow-500"
             >
               {{ country.name }}
-              <city-list :cities="cityByCountryIso(country.iso)"/>
+              <city-list :cities="cityByCountryIso(country.iso)" />
             </li>
           </ul>
-          <city-list v-else :cities="displayCities"/>
+          <city-list v-else :cities="displayCities" />
         </div>
       </div>
 
