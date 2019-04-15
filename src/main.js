@@ -37,14 +37,12 @@ const apolloProvider = createProvider();
 
 FBApp.auth().onAuthStateChanged(user => {
   // change logic to somwhere else? its calling every time...
-  console.log('onAuthStateChanged user', user);
+  //console.log('onAuthStateChanged user', user);
   store.dispatch('user/setUser', user);
   if (user) {
     user.getIdToken(/* forceRefresh */ true).then(idToken => {
       onLogin(apolloProvider.defaultClient, idToken);
     });
-  } else {
-    onLogout(apolloProvider.defaultClient);
   }
 });
 store.dispatch('user/setFbApp', FBApp);
