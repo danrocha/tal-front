@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--HEADER -->
-    <the-main-menu/>
+    <main-menu />
     <!-- BODY WRAP -->
     <main role="main">
       <router-view/>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TheMainMenu from '@/components/TheMainMenu.vue';
+import MainMenu from '@/components/MainMenu.vue';
 import NotificationContainer from '@/components/NotificationContainer.vue';
 //import TheMainFooter from '@/components/TheMainFooter.vue';
 //import { onLogout } from './vue-apollo';
@@ -20,8 +20,7 @@ import NotificationContainer from '@/components/NotificationContainer.vue';
 export default {
   name: 'App',
   components: {
-    TheMainMenu,
-    //TheMainFooter,
+    MainMenu,
     NotificationContainer,
   },
   data() {
