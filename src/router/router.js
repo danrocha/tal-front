@@ -15,11 +15,6 @@ const router = new Router({
       component: Home,
     },
     {
-      path: '/map',
-      name: 'home-map',
-      component: () => import(/* webpackChunkName: "HomeMap" */ '../views/HomeMap.vue'),
-    },
-    {
       path: '/:country_iso/:city_name',
       name: 'city',
       props: true,
@@ -28,9 +23,6 @@ const router = new Router({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "About" */ '../views/About.vue'),
     },
     {
@@ -47,9 +39,6 @@ const router = new Router({
       path: '/add',
       name: 'add-office',
       beforeEnter: AuthGuard,
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "AddOffice" */ '../views/AddOffice.vue'),
     },
     {
@@ -67,32 +56,14 @@ const router = new Router({
       path: '/dashboard/settings',
       name: 'settings',
       props: { section: 'settings' },
-
       beforeEnter: AuthGuard,
       component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
     },
-    {
-      path: '/admin',
-      name: 'Admin',
-      //beforeEnter: AuthGuard,
-      component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin.vue'),
-    },
-
     {
       path: '/auth',
       name: 'auth',
       props: true,
       component: () => import(/* webpackChunkName: "Auth" */ '../views/Auth.vue'),
-    },
-    {
-      path: '/:country_iso',
-      name: 'home_country',
-      component: Home,
-    },
-    {
-      path: '/:country_iso/:city_name',
-      name: 'home_country_city',
-      component: Home,
     },
     {
       path: '/:country_iso/:city_name/:location_id/:office_name',
