@@ -2,9 +2,9 @@
   <div class="pt-8 container mx-auto md:w-2/3 lg:w-1/2 md:mr-6 md:ml-56">
     <h2>Add Office</h2>
     <div class="mt-8">
-      <add-office-1-city/>
-      <add-office-2-details/>
-      <add-office-3-review @save="addNewOffice" :is-loading="isLoading"/>
+      <add-office-1-city />
+      <add-office-2-details />
+      <add-office-3-review @save="addNewOffice" :is-loading="isLoading" />
     </div>
   </div>
 </template>
@@ -30,6 +30,12 @@ export default {
       isLoading: false,
     };
   },
+  beforeMount() {
+    const API_KEY = process.env.VUE_APP_GOOGLE_MAPS_API_KEY;
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&language=en`;
+    document.head.append(script);
+  },
   created() {
     if (!this.$store.state.user.user) {
       return this.$router.push({
@@ -41,36 +47,24 @@ export default {
   computed: {
     mutationVariables() {
       if (this.addOffice.officeDetails) {
-        let country = this.addOffice.officeDetails.address_components.find(
-          component => {
-            return component.types.includes('country');
-          }
-        );
-        let city = this.addOffice.officeDetails.address_components.find(
-          component => {
-            return component.types.includes('locality');
-          }
-        );
-        let region = this.addOffice.officeDetails.address_components.find(
-          component => {
-            return component.types.includes('administrative_area_level_1');
-          }
-        );
-        let streetNumber = this.addOffice.officeDetails.address_components.find(
-          component => {
-            return component.types.includes('street_number');
-          }
-        );
-        let route = this.addOffice.officeDetails.address_components.find(
-          component => {
-            return component.types.includes('route');
-          }
-        );
-        let postalCode = this.addOffice.officeDetails.address_components.find(
-          component => {
-            return component.types.includes('postal_code');
-          }
-        );
+        let country = this.addOffice.officeDetails.address_components.find(component => {
+          return component.types.includes('country');
+        });
+        let city = this.addOffice.officeDetails.address_components.find(component => {
+          return component.types.includes('locality');
+        });
+        let region = this.addOffice.officeDetails.address_components.find(component => {
+          return component.types.includes('administrative_area_level_1');
+        });
+        let streetNumber = this.addOffice.officeDetails.address_components.find(component => {
+          return component.types.includes('street_number');
+        });
+        let route = this.addOffice.officeDetails.address_components.find(component => {
+          return component.types.includes('route');
+        });
+        let postalCode = this.addOffice.officeDetails.address_components.find(component => {
+          return component.types.includes('postal_code');
+        });
         return {
           name: this.addOffice.officeDetails.name,
           website: this.addOffice.officeDetails.website,
@@ -87,11 +81,8 @@ export default {
           lat: this.addOffice.officeDetails.geometry.location.lat(),
           lng: this.addOffice.officeDetails.geometry.location.lng(),
           formattedAddress: this.addOffice.officeDetails.formatted_address,
-          addressComponents: JSON.stringify(
-            this.addOffice.officeDetails.address_components
-          ),
-          internationalPhoneNumber: this.addOffice.officeDetails
-            .international_phone_number,
+          addressComponents: JSON.stringify(this.addOffice.officeDetails.address_components),
+          internationalPhoneNumber: this.addOffice.officeDetails.international_phone_number,
           googlePlaceId: this.addOffice.officeDetails.place_id,
         };
       }
@@ -178,8 +169,7 @@ export default {
           this.isLoading = false;
           this.$store.dispatch('notification/add', {
             type: 'error',
-            message:
-              'There was a problem adding this location: ' + error.message,
+            message: 'There was a problem adding this location: ' + error.message,
           });
           // We restore the initial user input
           //this.newTag = newTag;
