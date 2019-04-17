@@ -2,7 +2,10 @@
 export default {
   methods: {
     kebabCase(str) {
-      return str.replace(/[\s_]+/g, '-').toLowerCase();
+      return str
+        .replace(/[^a-zA-Z0-9\s]/g, '')
+        .replace(/[\s_]+/g, '-')
+        .toLowerCase();
     },
   },
 };
