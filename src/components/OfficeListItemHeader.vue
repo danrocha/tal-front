@@ -1,8 +1,10 @@
 <template>
   <header>
     <h1 class="font-bold text-base text-gray-800 mb-1 w-full">
-      <router-link :to="officeDetailsLink" class="link" @click.stop="selectLocation">
-        {{ location.office.name }}
+      <router-link :to="officeDetailsLink" class="link" @click.native="selectLocation">
+        {{
+        location.office.name
+        }}
       </router-link>
     </h1>
     <div class="text-sm text-gray-600 mb-1">
