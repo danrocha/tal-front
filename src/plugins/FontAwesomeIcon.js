@@ -25,6 +25,8 @@ import {
   faArrowLeft,
   faHeart,
   faUser,
+  faFilter,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -53,7 +55,9 @@ library.add(
   faEdit,
   faCaretUp,
   faHeart,
-  faUser
+  faUser,
+  faFilter,
+  faTimes
 );
 
 export default FontAwesomeIcon;
