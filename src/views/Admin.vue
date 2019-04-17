@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
-    <vue-headful title="Administration - TAL" />
+  <div>
+    <vue-headful title="Administration - TAL"/>
     <div id="dashboard">
       <h2 class="text-4xl font-bold">Administration</h2>
       <aside class="w-auto flex flex-col items-end pr-8">
@@ -11,7 +11,7 @@
             alt="Your user photo"
             width="100"
             height="100"
-          />
+          >
           <apollo-query :query="require('../graphql/CurrentUser.gql')">
             <template slot-scope="{ result: { loading, error, data } }">
               <!-- Loading -->
@@ -43,7 +43,7 @@
         </ul>
       </aside>
       <main role="main" class="w-full">
-        <admin-cities />
+        <admin-cities/>
       </main>
     </div>
   </div>

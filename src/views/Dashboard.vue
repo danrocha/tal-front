@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
-    <vue-headful title="Dashboard - TAL"/>
+  <div>
+    <vue-headful title="Dashboard - TAL" />
     <div id="dashboard" v-if="user">
       <h2 class="text-4xl font-bold">Dashboard</h2>
       <aside class="w-auto flex flex-col items-end pr-8">
@@ -11,32 +11,42 @@
           alt="Your user photo"
           width="100"
           height="100"
-        >
+        />
         <ul class="text-right">
           <li class="mb-1 text-base font-mono">
             <button
               class="link uppercase tracking-wider"
               :class="section === 'favorites' ? 'font-bold' : 'font-normal'"
               @click="$router.push({ name: 'favorites' })"
-            >Favorites</button>
+            >
+              Favorites
+            </button>
           </li>
           <li class="uppercase tracking-wider mb-1 text-base font-mono">
             <button
               class="link uppercase tracking-wider"
               :class="section === 'settings' ? 'font-bold' : 'font-normal'"
               @click="$router.push({ name: 'settings' })"
-            >Account Settings</button>
+            >
+              Account Settings
+            </button>
           </li>
           <li class="mb-1">
             <logout>
-            <button slot-scope="{logout}" class="link uppercase tracking-wider text-base font-mono" @click="logout">Logout</button>
-              </logout>
+              <button
+                slot-scope="{ logout }"
+                class="link uppercase tracking-wider text-base font-mono"
+                @click="logout"
+              >
+                Logout
+              </button>
+            </logout>
           </li>
         </ul>
       </aside>
       <main role="main" class="w-full">
-        <dashboard-favorites v-if="section === 'favorites'"/>
-        <dashboard-settings v-if="section === 'settings'"/>
+        <dashboard-favorites v-if="section === 'favorites'" />
+        <dashboard-settings v-if="section === 'settings'" />
       </main>
     </div>
   </div>
@@ -46,14 +56,14 @@
 import { mapState } from 'vuex';
 import DashboardFavorites from '../components/DashboardFavorites.vue';
 import DashboardSettings from '../components/DashboardSettings.vue';
-import Logout from '../components/Logout.vue'
+import Logout from '../components/Logout.vue';
 
 export default {
   name: 'Dashboard',
   components: {
     DashboardFavorites,
     DashboardSettings,
-    Logout
+    Logout,
   },
   props: {
     section: {
@@ -66,7 +76,6 @@ export default {
       user: state => state.user.user,
     }),
   },
-
 };
 </script>
 

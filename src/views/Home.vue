@@ -1,5 +1,5 @@
 <template>
-  <div id="home-content" class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
+  <div id="home-content">
     <vue-headful title="The Architecture List" />
     <div class="mb-8">
       <h1 class="text-4xl mb-2">
@@ -113,18 +113,13 @@ export default {
         return this.cities.nodes.filter(
           city =>
             city.name.toLowerCase().includes(this.filterTerm.toLowerCase()) ||
-            city.countryByCountryIsocode.name
-              .toLowerCase()
-              .includes(this.filterTerm.toLowerCase())
+            city.countryByCountryIsocode.name.toLowerCase().includes(this.filterTerm.toLowerCase())
         );
       }
       return this.cities.nodes;
     },
     countries() {
-      return uniqBy(
-        this.displayCities.map(city => city.countryByCountryIsocode),
-        'iso'
-      );
+      return uniqBy(this.displayCities.map(city => city.countryByCountryIsocode), 'iso');
     },
   },
   methods: {
@@ -132,9 +127,7 @@ export default {
       console.log(city.name);
     },
     cityByCountryIso(iso) {
-      return this.displayCities.filter(
-        city => city.countryByCountryIsocode.iso === iso
-      );
+      return this.displayCities.filter(city => city.countryByCountryIsocode.iso === iso);
     },
   },
 };

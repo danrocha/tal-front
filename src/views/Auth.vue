@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
-    <vue-headful title="Login or Sign Up - TAL"/>
+  <div>
+    <vue-headful title="Login or Sign Up - TAL" />
     <h2>Login or Sign Up</h2>
     <div>
       <p class="w-1/2">
@@ -13,44 +13,79 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { onLogin } from '../vue-apollo';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-const uiConfig = {
-  //signInSuccessUrl: '/success',
-  signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-  ],
-  tosUrl: 'https://thearchitecturelist.com/tos',
-  // Privacy policy url.
-  privacyPolicyUrl: 'https://thearchitecturelist.com/privacy',
-  signInFlow: 'popup',
-};
-
 export default {
   name: 'Auth',
   mounted() {
+    const apollo = this.$apollo;
+    const signInSuccessUrl = this.nextRoute;
+    const addNewUser = this.addNewUser;
+    const uiConfig = {
+      //signInSuccessUrl: '/success',
+      signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+      ],
+      tosUrl: 'https://thearchitecturelist.com/tos',
+      // Privacy policy url.
+      privacyPolicyUrl: 'https://thearchitecturelist.com/privacy',
+      signInFlow: 'popup',
+      signInSuccessUrl,
+      callbacks: {
+        async signInSuccessWithAuthResult(authResult, redirectUrl) {
+          const user = authResult.user;
+          const isNewUser = authResult.additionalUserInfo.isNewUser;
+          user.getIdToken(/* forceRefresh */ true).then(idToken => {
+            onLogin(apollo.provider.defaultClient, idToken);
+          });
+          console.log('isNewUser', isNewUser);
+          if (isNewUser) {
+            const newUser = await addNewUser(user);
+            console.log('newUser', newUser);
+          }
+          return false;
+        },
+      },
+    };
     this.fbUiApp.start('#firebaseui-auth-container', uiConfig);
   },
   destroyed() {
     this.fbUiApp.reset();
   },
-
-  watch: {
-    user(auth) {
-      if (auth) {
-        this.$router.replace(this.nextRoute);
-      }
+  methods: {
+    ...mapActions(['user/setUser']),
+    async addNewUser(user) {
+      console.log('addin new user...');
+      this.$apollo
+        .mutate({
+          mutation: require('../graphql/CreateUser.gql'),
+          variables: {
+            user: {
+              uid: user.uid,
+              displayName: user.displayName,
+              photoUrl: user.photoUrl,
+              email: user.email,
+            },
+          },
+        })
+        .then(({ data }) => {
+          console.log('new user added');
+          return data.user;
+        })
+        .catch(error => {
+          console.error('Error adding new user:', error);
+        });
     },
   },
+
   computed: {
     ...mapState({
-      user: state => state.user.user,
       fbUiApp: state => state.user.fbUiApp,
     }),
     nextRoute() {

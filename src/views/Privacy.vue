@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
-    <vue-headful title="Privacy Policy - TAL"/>
+  <div>
+    <vue-headful title="Privacy Policy - TAL" />
     <h2>Privacy Policy</h2>
     <p class="font-bold">Your privacy is critically important to us.</p>
     <p>
@@ -11,10 +11,7 @@
     <p>
       It is The Architecture List’s policy to respect your privacy regarding any information we may
       collect while operating our website. This Privacy Policy applies to
-      <a
-        class="link"
-        href="http://thearchitecturelist.com"
-      >thearchitecturelist.com</a>
+      <a class="link" href="http://thearchitecturelist.com">thearchitecturelist.com</a>
       (hereinafter, "us", "we", or "thearchitecturelist.com"). We respect your privacy and are
       committed to protecting personally identifiable information you may provide us through the
       Website. We have adopted this privacy policy ("Privacy Policy") to explain what information
@@ -162,11 +159,9 @@
         href="https://termsandconditionstemplate.com/privacy-policy-generator/"
         title="Privacy policy template generator"
         target="_blank"
-      >termsandconditionstemplate.com</a>. If you have any questions about this Privacy Policy, please contact us via
-      <a
-        class="link"
-        href="mailto:"
-      >email</a> or
+        >termsandconditionstemplate.com</a
+      >. If you have any questions about this Privacy Policy, please contact us via
+      <a class="link" href="mailto:">email</a> or
       <a class="link" href="tel:004916094609076">phone</a>.
     </p>
 

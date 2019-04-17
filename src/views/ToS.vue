@@ -1,11 +1,11 @@
 <template>
-  <div class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
+  <div>
     <h2>Terms of Service</h2>
     <p>
       These terms and conditions outline the rules and regulations for the use of The Architecture
       List's Website.
     </p>
-    <br>
+    <br />
     <span style="text-transform: capitalize;">The Architecture List</span> is located in Berlin,
     Germany.
     <p>
@@ -98,9 +98,9 @@
       </li>
       <li>
         You hereby grant to
-        <strong>The Architecture List</strong> a non-exclusive royalty-free
-        license to use, reproduce, edit and authorize others to use, reproduce and edit any of your
-        Comments in any and all forms, formats or media.
+        <strong>The Architecture List</strong> a non-exclusive royalty-free license to use,
+        reproduce, edit and authorize others to use, reproduce and edit any of your Comments in any
+        and all forms, formats or media.
       </li>
     </ol>
     <h3>Hyperlinking to our Content</h3>
@@ -139,7 +139,9 @@
             Commerce, American Automobile Association, AARP and Consumers Union;
           </li>
           <li>dot.com community sites;</li>
-          <li>associations or other groups representing charities, including charity giving sites,</li>
+          <li>
+            associations or other groups representing charities, including charity giving sites,
+          </li>
           <li>online directory distributors;</li>
           <li>internet portals;</li>
           <li>accounting, law and consulting firms whose primary clients are businesses; and</li>
@@ -173,7 +175,8 @@
         class="link"
         href="mailto:info@thearchitecturelist.com"
         title="send an email to info@thearchitecturelist.com"
-      >info@thearchitecturelist.com</a>. Please include your name, your organization name, contact information (such as a phone
+        >info@thearchitecturelist.com</a
+      >. Please include your name, your organization name, contact information (such as a phone
       number and/or e-mail address) as well as the URL of your site, a list of any URLs from which
       you intend to link to our Web site, and a list of the URL(s) on our site to which you would
       like to link. Allow 2-3 weeks for a response.
@@ -265,7 +268,8 @@
       <a
         style="color:inherit;text-decoration:none;cursor:text;"
         href="https://termsandconditionstemplate.com"
-      >termsandconditionstemplate.com</a>
+        >termsandconditionstemplate.com</a
+      >
       generator. If you have any queries regarding any of our terms, please contact us.
     </p>
     <p class="border-t py-8">

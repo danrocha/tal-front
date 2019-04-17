@@ -3,7 +3,7 @@
     <!--HEADER -->
     <main-menu />
     <!-- BODY WRAP -->
-    <div>
+    <div class="pt-8 px-6 container mx-auto lg:px-0 lg:w-auto lg:mr-6 lg:ml-56">
       <router-view />
       <notification-container />
     </div>

@@ -1,26 +1,25 @@
 <template>
-  <div
-    v-if="$apollo.queries.locations.loading || $apollo.queries.cities.loading"
-    class="pt-8 container mx-auto md:w-1/2 lg:w-1/3 md:mr-6 md:ml-56"
-  >
+  <div v-if="$apollo.queries.locations.loading || $apollo.queries.cities.loading">
     <vcl-list/>
   </div>
-  <div v-else class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
-    <vue-headful :title="`Offices in ${city.name} - TAL`" />
+  <div v-else>
+    <vue-headful :title="`Offices in ${city.name} - TAL`"/>
     <div id="city-page">
-      <h2 class="text-4xl font-bold">
+      <h2 class="text-4xl font-bold mb-6 sm:m-0">
         <span class="font-normal">{{ locations.totalCount }} offices in</span>
         {{ city.name }}
-        <span class="font-normal text-gray-500 ml-1">{{ city.countryByCountryIsocode.iso }}</span>
+        <span
+          class="font-normal text-gray-500 ml-1"
+        >{{ city.countryByCountryIsocode.iso }}</span>
       </h2>
 
-      <aside class="w-64">
-        <office-list-controls />
+      <aside class="w-full mb-6 sm:m-0 sm:w-64">
+        <office-list-controls/>
       </aside>
       <!-- LIST -->
       <main role="main" class="w-full">
         <div v-if="$apollo.queries.locations.loading" class="p-6 w-1/2">
-          <vcl-list />
+          <vcl-list/>
         </div>
         <div v-else-if="$apollo.queries.locations.error" class="p-6">
           <!-- TODO: add styled error -->
@@ -31,14 +30,14 @@
             <p class="mb-2">
               Oops, no offices match these filters! However, some offices still have incomplete
               information.
-              <br />You can include them in your filter by checking the option
+              <br>You can include them in your filter by checking the option
               <strong>Include incomplete entries</strong> on the right.
             </p>
             <p>
               <button class="btn" @click="clearFilters" base-type="secondary">clear filters</button>
             </p>
           </div>
-          <office-list-alt :locations="displayLocations" :pagination="false" :ordering="true" />
+          <office-list-alt :locations="displayLocations" :pagination="false" :ordering="true"/>
         </div>
         <div v-else class="no-result apollo">No result :(</div>
       </main>
@@ -86,7 +85,8 @@ export default {
         this.city = data.cities.nodes.find(city => {
           return (
             this.kebabCase(city.name) === this.city_name &&
-            this.kebabCase(city.countryByCountryIsocode.iso) === this.country_iso
+            this.kebabCase(city.countryByCountryIsocode.iso) ===
+              this.country_iso
           );
         });
         this['location/setLocationQueryFilter']({
@@ -123,7 +123,9 @@ export default {
     }),
     isFiltered() {
       return (
-        this.typologyFilter.length > 0 || this.sizeFilter.length > 0 || this.yearFilter.length > 0
+        this.typologyFilter.length > 0 ||
+        this.sizeFilter.length > 0 ||
+        this.yearFilter.length > 0
       );
     },
   },
@@ -135,7 +137,10 @@ export default {
     },
     filterLocations() {
       return this.filterTypologies(
-        this.filterSizes(this.filterYears(this.locations.nodes, this.yearFilter), this.sizeFilter),
+        this.filterSizes(
+          this.filterYears(this.locations.nodes, this.yearFilter),
+          this.sizeFilter
+        ),
         this.typologyFilter
       );
     },
@@ -208,21 +213,33 @@ export default {
 
 <style scoped>
 #city-page {
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  grid-template-rows: 5rem auto;
-  grid-template-areas:
-    'title-empty title'
-    'controls list';
-  grid-gap: 1.5rem;
+  @apply flex flex-col flex-wrap;
 }
-#city-page > h2 {
-  grid-area: title;
+@screen sm {
+  #city-page {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 5rem auto;
+    grid-template-areas:
+      'title title'
+      'controls list';
+    grid-gap: 1.5rem;
+  }
+  #city-page > h2 {
+    grid-area: title;
+  }
+  #city-page > aside {
+    grid-area: controls;
+  }
+  #city-page > main {
+    grid-area: list;
+  }
 }
-#city-page > aside {
-  grid-area: controls;
-}
-#city-page > main {
-  grid-area: list;
+@screen md {
+  #city-page {
+    grid-template-areas:
+      'title-left title'
+      'controls list';
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-8 container mx-auto md:w-auto md:mr-6 md:ml-56">
+  <div>
     <vue-headful title="About - TAL" />
     <div class="flex items-center">
       <div class="w-1/2">
@@ -184,8 +184,9 @@
         <p>
           We are
           <a class="link link-inline" href="http://richardantoine.de/" target="_blank">Antoine</a>
-          and <a class="link link-inline" href="http://ddrocha.com/" target="_blank">Daniel</a>,
-          French and Brazilian architects based in Berlin. We met long ago via
+          and
+          <a class="link link-inline" href="http://ddrocha.com/" target="_blank">Daniel</a>, French
+          and Brazilian architects based in Berlin. We met long ago via
           <a class="link link-inline" href="https://www.couchsurfing.com/" target="_blank"
             >Couchsurfing</a
           >, ended up working at the same office, and now we are trying to create this together.
