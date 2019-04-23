@@ -451,7 +451,7 @@ export default {
       yearFounded: {
         minLength: minLength(4),
         maxLength: maxLength(4),
-        between: between(1900, 2025),
+        between: between(1800, 2025),
         integer,
       },
       website: {
