@@ -1,18 +1,14 @@
 <template>
   <div>
-    <vue-headful :title="`${location.office.name} - Edit - TAL`" />
+    <vue-headful :title="`${location.office.name} - Edit - TAL`"/>
 
     <form @submit.prevent="submit">
       <section class="flex pt-6" id="office-details">
         <aside id="instructions-details" class="w-1/4 pr-4 flex flex-col justify-between">
           <div>
             <add-office-step :isActive="true" class="-ml-10">
-              <template v-slot:step
-                >1</template
-              >
-              <template v-slot:step-name
-                >Office Details</template
-              >
+              <template v-slot:step>1</template>
+              <template v-slot:step-name>Office Details</template>
             </add-office-step>
             <p class="text-sm leading-normal">
               Edit general information about the office. On Step 2 below, you can edit details
@@ -26,8 +22,7 @@
               class="mr-4"
               :class="{ 'btn-disabled': $v.$invalid }"
               :disabled="disabled"
-              >save</base-button
-            >
+            >save</base-button>
             <button aria-label="cancel" class="link" @click="closeForm">Cancel</button>
           </div>
         </aside>
@@ -63,7 +58,7 @@
               />
             </div>
             <div id="size" class="w-1/2">
-              <select-size v-model="formOffice.sizeId" :originalSizeId="formOffice.sizeId" />
+              <select-size v-model="formOffice.sizeId" :originalSizeId="formOffice.sizeId"/>
             </div>
           </div>
           <div id="typologies" class="mt-6">
@@ -75,7 +70,7 @@
           </div>
           <div id="description" class="mt-6">
             <base-label for="description-textarea">{{ formOffice.$labels.description }}</base-label>
-            <editor v-model="formOffice.description" />
+            <editor v-model="formOffice.description"/>
             <!-- <textarea
               id="description-textarea"
               rows="5"
@@ -263,7 +258,8 @@ export default {
           label: 'Description',
         },
         typologies: {
-          value: this.$store.state.location.selectedLocation.office.officeTypologies
+          value: this.$store.state.location.selectedLocation.office
+            .officeTypologies
             ? this.$store.state.location.selectedLocation.office.officeTypologies.nodes.map(
                 node => node.typology
               )
@@ -319,7 +315,9 @@ export default {
           continue;
         }
         if (key == 'typologies') {
-          officePatch.typologies = officePatch.typologies.map(typology => typology.id);
+          officePatch.typologies = officePatch.typologies.map(
+            typology => typology.id
+          );
         }
       }
       //console.log(patch);
@@ -421,13 +419,19 @@ export default {
       return null;
     },
     locationYearErrorMessage() {
-      if (this.$v.formLocation.yearFounded.$invalid && !this.formLocation.singleLocation) {
+      if (
+        this.$v.formLocation.yearFounded.$invalid &&
+        !this.formLocation.singleLocation
+      ) {
         return this.yearErrorMessage;
       }
       return null;
     },
     locationWebsiteErrorMessage() {
-      if (this.$v.formLocation.website.$invalid && !this.formLocation.singleLocation) {
+      if (
+        this.$v.formLocation.website.$invalid &&
+        !this.formLocation.singleLocation
+      ) {
         return this.websiteErrorMessage;
       }
       return null;
@@ -439,7 +443,10 @@ export default {
       return null;
     },
     disabled() {
-      return this.$v.$invalid || (!this.formOffice.isDirty() && !this.formLocation.isDirty());
+      return (
+        this.$v.$invalid ||
+        (!this.formOffice.isDirty() && !this.formLocation.isDirty())
+      );
     },
   },
 
