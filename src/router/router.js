@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import NProgress from 'nprogress';
 import Home from '../views/Home.vue';
-import AuthGuard from './auth-guard';
+import { AuthGuard } from './auth-guard';
 
 Vue.use(Router);
 
@@ -13,6 +14,18 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Home,
+    },
+    {
+      path: '/auth',
+      name: 'auth',
+      props: true,
+      component: () => import(/* webpackChunkName: "Auth" */ '../views/Auth.vue'),
+    },
+    {
+      path: '/auth/callback',
+      name: 'authCallback',
+      props: true,
+      component: () => import(/* webpackChunkName: "AuthCallback" */ '../views/AuthCallback.vue'),
     },
     {
       path: '/:country_iso/:city_name',
@@ -74,12 +87,6 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
     },
     {
-      path: '/auth',
-      name: 'auth',
-      props: true,
-      component: () => import(/* webpackChunkName: "Auth" */ '../views/Auth.vue'),
-    },
-    {
       path: '/network-issue',
       name: 'network-issue',
       component: () => import(/* webpackChunkName: "NetworkIssue" */ '../views/NetworkIssue.vue'),
@@ -91,10 +98,26 @@ const router = new Router({
       component: () => import(/* webpackChunkName: "NotFound" */ '../views/NotFound.vue'),
     },
     {
+      path: '/admin',
+      name: 'admin',
+      component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin.vue'),
+    },
+    {
       path: '*',
       redirect: { name: '404', params: { resource: 'page' } },
     },
   ],
+});
+
+router.beforeResolve((to, from, next) => {
+  if (to.name) {
+    NProgress.start();
+  }
+  next();
+});
+
+router.afterEach((to, from) => {
+  NProgress.done();
 });
 
 export default router;

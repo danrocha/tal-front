@@ -8,7 +8,7 @@ import camelCase from 'lodash.camelcase';
 import vueHeadful from 'vue-headful';
 import FontAwesomeIcon from './plugins/FontAwesomeIcon';
 import VTooltip from 'v-tooltip';
-import { createProvider, onLogin, onLogout } from './vue-apollo';
+import { createProvider } from './vue-apollo';
 import { sync } from 'vuex-router-sync';
 import { FBApp, FBUIApp } from './plugins/firebaseConfig';
 
@@ -17,6 +17,7 @@ require('typeface-ubuntu-mono');
 
 import './plugins/axios';
 import '@/assets/styles/main.css';
+import '../node_modules/nprogress/nprogress.css';
 
 require('dotenv').config();
 
@@ -34,15 +35,17 @@ Vue.component('vue-headful', vueHeadful);
 
 const apolloProvider = createProvider();
 // Firebase auth
-
+const AUTH_TOKEN = 'id_token';
 FBApp.auth().onAuthStateChanged(user => {
   // change logic to somwhere else? its calling every time...
-  //console.log('onAuthStateChanged user', user);
+  console.log('onAuthStateChanged user in main called!!');
   store.dispatch('user/setUser', user);
   if (user) {
-    user.getIdToken(/* forceRefresh */ true).then(idToken => {
-      onLogin(apolloProvider.defaultClient, idToken);
-    });
+    if (typeof localStorage !== 'undefined') {
+      user.getIdToken(/* forceRefresh */ true).then(idToken => {
+        localStorage.setItem(AUTH_TOKEN, idToken);
+      });
+    }
   }
 });
 store.dispatch('user/setFbApp', FBApp);

@@ -1,0 +1,7 @@
+fragment User on User {
+  uid
+  displayName
+  photoUrl
+  isAdmin
+  email
+}

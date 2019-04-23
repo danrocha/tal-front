@@ -85,13 +85,13 @@ export async function onLogin(apolloClient, idToken) {
   if (typeof localStorage !== 'undefined' && idToken) {
     localStorage.setItem(AUTH_TOKEN, idToken);
   }
-  // if (apolloClient.wsClient) restartWebsockets(apolloClient.wsClient);
-  // try {
-  //   await apolloClient.resetStore();
-  // } catch (e) {
-  //   // eslint-disable-next-line no-console
-  //   console.log('%cError on cache reset (login)', 'color: orange;', e.message);
-  // }
+  if (apolloClient.wsClient) restartWebsockets(apolloClient.wsClient);
+  try {
+    await apolloClient.resetStore();
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log('%cError on cache reset (login)', 'color: orange;', e.message);
+  }
 }
 
 // Manually call this when user log out

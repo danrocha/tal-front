@@ -1,6 +1,6 @@
 import store from '../store/store';
 
-export default (to, from, next) => {
+export const AuthGuard = (to, from, next) => {
   if (store.state.user.user) {
     //console.log('user found, next...');
     next();
@@ -11,4 +11,8 @@ export default (to, from, next) => {
       params: { to, message: 'You need to login to perform this action.' },
     });
   }
+};
+
+export const AdminGuard = (to, from, next) => {
+  next();
 };
