@@ -4,7 +4,7 @@
     <!-- LOGO -->
     <div id="logo">
       <router-link to="/" tag="span" class="cursor-pointer">
-        <logo/>
+        <logo />
       </router-link>
     </div>
     <!-- menu left -->
@@ -21,54 +21,66 @@
         </base-button>
       </div>
       <div class="flex-none">
-        <router-link to="/about" class="link font-mono mr-6"  active-class="link-active">ABOUT</router-link>
+        <router-link to="/about" class="link font-mono mr-6" active-class="link-active"
+          >ABOUT</router-link
+        >
       </div>
       <!-- menu right -->
-      <div v-if="user">
-        <a href="#" @click="toggleDropdown" class="inline-block">
-          <img v-if="user.photoURL" :src="user.photoURL" class="h-8 w-8 rounded-full">
-          <font-awesome-icon v-else icon="user"></font-awesome-icon>
-        </a>
-        <ul
-          v-if="dropdown"
-          v-on-clickaway="toggleDropdown"
-          class="text-sm absolute mt-1 right-0 bg-white border border-solid border-gray-400 shadow p-2 mx-4 z-10"
-        >
-          <li class="mb-2 pb-2 border-b">
-            Logged in as
-            <br>
-            <strong>{{ user.displayName }}</strong>
-          </li>
-          <li class="mb-2 pb-2 border-b">
-            <router-link to="/dashboard" class="link" @click="toggleDropdown"  active-class="link-active">Dashboard</router-link>
-            <apollo-query
-              :query="require('../graphql/UserFavorites.gql')"
-              :skip="user === undefined"
+      <apollo-query :query="require('../graphql/CurrentUser.gql')">
+        <template slot-scope="{ result: { loading, error, data } }">
+          <div v-if="data">
+            <a href="#" @click="toggleDropdown" class="inline-block">
+              <img v-if="user.photoURL" :src="user.photoURL" class="h-8 w-8 rounded-full" />
+              <font-awesome-icon v-else icon="user"></font-awesome-icon>
+            </a>
+            <ul
+              v-if="dropdown"
+              v-on-clickaway="toggleDropdown"
+              class="text-sm absolute mt-1 right-0 bg-white border border-solid border-gray-400 shadow p-2 mx-4 z-10"
             >
-              <template slot-scope="{ result: { data } }">
-                <div v-if="data">
-                  <div
-                    v-if="data.userFavorites.nodes.length > 0"
-                    class="flex items-center text-gray-600"
-                  >
-                    <font-awesome-icon icon="heart" class="text-yellow-500"></font-awesome-icon>
-                    &times;{{ data.userFavorites.totalCount }}
-                  </div>
-                </div>
-              </template>
-            </apollo-query>
-          </li>
-          <!-- <li class="mb-2">Settings</li> -->
-          <li>
-            <logout>
-                  <a slot-scope="{logout}" href="#" @click="logout" class="link">Logout</a>
-              </logout>
-          </li>
-        </ul>
-      </div>
-      <div class="flex-none">
-        <router-link v-if="!user" to="/auth" class="font-mono link">LOGIN</router-link>
-      </div>
+              <li class="mb-2 pb-2 border-b">
+                Logged in as
+                <br />
+                <strong>{{ user.displayName }}</strong>
+              </li>
+              <li class="mb-2 pb-2 border-b">
+                <router-link
+                  to="/dashboard"
+                  class="link"
+                  @click="toggleDropdown"
+                  active-class="link-active"
+                  >Dashboard</router-link
+                >
+                <apollo-query
+                  :query="require('../graphql/UserFavorites.gql')"
+                  :skip="user === undefined"
+                >
+                  <template slot-scope="{ result: { data } }">
+                    <div v-if="data">
+                      <div
+                        v-if="data.userFavorites.nodes.length > 0"
+                        class="flex items-center text-gray-600"
+                      >
+                        <font-awesome-icon icon="heart" class="text-yellow-500"></font-awesome-icon>
+                        &times;{{ data.userFavorites.totalCount }}
+                      </div>
+                    </div>
+                  </template>
+                </apollo-query>
+              </li>
+              <!-- <li class="mb-2">Settings</li> -->
+              <li>
+                <logout>
+                  <a slot-scope="{ logout }" href="#" @click="logout" class="link">Logout</a>
+                </logout>
+              </li>
+            </ul>
+          </div>
+          <div v-else class="flex-none">
+            <router-link to="/auth" class="font-mono link">LOGIN</router-link>
+          </div>
+        </template>
+      </apollo-query>
     </div>
   </nav>
 </template>

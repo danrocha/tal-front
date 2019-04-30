@@ -1,5 +1,5 @@
 <template>
-  <div>Creating new user...</div>
+  <div>Hold on, just a second...</div>
 </template>
 
 <script>
@@ -14,15 +14,7 @@ export default {
       isNewUser: this.$route.query.isnewuser == 'true',
     };
   },
-  created() {
-    if (!this.isNewUser) {
-      this.$router.push(this.$route.query.redirect);
-    }
-  },
   methods: {
-    onDone(user) {
-      console.log('new user added:', user);
-    },
     async createUser(user) {
       console.log('addin new user...');
       this.$apollo
@@ -55,12 +47,14 @@ export default {
   },
   watch: {
     async user() {
-      if (this.user && this.isNewUser) {
+      if (this.user) {
         NProgress.start();
         NProgress.set(0.33);
         await onLogin(this.$apollo.provider.defaultClient, this.$route.query.token);
         NProgress.set(0.66);
-        await this.createUser(this.user);
+        if (this.isNewUser) {
+          await this.createUser(this.user);
+        }
         NProgress.done();
         this.$router.push(this.$route.query.redirect);
       }
