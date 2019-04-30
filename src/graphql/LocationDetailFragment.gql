@@ -28,10 +28,7 @@ fragment LocationDetail on Location {
   city {
     ...CityDetail
   }
-  countryByCountryIsocode {
-    iso
-    name
-  }
+
   office {
     ...OfficeDetail
   }

@@ -1,49 +1,34 @@
 <template>
   <div class="ml-10">
-    <div v-show="!addOffice.manual">
+    <div v-show="!manual">
       <span class="inline-block w-full">
         <base-label for="office-name">Office name</base-label>
-        <input
-          type="text"
-          placeholder="Office Name..."
-          v-model="query"
+        <gmap-autocomplete
           id="office-name"
-          ref="officeName"
-          class="input input-large mt-1 -mr-6"
-        >
-        <span
-          v-if="query"
-          @click="clear"
-          class="cursor-pointer text-yellow-800 font-bold"
-          title="Clear"
-        >&times;</span>
+          autofocus
+          :types="['establishment']"
+          :options="{
+            bounds: city.geometry.viewport,
+            strictBounds: true
+          }"
+          placeholder="Start typing..."
+          :select-first-on-enter="true"
+          class="input input-large"
+          @place_changed="setDetails"
+        ></gmap-autocomplete>
       </span>
-      <div v-if="addOffice.officeDetails">
-        <div class="flex items-center justify-end">
-          <tal-button aria-label="clear" @click="clear" base-type="secondary" class="mx-6">Clear</tal-button>
-          <tal-button aria-label="next" @click="nextStep" base-type="primary">Next</tal-button>
-        </div>
-      </div>
 
       <p class="text-right mt-4">
-        <a
-          @click="addOfficeToggleManual"
-          href="#"
-          class="no-underline text-gray-800 cursor-pointer"
-        >
+        <a @click="toggleManual" href="#" class="no-underline text-gray-800 cursor-pointer">
           Can't find it? Add details manually
           <font-awesome-icon icon="arrow-right"></font-awesome-icon>
         </a>
       </p>
     </div>
 
-    <div v-show="addOffice.manual">
-      <base-input
-        label="Office Name"
-        v-model="name"
-        id="office-name"
-        targetClass="input-large mb-4"
-      />
+    <div v-show="manual">
+      <base-label for="office-name">Office Name</base-label>
+      <base-input autofocus v-model="name" id="office-name" targetClass="input-large mb-4"/>
       <div class="error" v-if="!$v.name.minLength">We need a name :)</div>
       <base-input
         label="Website - Optional"
@@ -56,16 +41,24 @@
         Don't forget the
         <strong>http://</strong>
       </div>
-      <base-input
-        label="Address"
-        v-model="address"
-        id="office-address"
-        targetClass="input-large mb-4"
-      />
+      <span class="inline-block w-full">
+        <base-label for="office-name">Address</base-label>
+        <gmap-autocomplete
+          :types="['address']"
+          :options="{
+            bounds: city.geometry.viewport,
+            strictBounds: true,
+          }"
+          placeholder="Start typing..."
+          :select-first-on-enter="true"
+          class="input input-large mb-4"
+          @place_changed="setAddress"
+        ></gmap-autocomplete>
+      </span>
       <div class="flex items-center justify-end">
         <base-button
           aria-label="back to search"
-          @click="addOfficeToggleManual"
+          @click="toggleManual"
           base-type="secondary"
           class="mx-6"
         >back to search</base-button>
@@ -85,20 +78,15 @@ import { validationMixin } from 'vuelidate';
 const { required, minLength, url } = require('vuelidate/lib/validators');
 import formatUrl from '@/mixins/formatUrl';
 import { mapActions, mapState } from 'vuex';
-import TalButton from '@/components/TalButton.vue';
 
 export default {
   name: 'AddOfficeDetails',
   mixins: [formatUrl, validationMixin],
-  components: {
-    TalButton,
-  },
   data() {
     return {
       name: null,
       link: null,
       address: null,
-      query: '',
       selectedAddress: null,
     };
   },
@@ -110,53 +98,26 @@ export default {
     link: {
       url,
     },
-    address: {
+    selectedAddress: {
       required,
     },
   },
-  mounted() {
-    /* eslint-disable-next-line*/
-    let bounds = new google.maps.LatLngBounds();
-    bounds.extend({
-      lat: this.addOffice.city.latitude,
-      lng: this.addOffice.city.longitude,
-    });
-    /* eslint-disable-next-line*/
-    this.autocompleteEstablishment = new google.maps.places.Autocomplete(
-      document.getElementById('office-name'),
-      {
-        types: ['establishment'],
-        bounds,
-      }
-    );
-    /* eslint-disable-next-line*/
-    this.autocompleteAddress = new google.maps.places.Autocomplete(
-      document.getElementById('office-address'),
-      {
-        types: ['address'],
-        bounds,
-      }
-    );
-    this.autocompleteEstablishment.addListener('place_changed', () => {
-      this.setAddOfficeOfficeDetails(this.autocompleteEstablishment.getPlace());
-      this.query = this.addOffice.officeDetails.name;
-      this.addOfficeNextStep();
-    });
-    this.autocompleteAddress.addListener('place_changed', () => {
-      this.selectedAddress = this.autocompleteAddress.getPlace();
-      this.address = this.selectedAddress.formatted_address;
-    });
-    this.setFocus();
-  },
 
   methods: {
-    ...mapActions([
-      'setAddOfficeOfficeDetails',
-      'addOfficeNextStep',
-      'addOfficeToggleManual',
-      'resetAddOfficeOfficeDetails',
-      'notification/add',
+    ...mapActions('add', [
+      'setOfficeDetails',
+      'nextStep',
+      'toggleManual',
+      'resetOfficeDetails',
     ]),
+    ...mapActions(['notification/add']),
+    setDetails(details) {
+      this.setOfficeDetails(details);
+      this.nextStep();
+    },
+    setAddress(address) {
+      this.selectedAddress = address;
+    },
     onManualSubmit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
@@ -173,9 +134,9 @@ export default {
           name: this.name,
           website: this.link,
         };
-        this.setAddOfficeOfficeDetails(officeDetails);
-        this.addOfficeToggleManual();
-        this.addOfficeNextStep();
+        this.setOfficeDetails(officeDetails);
+        this.toggleManual();
+        this.nextStep();
       }
     },
     setFocus() {
@@ -186,15 +147,15 @@ export default {
       this.link = null;
       this.address = null;
       this.query = '';
-      this.resetAddOfficeOfficeDetails();
-    },
-
-    nextStep() {
-      this.addOfficeNextStep();
+      this.resetOfficeDetails();
     },
   },
   computed: {
-    ...mapState(['addOffice']),
+    ...mapState({
+      officeDetails: state => state.add.officeDetails,
+      manual: state => state.add.manual,
+      city: state => state.add.city,
+    }),
     formNotFilled() {
       if (this.name && this.selectedAddress) {
         return false;

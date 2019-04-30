@@ -8,6 +8,8 @@ import camelCase from 'lodash.camelcase';
 import vueHeadful from 'vue-headful';
 import FontAwesomeIcon from './plugins/FontAwesomeIcon';
 import VTooltip from 'v-tooltip';
+import * as VueGoogleMaps from 'vue2-google-maps';
+import { GmapAutocomplete } from 'vue2-google-maps/src/components/autocomplete';
 import { createProvider } from './vue-apollo';
 import { sync } from 'vuex-router-sync';
 import { FBApp, FBUIApp } from './plugins/firebaseConfig';
@@ -54,6 +56,16 @@ store.dispatch('user/setFbUiApp', FBUIApp);
 sync(store, router);
 //Vue.use(VueGeolocation);
 Vue.use(VTooltip);
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyBKnsrA-tAtFLqrAwTY7OKP67CgJyjqZ4w',
+    libraries: 'places',
+    installComponents: false,
+    region: 'US',
+    language: 'en',
+  },
+});
+Vue.component('GmapAutocomplete', GmapAutocomplete);
 
 Vue.config.productionTip = false;
 

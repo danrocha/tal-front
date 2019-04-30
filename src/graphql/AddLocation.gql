@@ -1,0 +1,9 @@
+#import "./LocationDetailFragment.gql"
+
+mutation AddLocation($input: AddLocationInput!) {
+  addLocation(input: $input) {
+    location {
+      ...LocationDetail
+    }
+  }
+}

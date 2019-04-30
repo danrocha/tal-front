@@ -1,6 +1,6 @@
 <template>
   <section>
-    <add-office-step :isActive="addOffice.step === 3" class="mt-6">
+    <add-office-step :isActive="step === 3" class="mt-6">
       <template v-slot:step
         >3</template
       >
@@ -8,7 +8,7 @@
         >Review & Submit</template
       >
     </add-office-step>
-    <div v-if="addOffice.step === 3">
+    <div v-if="step === 3">
       <div class="mt-4 ml-10 mb-4 flex items-start">
         <div>
           <font-awesome-icon
@@ -19,8 +19,11 @@
         <div>
           <p class="mb-2">Is the above information correct?</p>
           <p v-if="!sameCities" class="text-gray-600">
-            It seems the address above is not exactly in {{ addOffice.city.name }}; if you confirm,
-            the address will take precedence.
+            It seems the address above is
+            <strong>not</strong>
+            in {{ city.name }}; Would you like to add the address in
+            <strong>{{ officeAddressObject.city }}</strong>
+            ({{ officeAddressObject.country }}) instead?
           </p>
         </div>
       </div>
@@ -30,7 +33,7 @@
           base-type="secondary"
           aria-label="start-over"
           class="secondary mx-6"
-          @click="resetAddOffice"
+          @click="reset"
           :disabled="isLoading"
           >No, start over</base-button
         >
@@ -48,7 +51,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 import AddOfficeStep from '@/components/AddOfficeStep.vue';
 
 export default {
@@ -63,18 +66,28 @@ export default {
     },
   },
   computed: {
-    ...mapState(['addOffice']),
+    ...mapState({
+      step: state => state.add.step,
+      city: state => state.add.city,
+      officeDetails: state => state.add.officeDetails,
+    }),
+    ...mapGetters(['add/getAddressObject']),
+
     sameCities() {
-      if (this.addOffice.officeDetails && this.addOffice.city) {
-        return this.addOffice.officeDetails.address_components.find(component => {
-          return component.long_name.includes(this.addOffice.city.name);
-        });
+      if (this.officeDetails && this.city) {
+        return this.officeAddressObject.city === this.cityAddressObject.city;
       }
       return false;
     },
+    cityAddressObject() {
+      return this['add/getAddressObject']('city');
+    },
+    officeAddressObject() {
+      return this['add/getAddressObject']('officeDetails');
+    },
   },
   methods: {
-    ...mapActions(['resetAddOffice']),
+    ...mapActions('add', ['reset']),
   },
 };
 </script>
