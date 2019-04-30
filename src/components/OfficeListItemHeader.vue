@@ -1,12 +1,12 @@
 <template>
   <header>
     <h1 class="font-bold text-base text-gray-800 mb-1 w-full">
-      <router-link :to="officeDetailsLink" class="link" @click.native="selectLocation">
-        {{
+      <router-link :to="officeDetailsLink" class="link" @click.native="selectLocation">{{
         location.office.name
-        }}
-      </router-link>
-      <span class="ml-4 font-normal text-gray-400 italic">{{ location.office.yearFounded }}</span>
+      }}</router-link>
+      <span v-if="location.office.yearFounded" class="ml-4 font-normal text-gray-400 italic">{{
+        location.office.yearFounded
+      }}</span>
     </h1>
     <div class="text-sm text-gray-600 mb-1">
       <a
@@ -14,7 +14,8 @@
         class="link"
         :href="location.office.website"
         target="_blank"
-      >{{ formatUrl(location.office.website) }}</a>
+        >{{ formatUrl(location.office.website) }}</a
+      >
     </div>
   </header>
 </template>
@@ -35,11 +36,9 @@ export default {
   computed: {
     officeDetailsLink() {
       return {
-        path: `/${this.kebabCase(
-          this.location.countryByCountryIsocode.iso
-        )}/${this.kebabCase(this.location.city.name)}/${
-          this.location.id
-        }/${this.kebabCase(this.location.office.name)}`,
+        path: `/${this.kebabCase(this.location.city.countryByCountryIsocode.iso)}/${this.kebabCase(
+          this.location.city.name
+        )}/${this.location.id}/${this.kebabCase(this.location.office.name)}`,
       };
     },
   },

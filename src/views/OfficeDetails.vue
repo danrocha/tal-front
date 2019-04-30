@@ -13,9 +13,9 @@
             <!-- <span class="label">AKA</span>&nbsp;<span class="text-base text-gray-600 font-normal">Alt name 1, altname 2</span><edit-link  class="ml-2 font-sans font-normal"/> -->
           </h2>
           <p v-if="location.office.website">
-            <a :href="location.office.website" class="link">
-              {{ formatUrl(location.office.website) }}
-            </a>
+            <a :href="location.office.website" class="link">{{
+              formatUrl(location.office.website)
+            }}</a>
           </p>
           <p class="mt-2" v-else>
             <router-link :to="editLink" class="link">Add a website...</router-link>
@@ -80,7 +80,10 @@
         <div class="flex flex-row">
           <div class="w-1/4">
             <p v-for="location in location.office.locations.nodes" :key="location.id" class="my-1">
-              {{ location.city.name }}, {{ location.city.countryByCountryIsocode.iso }}
+              <router-link :to="cityPageUrl(location.city)" class="link">
+                {{ location.city.name }},
+                {{ location.city.countryByCountryIsocode.iso }}
+              </router-link>
             </p>
           </div>
           <div class="w-3/4">
@@ -147,6 +150,7 @@ export default {
       this.$apollo.queries.locationById.skip = true;
     }
   },
+
   computed: {
     ...mapState({
       user: state => state.user.user,
@@ -157,6 +161,9 @@ export default {
     ...mapActions(['location/setLocation']),
     edit() {
       this.$router.push({ path: `${this.$route.path}/edit` });
+    },
+    cityPageUrl(city) {
+      return `/${this.kebabCase(city.countryByCountryIsocode.iso)}/${this.kebabCase(city.name)}`;
     },
   },
   apollo: {

@@ -16,15 +16,15 @@
       </div>
       <div class="w-full ml-4">
         <h1 class="font-bold text-sm text-gray-800 mb-2 w-full">
-          <router-link :to="officeDetailsLink" class="link" @click.stop="selectLocation">{{
-            location.office.name
-          }}</router-link>
+          <router-link :to="officeDetailsLink" class="link" @click.stop="selectLocation">
+            {{ location.office.name }}
+          </router-link>
         </h1>
         <div class="flex justify-between text-sm text-gray-600 mb-2">
           <div>
-            <a v-if="hasWebsite" class="link" :href="location.office.website" target="_blank">
-              {{ formatUrl(location.office.website) }}
-            </a>
+            <a v-if="hasWebsite" class="link" :href="location.office.website" target="_blank">{{
+              formatUrl(location.office.website)
+            }}</a>
           </div>
           <div>
             <button
@@ -42,9 +42,9 @@
           class="mb-2 flex"
         >
           <div v-if="location.office.sizeId" class="flex">
-            <span class="uppercase text-xs py-1 px-2 mr-2 bg-white border border-gray-500rounded">
-              {{ location.office.size.nameShort }}
-            </span>
+            <span class="uppercase text-xs py-1 px-2 mr-2 bg-white border border-gray-500rounded">{{
+              location.office.size.nameShort
+            }}</span>
           </div>
           <div v-if="location.office.officeTypologies.nodes.length > 0" class="flex">
             <span
@@ -58,7 +58,8 @@
         <p class="text-xs text-gray-600 mb-0">
           {{ location.office.officeVotes.totalCount }} votes
           <span v-if="alreadyVoted">
-            &nbsp;| <button aria-label="vote up" @click.stop="vote" class="link">unvote</button>
+            &nbsp;|
+            <button aria-label="vote up" @click.stop="vote" class="link">unvote</button>
           </span>
         </p>
       </div>
@@ -107,7 +108,7 @@ export default {
 
     officeDetailsLink() {
       return {
-        path: `/${this.kebabCase(this.location.countryByCountryIsocode.iso)}/${this.kebabCase(
+        path: `/${this.kebabCase(this.location.city.countryByCountryIsocode.iso)}/${this.kebabCase(
           this.location.city.name
         )}/${this.location.id}/${this.kebabCase(this.location.office.name)}`,
       };
