@@ -58,7 +58,7 @@ sync(store, router);
 Vue.use(VTooltip);
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyBKnsrA-tAtFLqrAwTY7OKP67CgJyjqZ4w',
+    key: process.env.VUE_APP_GOOGLE_MAPS_API_KEY,
     libraries: 'places',
     installComponents: false,
     region: 'US',
