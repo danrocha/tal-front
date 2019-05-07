@@ -40,7 +40,7 @@ export default {
       user: state => state.user.user,
       selectedLocation: state => state.location.selectedLocation,
     }),
-    ...mapGetters(['add/getAddressObject']),
+    ...mapGetters(['add/getAddressObject', 'add/sameCities']),
   },
   methods: {
     ...mapActions(['add/reset', 'location/setLocation']),
@@ -58,7 +58,7 @@ export default {
         x: this.officeDetails.geometry.location.lat(),
         y: this.officeDetails.geometry.location.lng(),
       };
-      const {
+      let {
         city: iCity,
         country: iCountry,
         route: iRoute,
@@ -66,6 +66,10 @@ export default {
         postal_code: iPostalCode,
         street_number: iStreetNumber,
       } = this['add/getAddressObject']('officeDetails');
+      if (this['add/sameCities']) {
+        let { city, country } = this['add/getAddressObject']('city');
+        (iCity = city), (iCountry = country);
+      }
       const location_input = {
         iCity,
         iCountry,

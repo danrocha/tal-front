@@ -71,13 +71,10 @@ export default {
       city: state => state.add.city,
       officeDetails: state => state.add.officeDetails,
     }),
-    ...mapGetters(['add/getAddressObject']),
+    ...mapGetters(['add/getAddressObject', 'add/sameCities']),
 
     sameCities() {
-      if (this.officeDetails && this.city) {
-        return this.officeAddressObject.city === this.cityAddressObject.city;
-      }
-      return false;
+      return this['add/sameCities'];
     },
     cityAddressObject() {
       return this['add/getAddressObject']('city');
