@@ -25,6 +25,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['add/setCity', 'add/nextStep', 'add/reset']),
     setCity(city) {
       this['add/setCity'](city);
       this['add/nextStep']();
@@ -33,7 +34,6 @@ export default {
       this['add/reset']();
       this.city = '';
     },
-    ...mapActions(['add/setCity', 'add/nextStep', 'add/reset']),
   },
 };
 </script>
