@@ -23,7 +23,7 @@ export const mutations = {
   SET_LOCATION(state, location) {
     state.selectedLocation = location;
   },
-  SET_LOCATION_QUERY_ORDER_BY(state, orderBy) {
+  SET_ORDER_BY(state, orderBy) {
     state.locationQueryVariables.orderBy = orderBy;
   },
   SET_LOCATION_QUERY_FILTER(state, filter) {
@@ -47,8 +47,8 @@ export const actions = {
   setLocation({ commit }, location) {
     commit('SET_LOCATION', location);
   },
-  setLocationQueryOrderBy({ commit }, orderBy) {
-    commit('SET_LOCATION_QUERY_ORDER_BY', orderBy);
+  setOrderBy({ commit }, orderBy) {
+    commit('SET_ORDER_BY', orderBy);
   },
   setLocationQueryFilter({ commit }, filter) {
     commit('SET_LOCATION_QUERY_FILTER', filter);

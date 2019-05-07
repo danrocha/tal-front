@@ -99,14 +99,23 @@ export default {
     locations: {
       query: LOCATIONS,
       variables() {
+        const {
+          first,
+          last,
+          after,
+          before,
+          orderBy,
+          condition,
+          filter,
+        } = this.locationQueryVariables;
         return {
-          first: this.locationQueryVariables.first,
-          last: this.locationQueryVariables.last,
-          after: this.locationQueryVariables.after,
-          before: this.locationQueryVariables.before,
-          orderBy: this.locationQueryVariables.orderBy,
-          condition: this.locationQueryVariables.condition,
-          filter: this.locationQueryVariables.filter,
+          first,
+          last,
+          after,
+          before,
+          orderBy,
+          condition,
+          filter,
         };
       },
       update(data) {

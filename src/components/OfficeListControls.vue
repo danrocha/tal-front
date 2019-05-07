@@ -13,14 +13,14 @@
         <ul id="ordering-controls" class="flex text-sm">
           <li
             class="link"
-            :class="{ current: orderBy === 'OFFICE_BY_OFFICE_ID__NAME_ASC' }"
+            :class="{ 'link-active': orderBy === 'OFFICE_BY_OFFICE_ID__NAME_ASC' }"
             @click="setOrderBy('OFFICE_BY_OFFICE_ID__NAME_ASC')"
           >
             A-Z
           </li>
           <li
             class="link"
-            :class="{ current: orderBy === 'CREATED_AT_DESC' }"
+            :class="{ 'link-active': orderBy === 'CREATED_AT_DESC' }"
             @click="setOrderBy('CREATED_AT_DESC')"
           >
             Latest added
@@ -146,7 +146,7 @@ export default {
   },
   computed: {
     ...mapState({
-      orderBy: state => state.location.orderBy,
+      orderBy: state => state.location.locationQueryVariables.orderBy,
       typologyFilter: state => state.location.typologyFilter,
       sizeFilter: state => state.location.sizeFilter,
       yearFilter: state => state.location.yearFilter,
