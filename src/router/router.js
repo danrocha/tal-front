@@ -16,6 +16,44 @@ const router = new Router({
       component: Home,
     },
     {
+      path: '/admin',
+      name: 'admin',
+      component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin.vue'),
+      children: [
+        {
+          path: '',
+          component: () =>
+            import(/* webpackChunkName: "AdminHome")*/ '../components/AdminHome.vue'),
+        },
+        {
+          path: 'cities',
+          component: () =>
+            import(/* webpackChunkName: "AdminCities")*/ '../components/AdminCities.vue'),
+        },
+      ],
+    },
+    {
+      path: '/dashboard',
+      beforeEnter: AuthGuard,
+      component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
+      children: [
+        {
+          path: '',
+          redirect: 'favorites',
+        },
+        {
+          path: 'favorites',
+          component: () =>
+            import(/* webpackChunkName: "DashboardFavorites" */ '../components/DashboardFavorites.vue'),
+        },
+        {
+          path: 'settings',
+          component: () =>
+            import(/* webpackChunkName: "DashboardSettings" */ '../components/DashboardSettings.vue'),
+        },
+      ],
+    },
+    {
       path: '/auth',
       name: 'auth',
       props: true,
@@ -68,24 +106,7 @@ const router = new Router({
       beforeEnter: AuthGuard,
       component: () => import(/* webpackChunkName: "AddOffice" */ '../views/AddOffice.vue'),
     },
-    {
-      path: '/dashboard',
-      redirect: { name: 'favorites' },
-    },
-    {
-      path: '/dashboard/favorites',
-      name: 'favorites',
-      props: { section: 'favorites' },
-      beforeEnter: AuthGuard,
-      component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
-    },
-    {
-      path: '/dashboard/settings',
-      name: 'settings',
-      props: { section: 'settings' },
-      beforeEnter: AuthGuard,
-      component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
-    },
+
     {
       path: '/network-issue',
       name: 'network-issue',
@@ -97,11 +118,7 @@ const router = new Router({
       props: true,
       component: () => import(/* webpackChunkName: "NotFound" */ '../views/NotFound.vue'),
     },
-    {
-      path: '/admin',
-      name: 'admin',
-      component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin.vue'),
-    },
+
     {
       path: '*',
       redirect: { name: '404', params: { resource: 'page' } },
