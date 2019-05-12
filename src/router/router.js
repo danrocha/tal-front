@@ -22,13 +22,17 @@ const router = new Router({
       children: [
         {
           path: '',
-          component: () =>
-            import(/* webpackChunkName: "AdminHome")*/ '../components/AdminHome.vue'),
+          component: () => import(/* webpackChunkName: "AdminHome"*/ '../components/AdminHome.vue'),
         },
         {
           path: 'cities',
           component: () =>
-            import(/* webpackChunkName: "AdminCities")*/ '../components/AdminCities.vue'),
+            import(/* webpackChunkName: "AdminCities"*/ '../components/AdminCities.vue'),
+        },
+        {
+          path: 'offices',
+          component: () =>
+            import(/* webpackChunkName: "AdminOffices"*/ '../components/AdminOffices.vue'),
         },
       ],
     },
