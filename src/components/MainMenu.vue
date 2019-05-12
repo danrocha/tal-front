@@ -28,7 +28,7 @@
       <!-- menu right -->
       <apollo-query :query="require('../graphql/CurrentUser.gql')">
         <template slot-scope="{ result: { loading, error, data } }">
-          <div v-if="data" class="flex items-center">
+          <div v-if="data && user" class="flex items-center">
             <div v-if="data.currentUser.isAdmin" class="flex-none">
               <router-link to="/admin" class="link font-mono mr-6" active-class="link-active"
                 >ADMIN</router-link

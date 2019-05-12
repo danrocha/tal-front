@@ -1,16 +1,22 @@
 <template>
-  <div>
-    <vue-headful title="Administration - TAL" />
-    <div id="dashboard">
-      <h2 class="text-4xl font-bold">Administration</h2>
-      <aside class="w-auto flex flex-col items-end pr-8">
-        <admin-menu />
-      </aside>
-      <main role="main" class="w-full">
-        <router-view></router-view>
-      </main>
-    </div>
-  </div>
+  <apollo-query :query="require('../graphql/CurrentUser.gql')" @error="$router.push('/auth')">
+    <template slot-scope="{ result: { loading, data } }">
+      <div v-if="loading" class="loading apollo">Checking Admin Status...</div>
+
+      <div v-else-if="data">
+        <vue-headful title="Administration - TAL" />
+        <div id="dashboard">
+          <h2 class="text-4xl font-bold">Administration</h2>
+          <aside class="w-auto flex flex-col items-end pr-8">
+            <admin-menu />
+          </aside>
+          <main role="main" class="w-full">
+            <router-view></router-view>
+          </main>
+        </div>
+      </div>
+    </template>
+  </apollo-query>
 </template>
 
 <script>
