@@ -1,5 +1,5 @@
 #import "./OfficeDetailFragment.gql"
-query OFFICES($orderBy: [OfficesOrderBy!] = [CREATED_AT_DESC]) {
+query OFFICES($orderBy: [OfficesOrderBy!] = [NAME_ASC]) {
   offices(orderBy: $orderBy) {
     totalCount
 

@@ -1,0 +1,8 @@
+#import "./OfficeDetailFragment.gql"
+mutation updateOfficeById($input: UpdateOfficeByIdInput!) {
+  updateOfficeById(input: $input) {
+    office {
+      ...OfficeDetail
+    }
+  }
+}

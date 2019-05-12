@@ -1,0 +1,8 @@
+fragment OfficeSocialNetworkDetail on OfficeSocialNetwork {
+  id
+  socialNetwork {
+    id
+    name
+  }
+  handle
+}

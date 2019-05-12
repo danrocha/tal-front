@@ -1,3 +1,5 @@
+#import "./OfficeSocialNetworkFragment.gql"
+
 fragment OfficeDetail on Office {
   id
   name
@@ -24,6 +26,7 @@ fragment OfficeDetail on Office {
   }
   locations {
     nodes {
+      id
       formattedAddress
       city {
         id
@@ -47,4 +50,12 @@ fragment OfficeDetail on Office {
       userUid
     }
   }
+  logoUrl
+  officeSocialNetworks {
+    totalCount
+    nodes {
+      ...OfficeSocialNetworkDetail
+    }
+  }
+  brandfetch
 }

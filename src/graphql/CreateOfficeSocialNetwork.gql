@@ -1,0 +1,9 @@
+#import "./OfficeSocialNetworkFragment.gql"
+
+mutation createOfficeSocialNetwork($input: CreateOfficeSocialNetworkInput!) {
+  createOfficeSocialNetwork(input: $input) {
+    officeSocialNetwork {
+      ...OfficeSocialNetworkDetail
+    }
+  }
+}
