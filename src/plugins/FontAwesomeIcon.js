@@ -28,6 +28,15 @@ import {
   faFilter,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
+
+import {
+  faFacebook,
+  faInstagram,
+  faLinkedin,
+  faTwitter,
+  faPinterest,
+  faYoutube,
+} from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 library.add(
@@ -57,7 +66,13 @@ library.add(
   faHeart,
   faUser,
   faFilter,
-  faTimes
+  faTimes,
+  faFacebook,
+  faInstagram,
+  faLinkedin,
+  faTwitter,
+  faPinterest,
+  faYoutube
 );
 
 export default FontAwesomeIcon;
