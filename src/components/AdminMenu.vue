@@ -8,7 +8,7 @@
           <!-- Error -->
           <div v-else-if="error" class="error apollo">An error occurred</div>
           <!-- Result -->
-          <div v-else-if="data" class="text-sm text-center">
+          <div v-else-if="data && user" class="text-sm text-center">
             <img
               :src="user.photoURL"
               class="rounded-full border-solid mb-2"
@@ -25,21 +25,10 @@
     </div>
     <ul class="text-right mb-8">
       <li class="uppercase tracking-wider mb-1 text-base font-mono">
-        <router-link to="/admin/cities" tag="a" class="link">Cities</router-link>
+        <router-link to="/admin/offices" tag="a" class="link" active-class="link-active">Offices</router-link>
       </li>
       <li class="uppercase tracking-wider mb-1 text-base font-mono">
-        <a href="#" class="link">Account settings</a>
-      </li>
-      <li class="uppercase tracking-wider mb-1 text-base font-mono">
-        <a href="#" class="link">Logout</a>
-      </li>
-    </ul>
-    <ul class="text-right border-t border-grey-600 pt-8">
-      <li class="uppercase tracking-wider mb-1 text-base font-mono">
-        <a href="#" class="link">Favorites</a>
-      </li>
-      <li class="uppercase tracking-wider mb-1 text-base font-mono">
-        <a href="#" class="link">Account settings</a>
+        <router-link to="/admin/cities" tag="a" class="link" active-class="link-active">Cities</router-link>
       </li>
       <li class="uppercase tracking-wider mb-1 text-base font-mono">
         <a href="#" class="link">Logout</a>
