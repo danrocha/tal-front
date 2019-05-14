@@ -17,7 +17,6 @@ const router = new Router({
     },
     {
       path: '/admin',
-      name: 'admin',
       component: () => import(/* webpackChunkName: "Admin" */ '../views/Admin.vue'),
       children: [
         {
