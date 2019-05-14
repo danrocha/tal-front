@@ -57,6 +57,24 @@ const router = new Router({
       ],
     },
     {
+      path: '/add',
+      beforeEnter: AuthGuard,
+      component: () => import(/* webpackChunkName: "AddOffice" */ '../views/AddOffice.vue'),
+      children: [
+        {
+          path: '',
+          component: () =>
+            import(/* webpackChunkName: "AddOfficeHome" */ '../components/AddOfficeHome.vue'),
+        },
+        {
+          path: 'finalize',
+          props: true,
+          component: () =>
+            import(/* webpackChunkName: "AddOfficeHome" */ '../components/AddOfficeFinalize.vue'),
+        },
+      ],
+    },
+    {
       path: '/auth',
       name: 'auth',
       props: true,
@@ -68,6 +86,7 @@ const router = new Router({
       props: true,
       component: () => import(/* webpackChunkName: "AuthCallback" */ '../views/AuthCallback.vue'),
     },
+
     {
       path: '/:country_iso/:city_name',
       name: 'city',
@@ -88,6 +107,7 @@ const router = new Router({
       component: () =>
         import(/* webpackChunkName: "OfficeDetailsEdit" */ '../views/OfficeDetailsEdit.vue'),
     },
+
     {
       path: '/about',
       name: 'about',
@@ -102,12 +122,6 @@ const router = new Router({
       path: '/privacy',
       name: 'privacy',
       component: () => import(/* webpackChunkName: "Privacy" */ '../views/Privacy.vue'),
-    },
-    {
-      path: '/add',
-      name: 'add-office',
-      beforeEnter: AuthGuard,
-      component: () => import(/* webpackChunkName: "AddOffice" */ '../views/AddOffice.vue'),
     },
 
     {
