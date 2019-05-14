@@ -1,16 +1,7 @@
 <template>
   <div>
-    <div v-if="!office.logoUrl" class="flex items-center">
-      <office-logo-temporary :name="office.name" />
-      <p v-if="office.logoUrl === 'default'" class="text-xs ml-2 text-gray-500">
-        using default logo
-      </p>
-      <base-button v-if="office.website" @click="fetchLogo" class="ml-2">get logo</base-button>
-    </div>
-    <div v-else class="flex items-center">
-      <img :src="office.logoUrl" class="w-24 h-24 rounded" />
-      <base-button @click="deleteLogo" class="ml-2">delete logo</base-button>
-    </div>
+    <office-logo :name="office.name" :logo-url="office.logoUrl" />
+    <base-button v-if="office.website" @click="fetchLogo" class="ml-2">get logo</base-button>
   </div>
 </template>
 
@@ -19,7 +10,7 @@ import axios from 'axios';
 import { mapActions } from 'vuex';
 import formatUrl from '../mixins/formatUrl';
 
-import OfficeLogoTemporary from '../components/OfficeLogoTemporary.vue';
+import OfficeLogo from '../components/OfficeLogo.vue';
 export default {
   name: 'AdminOfficeLogo',
   mixins: [formatUrl],
@@ -30,7 +21,7 @@ export default {
     },
   },
   components: {
-    OfficeLogoTemporary,
+    OfficeLogo,
   },
   data() {
     return {

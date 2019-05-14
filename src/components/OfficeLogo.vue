@@ -1,7 +1,7 @@
 <template>
   <div class="shadow rounded flex items-center justify-center p-1" :class="sizeClass">
     <img v-if="logoUrl" :src="logoUrl" />
-    <p v-else class="font-bold" :class="fontSizeClass">{{ initials() }}</p>
+    <p v-else class="font-bold" :class="fontSizeClass()">{{ initials() }}</p>
   </div>
 </template>
 
