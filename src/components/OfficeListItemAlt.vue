@@ -4,6 +4,9 @@
       <div class="vote-arrow w-2 mr-2 text-center">
         <vote-control :location="location" />
       </div>
+      <div class="ml-2">
+        <office-logo size="sm" :name="location.office.name" :logo-url="location.office.logoUrl" />
+      </div>
       <div class="flex justify-between w-full">
         <div class="ml-4">
           <office-list-item-header :location="location" />
@@ -32,6 +35,7 @@ import OfficeListItemSize from '@/components/OfficeListItemSize.vue';
 import OfficeListItemTypologies from '@/components/OfficeListItemTypologies.vue';
 import VoteControl from '@/components/VoteControl.vue';
 import FavoriteControl from '@/components/FavoriteControl.vue';
+import OfficeLogo from '@/components/OfficeLogo.vue';
 export default {
   name: 'OfficeListItemAlt',
   mixins: [formatUrl, kebabCase],
@@ -41,6 +45,7 @@ export default {
     OfficeListItemHeader,
     OfficeListItemSize,
     OfficeListItemTypologies,
+    OfficeLogo,
   },
   props: {
     location: {

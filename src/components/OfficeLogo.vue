@@ -1,16 +1,18 @@
 <template>
-  <div
-    class="rounded border border-gray-500 p-2 flex items-center justify-center"
-    :class="sizeClass"
-  >
-    <p class="font-bold" :class="fontSizeClass">{{ initials }}</p>
+  <div class="shadow rounded flex items-center justify-center p-1" :class="sizeClass">
+    <img v-if="logoUrl" :src="logoUrl" />
+    <p v-else class="font-bold" :class="fontSizeClass">{{ initials() }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'TempLogo',
+  name: 'OfficeLogo',
   props: {
+    logoUrl: {
+      type: String,
+      default: '',
+    },
     name: {
       type: String,
       required: true,
@@ -27,6 +29,8 @@ export default {
       }
       return 'w-24 h-24';
     },
+  },
+  methods: {
     fontSizeClass() {
       if (this.size === 'sm') {
         return 'text-xl';
