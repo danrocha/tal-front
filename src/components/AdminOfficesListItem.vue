@@ -71,8 +71,6 @@ import AdminOfficeLogo from '../components/AdminOfficeLogo.vue';
 
 import OFFICES from '../graphql/Offices.gql';
 
-const brandfetch_api_key = 'e6pCTh1aft6qPm1wRmD6o8tOKzyEvzUX4PXbJymp';
-
 export default {
   name: 'AdminOfficesListItem',
   mixins: [kebabCase, formatUrl],
@@ -102,7 +100,7 @@ export default {
           this.office.website
         )}`,
         headers: {
-          Authorization: 'Bearer sk_0db9b163f6c520c98de0b50b4a4a375c',
+          Authorization: '',
         },
       })
         .then(({ data }) => {
