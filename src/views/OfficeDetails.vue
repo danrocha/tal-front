@@ -3,7 +3,7 @@
     <vcl-list />
   </div>
   <div v-else>
-    <vue-headful :title="`${location.office.name} - TAL`" />
+    <vue-headful :title="`${location.office.name} - The Architecture List`" />
     <section>
       <header id="heading" class="flex justify-between items-start py-6">
         <div class="flex-grow">
@@ -13,9 +13,9 @@
             <!-- <span class="label">AKA</span>&nbsp;<span class="text-base text-gray-600 font-normal">Alt name 1, altname 2</span><edit-link  class="ml-2 font-sans font-normal"/> -->
           </h2>
           <p v-if="location.office.website">
-            <a :href="location.office.website" class="link">{{
-              formatUrl(location.office.website)
-            }}</a>
+            <a :href="location.office.website" class="link">
+              {{ formatUrl(location.office.website) }}
+            </a>
           </p>
           <p class="mt-2" v-else>
             <router-link :to="editLink" class="link">Add a website...</router-link>
