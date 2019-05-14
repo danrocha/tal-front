@@ -86,7 +86,7 @@ export default {
             this.location.office.website
           )}`,
           headers: {
-            Authorization: 'Bearer sk_0db9b163f6c520c98de0b50b4a4a375c',
+            Authorization: '',
           },
         });
         if (data.hasOwnProperty('error')) {
