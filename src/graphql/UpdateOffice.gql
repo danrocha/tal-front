@@ -1,8 +1,0 @@
-#import "./OfficeDetailFragment.gql"
-mutation UPDATE_OFFICE_MUTATION($input: UpdateOfficeInput!) {
-  updateOffice(input: $input) {
-    office {
-      ...OfficeDetail
-    }
-  }
-}

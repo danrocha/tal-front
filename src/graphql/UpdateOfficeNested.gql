@@ -1,0 +1,8 @@
+#import "./OfficeDetailFragment.gql"
+mutation updateOfficeNested($input: UpdateOfficeNestedInput!) {
+  updateOfficeNested(input: $input) {
+    office {
+      ...OfficeDetail
+    }
+  }
+}
