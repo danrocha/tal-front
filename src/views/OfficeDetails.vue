@@ -1,20 +1,23 @@
 <template>
   <div v-if="!location">
-    <vcl-list />
+    <vcl-list/>
   </div>
   <div v-else>
-    <vue-headful :title="`${location.office.name} - The Architecture List`" />
+    <vue-headful :title="`${location.office.name} - The Architecture List`"/>
     <section>
       <header id="heading" class="flex justify-between items-start py-6">
-        <div class="flex-grow">
+        <office-logo :name="location.office.name" :logo-url="location.office.logoUrl"></office-logo>
+        <div class="flex-grow ml-4">
           <h2>
             {{ location.office.name }}
-            <br />
+            <br>
             <!-- <span class="label">AKA</span>&nbsp;<span class="text-base text-gray-600 font-normal">Alt name 1, altname 2</span><edit-link  class="ml-2 font-sans font-normal"/> -->
           </h2>
           <p v-if="location.office.website">
             <a :href="location.office.website" class="link">
-              {{ formatUrl(location.office.website) }}
+              {{
+              formatUrl(location.office.website)
+              }}
             </a>
           </p>
           <p class="mt-2" v-else>
@@ -22,7 +25,7 @@
           </p>
         </div>
         <div class="flex-grow-0 ml-6">
-          <edit-link class="text-normal btn btn-secondary" @click="edit" />
+          <edit-link class="text-normal btn btn-secondary" @click="edit"/>
         </div>
       </header>
 
@@ -39,7 +42,7 @@
 
             <p v-if="location.office.size" class="my-1">
               {{ location.office.size.nameShort }}
-              <br />
+              <br>
               ({{ location.office.size.description }})
             </p>
             <router-link v-else :to="editLink" class="link">Add size...</router-link>
@@ -56,8 +59,7 @@
                 v-for="node in location.office.officeTypologies.nodes"
                 :key="node.id"
                 class="p-1 mr-2 mb-2 border border-gray-500bg-white text-xs uppercase rounded-sm"
-                >{{ node.typology.name }}</span
-              >
+              >{{ node.typology.name }}</span>
             </div>
             <router-link v-else :to="editLink" class="link">Edit typologies...</router-link>
           </div>
@@ -100,8 +102,7 @@
           class="link text-sm my-6"
           tag="button"
           aria-label="back"
-          >&lt; back</router-link
-        >
+        >&lt; back</router-link>
       </div>
     </section>
   </div>
@@ -113,6 +114,7 @@ import { mapState, mapActions } from 'vuex';
 import formatUrl from '@/mixins/formatUrl';
 import kebabCase from '@/mixins/kebabCase';
 import EditLink from '@/components/EditLink.vue';
+import OfficeLogo from '@/components/OfficeLogo.vue';
 import LOCATION_BY_ID from '@/graphql/LocationById.gql';
 
 export default {
@@ -121,6 +123,7 @@ export default {
   components: {
     EditLink,
     VclList,
+    OfficeLogo,
   },
   props: {
     country_iso: {
@@ -163,7 +166,9 @@ export default {
       this.$router.push({ path: `${this.$route.path}/edit` });
     },
     cityPageUrl(city) {
-      return `/${this.kebabCase(city.countryByCountryIsocode.iso)}/${this.kebabCase(city.name)}`;
+      return `/${this.kebabCase(
+        city.countryByCountryIsocode.iso
+      )}/${this.kebabCase(city.name)}`;
     },
   },
   apollo: {
