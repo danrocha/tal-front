@@ -4,12 +4,7 @@
       <h3>Offices</h3>
       <!-- Loading -->
       <div v-if="isLoading" class="pt-8">
-        <hollow-dots-spinner
-          :animation-duration="1000"
-          :dot-size="15"
-          :dots-num="3"
-          color="#f2d024"
-        />
+        <spinner />
       </div>
 
       <!-- Error -->
@@ -27,13 +22,13 @@
 </template>
 
 <script>
-import { HollowDotsSpinner } from 'epic-spinners';
+import Spinner from './Spinner.vue';
 import AdminOfficesList from './AdminOfficesList.vue';
 export default {
   name: 'AdminOffices',
   components: {
     AdminOfficesList,
-    HollowDotsSpinner,
+    Spinner,
   },
 };
 </script>
