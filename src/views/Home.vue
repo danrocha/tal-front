@@ -1,6 +1,6 @@
 <template>
   <div id="home-content">
-    <vue-headful title="The Architecture List"/>
+    <vue-headful title="The Architecture List" />
     <div class="mb-8">
       <h1 class="text-4xl mb-2">
         Welcome to
@@ -8,13 +8,12 @@
       </h1>
       <p class="leading-normal">
         The world's first crowdsourced list of architecture offices.
-        <br>To help
-        <strong>you</strong> find the right ones.
+        <br />To help <strong>you</strong> find the right ones.
       </p>
     </div>
     <div class="mb-8">
-      <base-label>Recently added</base-label>
-      <recently-added-locations/>
+      <base-label class="mb-4">Recently added</base-label>
+      <recently-added-locations />
     </div>
     <div class="md:w-1/2">
       <base-input
@@ -28,7 +27,7 @@
     <div class="pt-8">
       <!-- Loading -->
       <div v-if="$apollo.queries.cities.loading" class="p-6 w-1/2">
-        <vcl-list/>
+        <vcl-list />
       </div>
 
       <!-- Error -->
@@ -44,13 +43,17 @@
               v-if="sort === 'COUNTRY_ISOCODE_ASC'"
               class="link uppercase tracking-wider"
               @click="sort = 'NAME_ASC'"
-            >A-Z</button>
+            >
+              A-Z
+            </button>
             <strong v-else>A-Z</strong> /
             <button
               v-if="sort === 'NAME_ASC'"
               class="link uppercase tracking-wider"
               @click="sort = 'COUNTRY_ISOCODE_ASC'"
-            >By Country</button>
+            >
+              By Country
+            </button>
             <strong v-else>By Country</strong>
           </p>
         </div>
@@ -62,10 +65,10 @@
               class="uppercase tracking-wider my-8 pt-1 border-t border-yellow-500"
             >
               {{ country.name }}
-              <city-list :cities="cityByCountryIso(country.iso)"/>
+              <city-list :cities="cityByCountryIso(country.iso)" />
             </li>
           </ul>
-          <city-list v-else :cities="displayCities"/>
+          <city-list v-else :cities="displayCities" />
         </div>
       </div>
 
@@ -116,18 +119,13 @@ export default {
         return this.cities.nodes.filter(
           city =>
             city.name.toLowerCase().includes(this.filterTerm.toLowerCase()) ||
-            city.countryByCountryIsocode.name
-              .toLowerCase()
-              .includes(this.filterTerm.toLowerCase())
+            city.countryByCountryIsocode.name.toLowerCase().includes(this.filterTerm.toLowerCase())
         );
       }
       return this.cities.nodes;
     },
     countries() {
-      return uniqBy(
-        this.displayCities.map(city => city.countryByCountryIsocode),
-        'iso'
-      );
+      return uniqBy(this.displayCities.map(city => city.countryByCountryIsocode), 'iso');
     },
   },
   methods: {
@@ -135,9 +133,7 @@ export default {
       console.log(city.name);
     },
     cityByCountryIso(iso) {
-      return this.displayCities.filter(
-        city => city.countryByCountryIsocode.iso === iso
-      );
+      return this.displayCities.filter(city => city.countryByCountryIsocode.iso === iso);
     },
   },
 };
