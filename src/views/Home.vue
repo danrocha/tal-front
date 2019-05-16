@@ -1,6 +1,6 @@
 <template>
   <div id="home-content">
-    <vue-headful title="The Architecture List" />
+    <vue-headful title="The Architecture List"/>
     <div class="mb-8">
       <h1 class="text-4xl mb-2">
         Welcome to
@@ -8,13 +8,18 @@
       </h1>
       <p class="leading-normal">
         The world's first crowdsourced list of architecture offices.
-        <br />To help <strong>you</strong> find the right ones.
+        <br>To help
+        <strong>you</strong> find the right ones.
       </p>
+    </div>
+    <div class="mb-8">
+      <base-label>Recently added</base-label>
+      <recently-added-locations/>
     </div>
     <div class="md:w-1/2">
       <base-input
         targetClass="input-large"
-        label="City or country"
+        label="Filter by City or country"
         placeholder="Start typing..."
         v-model="filterTerm"
       />
@@ -23,7 +28,7 @@
     <div class="pt-8">
       <!-- Loading -->
       <div v-if="$apollo.queries.cities.loading" class="p-6 w-1/2">
-        <vcl-list />
+        <vcl-list/>
       </div>
 
       <!-- Error -->
@@ -39,17 +44,13 @@
               v-if="sort === 'COUNTRY_ISOCODE_ASC'"
               class="link uppercase tracking-wider"
               @click="sort = 'NAME_ASC'"
-            >
-              A-Z
-            </button>
+            >A-Z</button>
             <strong v-else>A-Z</strong> /
             <button
               v-if="sort === 'NAME_ASC'"
               class="link uppercase tracking-wider"
               @click="sort = 'COUNTRY_ISOCODE_ASC'"
-            >
-              By Country
-            </button>
+            >By Country</button>
             <strong v-else>By Country</strong>
           </p>
         </div>
@@ -61,10 +62,10 @@
               class="uppercase tracking-wider my-8 pt-1 border-t border-yellow-500"
             >
               {{ country.name }}
-              <city-list :cities="cityByCountryIso(country.iso)" />
+              <city-list :cities="cityByCountryIso(country.iso)"/>
             </li>
           </ul>
-          <city-list v-else :cities="displayCities" />
+          <city-list v-else :cities="displayCities"/>
         </div>
       </div>
 
@@ -79,6 +80,7 @@ const uniqBy = require('lodash.uniqby');
 import { VclList } from 'vue-content-loading';
 import CITIES from '../graphql/Cities.gql';
 import CityList from '../components/CityList.vue';
+import RecentlyAddedLocations from '../components/RecentlyAddedLocations.vue';
 import { mapState } from 'vuex';
 
 export default {
@@ -86,6 +88,7 @@ export default {
   components: {
     VclList,
     CityList,
+    RecentlyAddedLocations,
   },
   data() {
     return {
@@ -113,13 +116,18 @@ export default {
         return this.cities.nodes.filter(
           city =>
             city.name.toLowerCase().includes(this.filterTerm.toLowerCase()) ||
-            city.countryByCountryIsocode.name.toLowerCase().includes(this.filterTerm.toLowerCase())
+            city.countryByCountryIsocode.name
+              .toLowerCase()
+              .includes(this.filterTerm.toLowerCase())
         );
       }
       return this.cities.nodes;
     },
     countries() {
-      return uniqBy(this.displayCities.map(city => city.countryByCountryIsocode), 'iso');
+      return uniqBy(
+        this.displayCities.map(city => city.countryByCountryIsocode),
+        'iso'
+      );
     },
   },
   methods: {
@@ -127,7 +135,9 @@ export default {
       console.log(city.name);
     },
     cityByCountryIso(iso) {
-      return this.displayCities.filter(city => city.countryByCountryIsocode.iso === iso);
+      return this.displayCities.filter(
+        city => city.countryByCountryIsocode.iso === iso
+      );
     },
   },
 };
