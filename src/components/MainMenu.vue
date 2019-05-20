@@ -34,53 +34,7 @@
                 >ADMIN</router-link
               >
             </div>
-            <a href="#" @click="toggleDropdown" class="inline-block">
-              <img v-if="user.photoURL" :src="user.photoURL" class="h-8 w-8 rounded-full" />
-              <font-awesome-icon v-else icon="user"></font-awesome-icon>
-            </a>
-            <ul
-              v-if="dropdown"
-              v-on-clickaway="toggleDropdown"
-              class="text-sm absolute mt-1 right-0 bg-white border border-solid border-gray-400 shadow p-2 mx-4 z-10"
-            >
-              <li class="mb-2 pb-2 border-b">
-                Logged in as
-                <br />
-                <strong>{{ user.displayName }}</strong>
-              </li>
-              <li class="mb-2 pb-2 border-b">
-                <router-link
-                  to="/dashboard"
-                  class="link"
-                  @click="toggleDropdown"
-                  active-class="link-active"
-                  >Dashboard</router-link
-                >
-                <apollo-query
-                  :query="require('../graphql/UserFavorites.gql')"
-                  :skip="user === undefined"
-                  @error="logout"
-                >
-                  <template slot-scope="{ result: { data } }">
-                    <div v-if="data">
-                      <div
-                        v-if="data.userFavorites.nodes.length > 0"
-                        class="flex items-center text-gray-600"
-                      >
-                        <font-awesome-icon icon="heart" class="text-yellow-500"></font-awesome-icon>
-                        &times;{{ data.userFavorites.totalCount }}
-                      </div>
-                    </div>
-                  </template>
-                </apollo-query>
-              </li>
-              <!-- <li class="mb-2">Settings</li> -->
-              <li>
-                <logout ref="logout">
-                  <a slot-scope="{ logout }" href="#" @click="logout" class="link">Logout</a>
-                </logout>
-              </li>
-            </ul>
+            <main-menu-user-dropdown :user="user" />
           </div>
           <div v-else class="flex-none">
             <router-link to="/auth" class="font-mono link">LOGIN</router-link>
@@ -94,15 +48,15 @@
 <script>
 import { mapState } from 'vuex';
 import { mixin as clickaway } from 'vue-clickaway';
+import MainMenuUserDropdown from '@/components/MainMenuUserDropdown.vue';
 import Logo from '@/components/Logo.vue';
-import Logout from '@/components/Logout.vue';
 
 export default {
   name: 'MainMenu',
   mixins: [clickaway],
   components: {
     Logo,
-    Logout,
+    MainMenuUserDropdown,
   },
   data() {
     return {
@@ -125,9 +79,6 @@ export default {
     },
   },
   methods: {
-    toggleDropdown() {
-      this.dropdown = !this.dropdown;
-    },
     logout() {
       this.$refs.logout.logout();
     },
