@@ -63,9 +63,13 @@ export default {
         postal_code: iPostalCode,
         street_number: iStreetNumber,
       } = this['add/getAddressObject']('officeDetails');
+      // if same city, get city and country names from the city object
       if (this['add/sameCities']) {
         let { city, country } = this['add/getAddressObject']('city');
-        (iCity = city), (iCountry = country);
+        // sometime the above operation returns null for city name
+        // so check before changing the iCity and iCountry values
+        iCity = city || iCity;
+        iCountry = country || iCountry;
       }
       const location_input = {
         iCity,
