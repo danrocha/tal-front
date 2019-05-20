@@ -59,6 +59,7 @@
                 <apollo-query
                   :query="require('../graphql/UserFavorites.gql')"
                   :skip="user === undefined"
+                  @error="logout"
                 >
                   <template slot-scope="{ result: { data } }">
                     <div v-if="data">
@@ -75,7 +76,7 @@
               </li>
               <!-- <li class="mb-2">Settings</li> -->
               <li>
-                <logout>
+                <logout ref="logout">
                   <a slot-scope="{ logout }" href="#" @click="logout" class="link">Logout</a>
                 </logout>
               </li>
@@ -126,6 +127,9 @@ export default {
   methods: {
     toggleDropdown() {
       this.dropdown = !this.dropdown;
+    },
+    logout() {
+      this.$refs.logout.logout();
     },
   },
 };
