@@ -48,6 +48,10 @@ FBApp.auth().onAuthStateChanged(user => {
         localStorage.setItem(AUTH_TOKEN, idToken);
       });
     }
+  } else {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem(AUTH_TOKEN);
+    }
   }
 });
 store.dispatch('user/setFbApp', FBApp);
