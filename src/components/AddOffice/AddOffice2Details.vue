@@ -57,12 +57,15 @@ export default {
       officeDetails: state => state.add.officeDetails,
       manual: state => state.add.manual,
     }),
+    hasWebsite() {
+      if (this.officeDetails) {
+        return this.officeDetails.hasOwnProperty('website');
+      }
+      return false;
+    },
   },
   methods: {
     ...mapActions('add', ['resetOfficeDetails']),
-    hasWebsite() {
-      return this.officeDetails.website;
-    },
   },
 };
 </script>
