@@ -39,8 +39,8 @@ export default {
   apollo: {
     typologies: {
       query: TYPOLOGIES,
-      result() {
-        this.loading = false;
+      result(data) {
+        this.loading = data.loading;
       },
     },
   },
