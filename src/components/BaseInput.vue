@@ -4,7 +4,7 @@
       {{ label }}
       <slot v-if="explanation" v-slot:explanation>{{ explanation }}</slot>
     </base-label>
-    <input :value="value" @input="updateValue" v-bind="$attrs" class="input" :class="finalClass">
+    <input :value="value" @input="updateValue" v-bind="$attrs" class="input" :class="finalClass" />
     <span v-if="error" class="text-xs text-gray">{{ error }}</span>
   </div>
 </template>

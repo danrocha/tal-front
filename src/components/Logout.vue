@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot :logout="logout"/>
+    <slot :logout="logout" />
   </div>
 </template>
 

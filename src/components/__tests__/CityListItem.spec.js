@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import CityListItem from '../CityListItem.vue';
-import kebabCase from '../../mixins/kebabCase'
+import kebabCase from '../../mixins/kebabCase';
 
 describe('CityListItem.vue', () => {
   const city = {
@@ -18,7 +18,7 @@ describe('CityListItem.vue', () => {
     propsData: {
       city,
     },
-    mixins: [kebabCase]
+    mixins: [kebabCase],
   });
   test('renders city.name in H3 component', () => {
     expect(wrapper.find('h3').text()).toContain(city.name);

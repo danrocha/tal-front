@@ -1,6 +1,6 @@
 <template>
   <ul class="cities-grid mt-8">
-    <city-list-item v-for="city in cities" :key="city.id" :city="city"/>
+    <city-list-item v-for="city in cities" :key="city.id" :city="city" />
   </ul>
 </template>
 

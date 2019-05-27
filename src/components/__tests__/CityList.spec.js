@@ -46,8 +46,8 @@ describe('CityList.vue', () => {
   test('render a CityListItem for each item in the cities prop', () => {
     const items = wrapper.findAll(CityListItem);
     expect(items).toHaveLength(cities.length);
-    items.wrappers.forEach((wrapper, i)=> {
+    items.wrappers.forEach((wrapper, i) => {
       expect(wrapper.props().city).toBe(cities[i]);
-    })
+    });
   });
 });

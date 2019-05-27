@@ -3,7 +3,7 @@
     <div>
       <a
         class="mt-0 pt-0 cursor-pointer text-lg"
-        :class="voted ?  'text-yellow-500': 'text-gray-900'"
+        :class="voted ? 'text-yellow-500' : 'text-gray-900'"
         @click.stop="vote"
         v-tooltip="{ content: voted ? 'unvote' : 'vote', trigger: 'hover' }"
       >

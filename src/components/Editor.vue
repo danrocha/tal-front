@@ -60,7 +60,7 @@
         </button>
       </div>
     </editor-menu-bar>
-    <editor-content class="m-2" :editor="editor" :content="value"/>
+    <editor-content class="m-2" :editor="editor" :content="value" />
   </div>
 </template>
 

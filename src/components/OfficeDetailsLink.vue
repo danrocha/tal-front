@@ -1,6 +1,6 @@
 <template>
   <router-link :to="officeDetailsLink()" class="link" tag="a" @click.native="setLocation">
-    <slot/>
+    <slot />
   </router-link>
 </template>
 
@@ -22,11 +22,9 @@ export default {
     },
     officeDetailsLink() {
       return {
-        path: `/${this.kebabCase(
-          this.location.city.countryByCountryIsocode.iso
-        )}/${this.kebabCase(this.location.city.name)}/${
-          this.location.id
-        }/${this.kebabCase(this.location.office.name)}`,
+        path: `/${this.kebabCase(this.location.city.countryByCountryIsocode.iso)}/${this.kebabCase(
+          this.location.city.name
+        )}/${this.location.id}/${this.kebabCase(this.location.office.name)}`,
       };
     },
   },

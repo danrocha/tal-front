@@ -81,15 +81,7 @@ export default {
           //   * Blue, 20px circles when point count is less than 100
           //   * Yellow, 30px circles when point count is between 100 and 750
           //   * Pink, 40px circles when point count is greater than or equal to 750
-          'circle-color': [
-            'step',
-            ['get', 'point_count'],
-            '#ffed4a',
-            10,
-            '#f2d024',
-            75,
-            '#684f1d',
-          ],
+          'circle-color': ['step', ['get', 'point_count'], '#ffed4a', 10, '#f2d024', 75, '#684f1d'],
           'circle-radius': ['step', ['get', 'point_count'], 20, 10, 30, 75, 40],
         },
       });
@@ -127,15 +119,13 @@ export default {
         layers: [this.mapClusteredLayerName],
       });
       const clusterId = features[0].properties.cluster_id;
-      this.map
-        .getSource(this.mapSourceName)
-        .getClusterExpansionZoom(clusterId, (err, zoom) => {
-          if (err) return;
-          this.map.easeTo({
-            center: features[0].geometry.coordinates,
-            zoom: zoom,
-          });
+      this.map.getSource(this.mapSourceName).getClusterExpansionZoom(clusterId, (err, zoom) => {
+        if (err) return;
+        this.map.easeTo({
+          center: features[0].geometry.coordinates,
+          zoom: zoom,
         });
+      });
     });
 
     this.map.on('mouseenter', 'clusters', () => {
@@ -166,10 +156,7 @@ export default {
         )}</a>`;
       }
       popupHTML += `<p class="mt-2 text-gray">
-          ${location.properties.formattedAddress.replace(
-            new RegExp(', ', 'g'),
-            '<br>'
-          )}</p>`;
+          ${location.properties.formattedAddress.replace(new RegExp(', ', 'g'), '<br>')}</p>`;
       new mapboxgl.Popup({
         offset: 5,
         closeButton: false,
@@ -196,11 +183,9 @@ export default {
     },
     fitBounds() {
       let bounds = new mapboxgl.LngLatBounds();
-      this.map
-        .getSource(this.mapSourceName)
-        ._data.features.forEach(function(feature) {
-          bounds.extend(feature.geometry.coordinates);
-        });
+      this.map.getSource(this.mapSourceName)._data.features.forEach(function(feature) {
+        bounds.extend(feature.geometry.coordinates);
+      });
       this.map.fitBounds(bounds, {
         padding: { top: 50, bottom: 50, left: 50, right: 50 },
         maxZoom: 16,
@@ -211,8 +196,7 @@ export default {
       //console.log(this.map.getSource(this.mapSourceName));
       const coords = this.map
         .getSource(this.mapSourceName)
-        ._data.features.find(feature => feature.properties.id === location_id)
-        .geometry.coordinates;
+        ._data.features.find(feature => feature.properties.id === location_id).geometry.coordinates;
       //console.log(coords);
       //const zoom = this.map.getZoom();
       this.map.easeTo({ center: coords, zoom: 16 });

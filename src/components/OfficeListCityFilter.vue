@@ -51,15 +51,13 @@ export default {
       if (!this.cities) {
         return [];
       }
-      return _map(groupBy(this.cities.nodes, 'countryIsocode')).map(
-        countryGroup => {
-          return {
-            countryName: countryGroup[0].countryByCountryIsocode.name,
-            countryIso: countryGroup[0].countryIsocode,
-            cities: countryGroup,
-          };
-        }
-      );
+      return _map(groupBy(this.cities.nodes, 'countryIsocode')).map(countryGroup => {
+        return {
+          countryName: countryGroup[0].countryByCountryIsocode.name,
+          countryIso: countryGroup[0].countryIsocode,
+          cities: countryGroup,
+        };
+      });
     },
   },
   watch: {
@@ -68,8 +66,7 @@ export default {
         // get city details from cities
         const city = this.cities.nodes.find(
           city =>
-            city.name.toLowerCase() ===
-              this.$route.params.city_name.toLowerCase() &&
+            city.name.toLowerCase() === this.$route.params.city_name.toLowerCase() &&
             city.countryByCountryIsocode.iso.toLowerCase() ===
               this.$route.params.country_iso.toLowerCase()
         );

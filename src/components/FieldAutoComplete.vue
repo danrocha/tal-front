@@ -11,13 +11,14 @@
         @keydown.enter="onEnter"
         :placeholder="placeholder"
         class="input input-large -mr-6"
-      >
+      />
       <span
         v-if="search"
         @click="clear"
         class="cursor-pointer text-yellow-800 font-bold"
         title="Clear"
-      >&times;</span>
+        >&times;</span
+      >
     </span>
 
     <ul v-show="isOpen" class="overflow-auto p-0 m-0 border border rounded border-gray-500h-48">
@@ -29,7 +30,9 @@
         @click="setResult(result, i)"
         :class="{ 'bg-yellow-500': i === arrowCounter }"
         class="text-left py-2 px-2 cursor-pointer hover:bg-yellow-500"
-      >{{ result }}</li>
+      >
+        {{ result }}
+      </li>
     </ul>
   </div>
 </template>

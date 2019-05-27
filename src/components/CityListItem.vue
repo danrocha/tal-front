@@ -61,9 +61,9 @@ export default {
       return `background: center / cover no-repeat url("${this.mapTileUrl}");`;
     },
     cityPageUrl() {
-      return `/${this.kebabCase(
-        this.city.countryByCountryIsocode.iso
-      )}/${this.kebabCase(this.city.name)}`;
+      return `/${this.kebabCase(this.city.countryByCountryIsocode.iso)}/${this.kebabCase(
+        this.city.name
+      )}`;
     },
   },
   methods: {

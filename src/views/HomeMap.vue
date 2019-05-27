@@ -3,7 +3,7 @@
     id="home-content"
     class="flex flex-wrap w-full justify-between lg:flex-row-reverse lg:h-full"
   >
-    <vue-headful title="The Architecture List"/>
+    <vue-headful title="The Architecture List" />
 
     <!-- MAP -->
     <div
@@ -12,7 +12,7 @@
       class="h-64 mt-2 w-screen lg:h-full lg:m-0 lg:w-2/3"
       :class="largeMap ? 'h-screen' : 'h-64'"
     >
-      <office-map :geojson="geoJson"/>
+      <office-map :geojson="geoJson" />
     </div>
     <!-- LIST -->
     <div
@@ -24,7 +24,9 @@
         class="flex w-full mb-4 mt-4 pb-4 pt-4 px-6 items-center justify-between text-xs border-b lg:hidden"
       >
         <div>
-          <span v-if="locations" class="text-gray-600 mr-1">{{ locations.totalCount }} offices</span>
+          <span v-if="locations" class="text-gray-600 mr-1"
+            >{{ locations.totalCount }} offices</span
+          >
           <span v-else class="text-gray-600 mr-1">Loading offices...</span>
         </div>
 
@@ -53,7 +55,7 @@
       <div class="lg:h-full">
         <!-- Loading -->
         <div v-if="$apollo.queries.locations.loading" class="p-6">
-          <vcl-list/>
+          <vcl-list />
         </div>
 
         <!-- Error -->
@@ -62,10 +64,10 @@
           An error occurred
         </div>
         <div id="locations-result" v-else-if="locations" class="flex flex-col h-full">
-          <office-list :locations="locations"/>
+          <office-list :locations="locations" />
 
           <div class="h-24 bg-white border-t">
-            <pagination :pageInfo="locations.pageInfo" :totalCount="locations.totalCount"/>
+            <pagination :pageInfo="locations.pageInfo" :totalCount="locations.totalCount" />
           </div>
         </div>
 
@@ -128,8 +130,7 @@ export default {
       error() {
         this.$store.dispatch('notification/add', {
           type: 'error',
-          message:
-            'Oops, something went wrong in the background! Please try reloading the page.',
+          message: 'Oops, something went wrong in the background! Please try reloading the page.',
         });
       },
     },

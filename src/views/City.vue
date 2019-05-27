@@ -1,6 +1,6 @@
 <template>
   <div v-if="$apollo.queries.locations.loading || $apollo.queries.cities.loading">
-    <vcl-list/>
+    <vcl-list />
   </div>
   <div v-else>
     <vue-headful
@@ -12,18 +12,16 @@
       <h2 class="text-4xl font-bold mb-6 sm:m-0">
         <span class="font-normal">{{ locations.totalCount }} offices in</span>
         {{ city.name }}
-        <span
-          class="font-normal text-gray-500 ml-1"
-        >{{ city.countryByCountryIsocode.iso }}</span>
+        <span class="font-normal text-gray-500 ml-1">{{ city.countryByCountryIsocode.iso }}</span>
       </h2>
 
       <aside class="w-full mb-6 sm:m-0 sm:w-64">
-        <office-list-controls/>
+        <office-list-controls />
       </aside>
       <!-- LIST -->
       <main role="main" class="w-full">
         <div v-if="$apollo.queries.locations.loading" class="p-6 w-1/2">
-          <vcl-list/>
+          <vcl-list />
         </div>
         <div v-else-if="$apollo.queries.locations.error" class="p-6">
           <!-- TODO: add styled error -->
@@ -34,14 +32,14 @@
             <p class="mb-2">
               Oops, no offices match these filters! However, some offices still have incomplete
               information.
-              <br>You can include them in your filter by checking the option
+              <br />You can include them in your filter by checking the option
               <strong>Include incomplete entries</strong> on the right.
             </p>
             <p>
               <button class="btn" @click="clearFilters" base-type="secondary">clear filters</button>
             </p>
           </div>
-          <office-list-alt :locations="displayLocations" :pagination="false" :ordering="true"/>
+          <office-list-alt :locations="displayLocations" :pagination="false" :ordering="true" />
         </div>
         <div v-else class="no-result apollo">No result :(</div>
       </main>
@@ -94,8 +92,7 @@ export default {
         this.city = data.cities.nodes.find(city => {
           return (
             this.kebabCase(city.name) === this.city_name &&
-            this.kebabCase(city.countryByCountryIsocode.iso) ===
-              this.country_iso
+            this.kebabCase(city.countryByCountryIsocode.iso) === this.country_iso
           );
         });
         this['location/setLocationQueryFilter']({
@@ -131,9 +128,7 @@ export default {
           return {
             ...location,
             size: location.office.sizeId,
-            typologies: location.office.officeTypologies.nodes.map(
-              node => node.typology.id
-            ),
+            typologies: location.office.officeTypologies.nodes.map(node => node.typology.id),
             age: this.calculateAge(location.office.yearFounded),
           };
         });
@@ -162,9 +157,7 @@ export default {
     }),
     isFiltered() {
       return (
-        this.typologyFilter.length > 0 ||
-        this.sizeFilter.length > 0 ||
-        this.yearFilter.length > 0
+        this.typologyFilter.length > 0 || this.sizeFilter.length > 0 || this.yearFilter.length > 0
       );
     },
   },
@@ -179,10 +172,7 @@ export default {
     },
     filterLocations() {
       return this.filterTypologies(
-        this.filterSizes(
-          this.filterYears(this.locations.nodes, this.yearFilter),
-          this.sizeFilter
-        ),
+        this.filterSizes(this.filterYears(this.locations.nodes, this.yearFilter), this.sizeFilter),
         this.typologyFilter
       );
     },
@@ -192,9 +182,7 @@ export default {
       }
       return locations.filter(location => {
         if (location.typologies.length > 0) {
-          return typologies.find(typology =>
-            location.typologies.includes(typology.id)
-          );
+          return typologies.find(typology => location.typologies.includes(typology.id));
         } else {
           return this.includeIncomplete;
         }

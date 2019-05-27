@@ -3,17 +3,16 @@
     <h4 class="font-bold mb-2">
       <span class="font-normal text-xs text-gray-400 mr-1">{{ office.id }}</span>
       {{ office.name }}
-      <edit-link class="font-normal ml-2" @click="editOffice"/>
+      <edit-link class="font-normal ml-2" @click="editOffice" />
     </h4>
-    <admin-office-logo :office="office"/>
+    <admin-office-logo :office="office" />
     <table class="text-xs">
       <tr>
         <td class="uppercase text-gray-500">locations</td>
         <td>
-          <p
-            v-for="location in office.locations.nodes"
-            :key="location.id"
-          >{{ location.formattedAddress }}</p>
+          <p v-for="location in office.locations.nodes" :key="location.id">
+            {{ location.formattedAddress }}
+          </p>
         </td>
       </tr>
       <tr>
@@ -49,11 +48,11 @@
       </p>
       <p v-if="!office.website">
         You need to add a website to get more info...
-        <br>
+        <br />
         <base-button @click="editOffice">edit office</base-button>
       </p>
       <p class="text-right">
-        <admin-delete-office-button type="secondary" :id="office.id"/>
+        <admin-delete-office-button type="secondary" :id="office.id" />
       </p>
     </div>
   </div>
@@ -127,10 +126,9 @@ export default {
             input: {
               id: this.office.id,
               patch: {
-
                 yearFounded: data.foundedYear,
-                brandfetch: true
-              }
+                brandfetch: true,
+              },
             },
           },
           update: (store, { data: { updateOffice } }) => {
@@ -165,9 +163,7 @@ export default {
         let office = data.offices.nodes.find(office => {
           return office.id === this.office.id;
         });
-        office.officeSocialNetworks.nodes.push(
-          createOfficeSocialNetwork.officeSocialNetwork
-        );
+        office.officeSocialNetworks.nodes.push(createOfficeSocialNetwork.officeSocialNetwork);
         store.writeQuery({ query: OFFICES, data });
       };
       if (facebook && facebook.handle && !this.hasSocialNetwork('facebook')) {

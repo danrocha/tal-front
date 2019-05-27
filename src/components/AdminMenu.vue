@@ -15,7 +15,7 @@
               alt="Your user photo"
               width="100"
               height="100"
-            >
+            />
             <p v-if="data.currentUser.isAdmin" class="font-bold text-center">Admin</p>
           </div>
           <!-- No result -->
@@ -25,10 +25,14 @@
     </div>
     <ul class="text-right mb-8">
       <li class="uppercase tracking-wider mb-1 text-base font-mono">
-        <router-link to="/admin/offices" tag="a" class="link" active-class="link-active">Offices</router-link>
+        <router-link to="/admin/offices" tag="a" class="link" active-class="link-active"
+          >Offices</router-link
+        >
       </li>
       <li class="uppercase tracking-wider mb-1 text-base font-mono">
-        <router-link to="/admin/cities" tag="a" class="link" active-class="link-active">Cities</router-link>
+        <router-link to="/admin/cities" tag="a" class="link" active-class="link-active"
+          >Cities</router-link
+        >
       </li>
       <li class="uppercase tracking-wider mb-1 text-base font-mono">
         <a href="#" class="link">Logout</a>
