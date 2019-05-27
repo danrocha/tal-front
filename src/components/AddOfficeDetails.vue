@@ -9,7 +9,7 @@
           :types="['establishment']"
           :options="{
             bounds: city.geometry.viewport,
-            strictBounds: true
+            strictBounds: true,
           }"
           placeholder="Start typing..."
           :select-first-on-enter="true"
@@ -28,7 +28,7 @@
 
     <div v-show="manual">
       <base-label for="office-name">Office Name</base-label>
-      <base-input autofocus v-model="name" id="office-name" targetClass="input-large mb-4"/>
+      <base-input autofocus v-model="name" id="office-name" targetClass="input-large mb-4" />
       <div class="error" v-if="!$v.name.minLength">We need a name :)</div>
       <base-input
         label="Website - Optional"
@@ -61,13 +61,15 @@
           @click="toggleManual"
           base-type="secondary"
           class="mx-6"
-        >back to search</base-button>
+          >back to search</base-button
+        >
         <base-button
           aria-label="next"
           @click="onManualSubmit"
           base-type="primary"
           :disabled="formNotFilled"
-        >Next</base-button>
+          >Next</base-button
+        >
       </div>
     </div>
   </div>
@@ -104,12 +106,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('add', [
-      'setOfficeDetails',
-      'nextStep',
-      'toggleManual',
-      'resetOfficeDetails',
-    ]),
+    ...mapActions('add', ['setOfficeDetails', 'nextStep', 'toggleManual', 'resetOfficeDetails']),
     ...mapActions(['notification/add']),
     setDetails(details) {
       this.setOfficeDetails(details);
@@ -123,8 +120,7 @@ export default {
       if (this.$v.$invalid) {
         return this['notification/add']({
           type: 'error',
-          message:
-            'There was an error in your form! Double check it and try again, please...',
+          message: 'There was an error in your form! Double check it and try again, please...',
         });
       } else {
         const officeDetails = {

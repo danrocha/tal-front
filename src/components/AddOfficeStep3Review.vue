@@ -55,7 +55,7 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 import AddOfficeStep from '@/components/AddOfficeStep.vue';
 
 export default {
-  name: 'AddOffice3Review',
+  name: 'AddOfficeStep3Review',
   components: {
     AddOfficeStep,
   },

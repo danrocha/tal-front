@@ -1,15 +1,15 @@
 <template>
   <div>
-    <add-office-1-city />
-    <add-office-2-details />
-    <add-office-3-review @save="addNewOffice" :is-loading="isLoading" />
+    <add-office-step-1-city />
+    <add-office-step-2-details />
+    <add-office-step-3-review @save="addNewOffice" :is-loading="isLoading" />
   </div>
 </template>
 
 <script>
-import AddOffice3Review from '@/components/AddOffice/AddOffice3Review.vue';
-import AddOffice2Details from '@/components/AddOffice/AddOffice2Details.vue';
-import AddOffice1City from '@/components/AddOffice/AddOffice1City.vue';
+import AddOfficeStep3Review from '@/components/AddOfficeStep3Review.vue';
+import AddOfficeStep2Details from '@/components/AddOfficeStep2Details.vue';
+import AddOfficeStep1City from '@/components/AddOfficeStep1City.vue';
 import kebabCase from '@/mixins/kebabCase';
 import { mapState, mapActions, mapGetters } from 'vuex';
 import CITIES from '@/graphql/Cities.gql';
@@ -19,9 +19,9 @@ export default {
   name: 'AddOffice',
   mixins: [kebabCase],
   components: {
-    AddOffice1City,
-    AddOffice2Details,
-    AddOffice3Review,
+    AddOfficeStep1City,
+    AddOfficeStep2Details,
+    AddOfficeStep3Review,
   },
   data() {
     return {

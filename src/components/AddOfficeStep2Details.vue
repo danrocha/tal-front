@@ -44,7 +44,7 @@ import EditLink from '@/components/EditLink.vue';
 import formatUrl from '@/mixins/formatUrl';
 
 export default {
-  name: 'AddOffice2Details',
+  name: 'AddOfficeStep2Details',
   mixins: [formatUrl],
   components: {
     AddOfficeStep,
