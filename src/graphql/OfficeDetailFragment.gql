@@ -28,6 +28,8 @@ fragment OfficeDetail on Office {
     nodes {
       id
       formattedAddress
+      email
+      internationalPhoneNumber
       city {
         id
         name

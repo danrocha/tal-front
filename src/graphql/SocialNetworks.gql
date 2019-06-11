@@ -1,0 +1,7 @@
+{
+  socialNetwork {
+    id
+    name
+    link
+  }
+}
