@@ -27,6 +27,10 @@ import {
   faUser,
   faFilter,
   faTimes,
+  faPhoneSquare,
+  faEnvelope,
+  faGlobe,
+  faShareAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -72,7 +76,11 @@ library.add(
   faLinkedin,
   faTwitter,
   faPinterest,
-  faYoutube
+  faYoutube,
+  faPhoneSquare,
+  faEnvelope,
+  faGlobe,
+  faShareAlt
 );
 
 export default FontAwesomeIcon;
