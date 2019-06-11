@@ -35,12 +35,11 @@ requireComponent.keys().forEach(fileName => {
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('vue-headful', vueHeadful);
 
-const apolloProvider = createProvider();
 // Firebase auth
-const AUTH_TOKEN = 'id_token';
+const AUTH_TOKEN = 'apollo_token';
 FBApp.auth().onAuthStateChanged(user => {
   // change logic to somwhere else? its calling every time...
-  console.log('onAuthStateChanged user in main called!!');
+  // console.log('onAuthStateChanged user in main called!!');
   store.dispatch('user/setUser', user);
   if (user) {
     if (typeof localStorage !== 'undefined') {
@@ -76,6 +75,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  apolloProvider,
+  apolloProvider: createProvider(),
   render: h => h(App),
 }).$mount('#app');

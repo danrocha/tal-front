@@ -1,14 +1,13 @@
-require('dotenv').config();
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
 import { createApolloClient, restartWebsockets } from 'vue-cli-plugin-apollo/graphql-client';
-import store from './store/store';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 // Install the vue plugin
 Vue.use(VueApollo);
 
 // Name of the localStorage item
-const AUTH_TOKEN = 'id_token';
+const AUTH_TOKEN = 'apollo-token';
 
 // Http endpoint
 const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'http://localhost:4000/graphql';
@@ -36,7 +35,7 @@ const defaultOptions = {
   // link: myLink
 
   // Override default cache
-  // cache: myCache
+  cache: new InMemoryCache(),
 
   // Override the way the Authorization header is set
   // getAuth: (tokenName) => ...
@@ -79,11 +78,9 @@ export function createProvider(options = {}) {
 }
 
 // Manually call this when user log in
-export async function onLogin(apolloClient, idToken) {
-  // set id token;
-  //console.log('onLogin idToken', idToken);
-  if (typeof localStorage !== 'undefined' && idToken) {
-    localStorage.setItem(AUTH_TOKEN, idToken);
+export async function onLogin(apolloClient, token) {
+  if (typeof localStorage !== 'undefined' && token) {
+    localStorage.setItem(AUTH_TOKEN, token);
   }
   if (apolloClient.wsClient) restartWebsockets(apolloClient.wsClient);
   try {
