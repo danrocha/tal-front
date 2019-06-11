@@ -26,7 +26,7 @@
         >
       </div>
       <!-- menu right -->
-      <apollo-query :query="require('../graphql/CurrentUser.gql')">
+      <apollo-query :query="require('../graphql/CurrentUser.gql')" @error="logout">
         <template slot-scope="{ result: { loading, error, data } }">
           <div v-if="data && user" class="flex items-center">
             <div v-if="data.currentUser.isAdmin" class="flex-none">
@@ -46,10 +46,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { mixin as clickaway } from 'vue-clickaway';
 import MainMenuUserDropdown from '@/components/MainMenuUserDropdown.vue';
 import Logo from '@/components/Logo.vue';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 export default {
   name: 'MainMenu',
@@ -62,6 +64,15 @@ export default {
     return {
       dropdown: false,
     };
+  },
+  methods: {
+    ...mapActions(['user/setUser']),
+    async logout() {
+      if (this.user) {
+        await firebase.auth().signOut();
+        //this['user/setUser'](null);
+      }
+    },
   },
   computed: {
     ...mapState({
@@ -76,11 +87,6 @@ export default {
     },
     about() {
       return this.$route.name === 'about';
-    },
-  },
-  methods: {
-    logout() {
-      this.$refs.logout.logout();
     },
   },
 };
