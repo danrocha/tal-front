@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow rounded flex items-center justify-center p-1" :class="sizeClass">
+  <div class="shadow rounded flex items-center justify-center p-1 bg-white" :class="sizeClass">
     <img v-if="logoUrl" :src="logoUrl" />
     <p v-else class="font-bold" :class="fontSizeClass()">{{ initials() }}</p>
   </div>
@@ -26,6 +26,9 @@ export default {
     sizeClass() {
       if (this.size === 'sm') {
         return 'w-12 h-12';
+      }
+      if (this.size === 'lg') {
+        return 'w-32 h-32';
       }
       return 'w-24 h-24';
     },

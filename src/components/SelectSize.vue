@@ -1,31 +1,40 @@
 <template>
-  <div v-if="loading">...</div>
-  <div v-else>
-    <base-label for="select-size">Size</base-label>
-    <multiselect
-      id="select-size"
-      v-model="value"
-      :searchable="false"
-      :close-on-select="true"
-      :show-labels="false"
-      :options="options"
-      track-by="id"
-      label="label"
-      placeholder="Select..."
-      @input="updateValue"
-      :disabled="disabled"
-    />
-  </div>
+  <apollo-query
+    :query="
+      gql => gql`
+        {
+          sizes(orderBy: [ORDER_ASC]) {
+            nodes {
+              id
+              nameShort
+              nameLong
+              description
+            }
+          }
+        }
+      `
+    "
+    :update="data => formatSizes(data)"
+  >
+    <template slot-scope="{ result: { loading, error, data } }">
+      <div v-if="loading">
+        <spinner />
+      </div>
+      <div v-else-if="options">
+        <ul>
+          <li v-for="size in options" :key="size.id" class="flex items-center mb-1">
+            <input type="radio" class="mr-2" />
+            {{ size.nameShort }} ({{ size.description }})
+          </li>
+        </ul>
+      </div>
+      <div v-else>error</div>
+    </template>
+  </apollo-query>
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect';
-import SIZES from '@/graphql/Sizes.gql';
-
 export default {
-  components: {
-    Multiselect,
-  },
   props: {
     disabled: {
       type: Boolean,
@@ -44,26 +53,22 @@ export default {
       options: null,
     };
   },
-  apollo: {
-    sizes: {
-      query: SIZES,
-      result({ data }) {
-        this.loading = false;
-        this.options = data.sizes.nodes.map(size => {
-          return {
-            ...size,
-            label: `${size.nameShort} (${size.description})`,
-          };
-        });
-        if (this.originalSizeId) {
-          this.value = this.options.find(option => {
-            return option.id === this.originalSizeId;
-          });
-        }
-      },
-    },
-  },
   methods: {
+    formatSizes(data) {
+      //console.log(data);
+      this.options = data.sizes.nodes.map(size => {
+        return {
+          ...size,
+          label: `${size.nameShort} (${size.description})`,
+        };
+      });
+      if (this.originalSizeId) {
+        this.value = this.options.find(option => {
+          return option.id === this.originalSizeId;
+        });
+      }
+    },
+
     updateValue() {
       this.$emit('input', this.value.id);
     },

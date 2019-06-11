@@ -1,129 +1,101 @@
 <template>
   <div v-if="!location">
-    <vcl-list/>
+    <vcl-list />
   </div>
-  <div v-else>
-    <vue-headful :title="`${location.office.name} - The Architecture List`"/>
-    <section>
-      <header id="heading" class="flex justify-between items-start py-6">
-        <office-logo :name="location.office.name" :logo-url="location.office.logoUrl"></office-logo>
-        <div class="flex-grow ml-4">
-          <h2>
-            {{ location.office.name }}
-            <br>
-            <!-- <span class="label">AKA</span>&nbsp;<span class="text-base text-gray-600 font-normal">Alt name 1, altname 2</span><edit-link  class="ml-2 font-sans font-normal"/> -->
-          </h2>
-          <p v-if="location.office.website">
-            <a :href="location.office.website" class="link">
-              {{
-              formatUrl(location.office.website)
-              }}
-            </a>
-          </p>
-          <p class="mt-2" v-else>
-            <router-link :to="editLink" class="link">Add a website...</router-link>
-          </p>
-        </div>
-        <div class="flex-grow-0 ml-6">
-          <edit-link class="text-normal btn btn-secondary" @click="edit"/>
-        </div>
-      </header>
-
-      <section id="office-info" class="flex no-wrap w-full border-t py-6">
-        <section id="details" class="w-1/4 pr-6">
-          <div id="founded" class="mb-4">
-            <base-label>Founded</base-label>
-
-            <p v-if="location.office.yearFounded" class="my-1">{{ location.office.yearFounded }}</p>
-            <router-link v-else :to="editLink" class="link">Add year founded...</router-link>
-          </div>
-          <div id="size" class="mb-4">
-            <base-label class="pt-4" for="office-size">Size</base-label>
-
-            <p v-if="location.office.size" class="my-1">
-              {{ location.office.size.nameShort }}
-              <br>
-              ({{ location.office.size.description }})
-            </p>
-            <router-link v-else :to="editLink" class="link">Add size...</router-link>
-          </div>
-        </section>
-        <section id="more-info" class="w-3/4">
-          <div id="typologies" class="mb-5">
-            <base-label>Typologies</base-label>
-            <div
-              v-if="location.office.officeTypologies.nodes.length > 0"
-              class="flex flex-wrap flex-row"
-            >
-              <span
-                v-for="node in location.office.officeTypologies.nodes"
-                :key="node.id"
-                class="p-1 mr-2 mb-2 border border-gray-500bg-white text-xs uppercase rounded-sm"
-              >{{ node.typology.name }}</span>
-            </div>
-            <router-link v-else :to="editLink" class="link">Edit typologies...</router-link>
-          </div>
-          <div id="description">
-            <base-label class="pt-4">Description</base-label>
-
-            <div
-              v-if="location.office.description"
-              v-html="location.office.description"
-              class="description"
-            ></div>
-            <router-link v-else :to="editLink" class="link">Add a description...</router-link>
-          </div>
-        </section>
-      </section>
-      <section id="office-info" class="flex flex-col no-wrap w-full border-t py-6">
-        <div class="block w-full">
-          <base-label>Locations</base-label>
-        </div>
-        <div class="flex flex-row">
-          <div class="w-1/4">
-            <p v-for="location in location.office.locations.nodes" :key="location.id" class="my-1">
-              <router-link :to="cityPageUrl(location.city)" class="link">
-                {{ location.city.name }},
-                {{ location.city.countryByCountryIsocode.iso }}
-              </router-link>
-            </p>
-          </div>
-          <div class="w-3/4">
-            <p class="text-base font-normal">{{ location.formattedAddress }}</p>
-          </div>
-        </div>
-        <div class="mt-8">
-          <p class="italic text-gray">Location edit coming soon!</p>
-        </div>
-      </section>
-      <div class="border-t w-full">
-        <router-link
-          :to="`/${country_iso}/${city_name}`"
-          class="link text-sm my-6"
-          tag="button"
-          aria-label="back"
-        >&lt; back</router-link>
+  <!-- START GRID -->
+  <div v-else id="office">
+    <vue-headful :title="`${location.office.name} - The Architecture List`" />
+    <!-- LOGO -->
+    <div id="office-logo" class="flex justify-end items-center">
+      <div class="pr-4 border-r border-gray-400">
+        <office-logo
+          class="-mr-16"
+          :name="location.office.name"
+          :logo-url="location.office.logoUrl"
+        />
       </div>
-    </section>
+    </div>
+    <div id="office-edit-link" class="flex justify-end w-full items-start">
+      <button @click="edit = !edit">EDIT</button>
+      <edit-link />
+    </div>
+    <!-- OFFICE NAME -->
+    <office-details-name
+      id="office-name"
+      class="flex-grow ml-4 border-l border-gray-400 pl-4 pt-8"
+      :office-name="location.office.name"
+      :edit="edit"
+    />
+
+    <office-details-links
+      id="office-links"
+      class="flex-grow ml-4 border-l border-gray-400 pl-4 pt-8"
+      :office="location.office"
+      :edit="edit"
+    />
+    <!-- DESCRIPTION -->
+    <office-details-description
+      id="office-description"
+      class="ml-4 border-l border-gray-400 pl-4 pt-8 lg:w-2/3"
+      :description="location.office.description"
+      :edit="edit"
+    />
+
+    <!-- OFFICE DETAILS -->
+    <office-details-details
+      :office="location.office"
+      id="office-details"
+      class="ml-4 border-l border-gray-400 pl-4 pt-16 lg:w-2/3"
+      :edit="edit"
+    />
+
+    <!-- OFFICE LOCATIONS -->
+    <div id="office-locations" class="ml-4 border-l border-gray-400 pl-4 pt-16">
+      <office-details-locations
+        v-for="location in location.office.locations.nodes"
+        :key="location.id"
+        :location="location"
+        class="-ml-16"
+      />
+    </div>
+
+    <div id="office-back">
+      <router-link
+        :to="`/${country_iso}/${city_name}`"
+        class="link text-sm my-6"
+        tag="button"
+        aria-label="back"
+        >&lt; back</router-link
+      >
+    </div>
   </div>
 </template>
 
 <script>
 import { VclList } from 'vue-content-loading';
 import { mapState, mapActions } from 'vuex';
-import formatUrl from '@/mixins/formatUrl';
 import kebabCase from '@/mixins/kebabCase';
 import EditLink from '@/components/EditLink.vue';
 import OfficeLogo from '@/components/OfficeLogo.vue';
+import OfficeDetailsDescription from '@/components/OfficeDetailsDescription.vue';
+import OfficeDetailsLocations from '@/components/OfficeDetailsLocations.vue';
+import OfficeDetailsLinks from '@/components/OfficeDetailsLinks.vue';
+import OfficeDetailsDetails from '@/components/OfficeDetailsDetails.vue';
+import OfficeDetailsName from '@/components/OfficeDetailsName.vue';
 import LOCATION_BY_ID from '@/graphql/LocationById.gql';
 
 export default {
   name: 'OfficeDetails',
-  mixins: [formatUrl, kebabCase],
+  mixins: [kebabCase],
   components: {
     EditLink,
     VclList,
     OfficeLogo,
+    OfficeDetailsLinks,
+    OfficeDetailsLocations,
+    OfficeDetailsDescription,
+    OfficeDetailsDetails,
+    OfficeDetailsName,
   },
   props: {
     country_iso: {
@@ -146,6 +118,7 @@ export default {
   data() {
     return {
       editLink: `${this.$route.path}/edit`,
+      edit: true,
     };
   },
   created() {
@@ -153,7 +126,6 @@ export default {
       this.$apollo.queries.locationById.skip = true;
     }
   },
-
   computed: {
     ...mapState({
       user: state => state.user.user,
@@ -162,13 +134,8 @@ export default {
   },
   methods: {
     ...mapActions(['location/setLocation']),
-    edit() {
-      this.$router.push({ path: `${this.$route.path}/edit` });
-    },
     cityPageUrl(city) {
-      return `/${this.kebabCase(
-        city.countryByCountryIsocode.iso
-      )}/${this.kebabCase(city.name)}`;
+      return `/${this.kebabCase(city.countryByCountryIsocode.iso)}/${this.kebabCase(city.name)}`;
     },
   },
   apollo: {
@@ -186,10 +153,6 @@ export default {
 </script>
 
 <style scoped>
-.description >>> p {
-  @apply leading-loose;
-  @apply my-4;
-}
 li::before {
   content: '•';
   color: #f2d024;
@@ -198,5 +161,41 @@ li::before {
 li {
   @apply py-2;
   @apply pl-6;
+}
+#office {
+  display: grid;
+  grid-template-columns: 6rem 1fr 1fr;
+  grid-template-areas:
+    'logo . edit'
+    '. name name'
+    '. links links'
+    '. description description'
+    '. details details'
+    '. locations locations'
+    'back . .';
+}
+#office > #office-logo {
+  grid-area: logo;
+}
+#office > #office-name {
+  grid-area: name;
+}
+#office > #office-links {
+  grid-area: links;
+}
+#office > #office-description {
+  grid-area: description;
+}
+#office > #office-locations {
+  grid-area: locations;
+}
+#office > #office-back {
+  grid-area: back;
+}
+#office > #office-edit-link {
+  grid-area: edit;
+}
+#office > #office-details {
+  grid-area: details;
 }
 </style>

@@ -1,28 +1,48 @@
 <template>
-  <div v-if="loading">...</div>
-  <div v-else>
-    <multiselect
-      v-model="value"
-      :options="typologies.nodes"
-      :multiple="true"
-      label="name"
-      track-by="id"
-      placeholder="Select..."
-      selectLabel="Select"
-      deselectLabel="Remove"
-      :clearOnSelect="false"
-      @input="updateValue"
-    />
-  </div>
+  <apollo-query
+    :query="
+      gql => gql`
+        {
+          typologies(orderBy: [NAME_ASC]) {
+            totalCount
+            nodes {
+              ...TypologyDetail
+            }
+          }
+        }
+        ${$options.fragments.TypologyDetail}
+      `
+    "
+  >
+    <template slot-scope="{ result: { loading, error, data } }">
+      <div v-if="loading">
+        <spinner />
+      </div>
+      <div v-else-if="data">
+        <ul class="flex flex-wrap">
+          <li
+            v-for="typology in data.typologies.nodes"
+            :key="typology.id"
+            class="w-1/2 flex items-center mb-1"
+          >
+            <input type="checkbox" class="mr-2 mb-1" />
+            {{ typology.name }}
+          </li>
+        </ul>
+      </div>
+      <div v-else>error</div>
+    </template>
+  </apollo-query>
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect';
-import TYPOLOGIES from '@/graphql/Typologies.gql';
+import gql from 'graphql-tag';
+import Spinner from '../components/Spinner.vue';
 
 export default {
+  name: 'SelectTypologies',
   components: {
-    Multiselect,
+    Spinner,
   },
   props: {
     originalTypologies: {
@@ -36,13 +56,14 @@ export default {
       loading: true,
     };
   },
-  apollo: {
-    typologies: {
-      query: TYPOLOGIES,
-      result(data) {
-        this.loading = data.loading;
-      },
-    },
+  fragments: {
+    TypologyDetail: gql`
+      fragment TypologyDetail on Typology {
+        id
+        name
+        description
+      }
+    `,
   },
   methods: {
     updateValue() {
