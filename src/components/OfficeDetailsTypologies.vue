@@ -13,8 +13,9 @@
     </div>
     <edit-link v-else>edit typologies...</edit-link>
   </div>
-  <div v-else class="mb-4">
-    <select-typologies :original-typologies="office.officeTypologies.nodes" />
+  <div v-else>
+    <base-label>Typologies</base-label>
+    <select-typologies :original-typologies="office.officeTypologies.nodes" @input="updateValue" />
   </div>
 </template>
 
@@ -36,6 +37,11 @@ export default {
     edit: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    updateValue(event) {
+      this.$emit('input', event);
     },
   },
 };

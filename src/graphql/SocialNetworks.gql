@@ -1,7 +1,10 @@
-{
-  socialNetwork {
-    id
-    name
-    link
+#import "./SocialNetworkFragment.gql"
+
+query socialNetworks {
+  socialNetworks {
+    totalCount
+    nodes {
+      ...SocialNetwork
+    }
   }
 }

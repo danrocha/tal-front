@@ -1,0 +1,7 @@
+fragment SocialNetwork on SocialNetwork {
+  id
+  name
+  url
+  handlePrefix
+  icon
+}

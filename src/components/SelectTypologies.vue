@@ -2,7 +2,7 @@
   <apollo-query
     :query="
       gql => gql`
-        {
+        query typologies {
           typologies(orderBy: [NAME_ASC]) {
             totalCount
             nodes {
@@ -25,8 +25,14 @@
             :key="typology.id"
             class="w-1/2 flex items-center mb-1"
           >
-            <input type="checkbox" class="mr-2 mb-1" />
-            {{ typology.name }}
+            <input
+              type="checkbox"
+              :id="typology.name"
+              :value="typology.id"
+              class="mr-2 mb-1"
+              v-model="checkedTypologies"
+            />
+            <label :for="typology.name">{{ typology.name }}</label>
           </li>
         </ul>
       </div>
@@ -54,6 +60,7 @@ export default {
     return {
       value: '',
       loading: true,
+      checkedTypologies: [],
     };
   },
   fragments: {
@@ -65,14 +72,12 @@ export default {
       }
     `,
   },
-  methods: {
-    updateValue() {
-      this.$emit('input', this.value);
-    },
-  },
   watch: {
     originalTypologies() {
       this.value = this.originalTypologies;
+    },
+    checkedTypologies() {
+      this.$emit('input', this.checkedTypologies);
     },
   },
 };

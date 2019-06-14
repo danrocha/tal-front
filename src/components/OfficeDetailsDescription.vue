@@ -12,21 +12,17 @@
         v-if="!readMore && showReadMore"
         class="link italic mt-2 text-sm text-gray-500"
         @click="readMore = true"
-      >
-        show more...
-      </button>
+      >show more...</button>
       <button
         v-else-if="readMore && showReadMore"
         class="link italic mt-2 text-sm text-gray-500"
         @click="readMore = false"
-      >
-        show less...
-      </button>
+      >show less...</button>
     </div>
   </div>
   <div v-else>
     <base-label for="description-textarea">Description</base-label>
-    <editor v-model="descriptionHtml" />
+    <editor v-model="descriptionHtml" @input="updateValue"/>
   </div>
 </template>
 
@@ -58,11 +54,16 @@ export default {
     };
   },
   mounted() {
-    if (this.description) {
+    if (this.description && !this.edit) {
       document.querySelector('#temp').innerHTML = this.description;
       this.descriptionText = document.querySelector('#temp').textContent;
       document.querySelector('#temp').innerHTML = '';
     }
+  },
+  methods: {
+    updateValue(event) {
+      this.$emit('input', event);
+    },
   },
   computed: {
     showReadMore() {

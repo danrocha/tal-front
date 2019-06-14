@@ -2,7 +2,7 @@
   <apollo-query
     :query="
       gql => gql`
-        {
+        query sizes {
           sizes(orderBy: [ORDER_ASC]) {
             nodes {
               id
@@ -16,14 +16,14 @@
     "
     :update="data => formatSizes(data)"
   >
-    <template slot-scope="{ result: { loading, error, data } }">
-      <div v-if="loading">
-        <spinner />
+    <template slot-scope="{ result: { data }, isLoading }">
+      <div v-if="isLoading">
+        <spinner/>
       </div>
       <div v-else-if="options">
         <ul>
           <li v-for="size in options" :key="size.id" class="flex items-center mb-1">
-            <input type="radio" class="mr-2" />
+            <input type="radio" name="size" class="mr-2" :value="size.id" @input="updateValue">
             {{ size.nameShort }} ({{ size.description }})
           </li>
         </ul>
@@ -34,7 +34,9 @@
 </template>
 
 <script>
+import Spinner from './Spinner';
 export default {
+  components: { Spinner },
   props: {
     disabled: {
       type: Boolean,
@@ -69,8 +71,8 @@ export default {
       }
     },
 
-    updateValue() {
-      this.$emit('input', this.value.id);
+    updateValue(event) {
+      this.$emit('input', event.target.value);
     },
   },
   watch: {

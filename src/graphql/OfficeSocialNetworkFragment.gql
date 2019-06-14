@@ -1,8 +1,10 @@
+#import "./SocialNetworkFragment.gql"
+
 fragment OfficeSocialNetworkDetail on OfficeSocialNetwork {
   id
+  socialNetworkId
   socialNetwork {
-    id
-    name
+    ...SocialNetwork
   }
   handle
 }
