@@ -1,43 +1,28 @@
-# The Architecture List - Frontend
+<h1 align="center">Welcome to The Architecture List - Frontend 👋</h1>
+<p>
+  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+</p>
 
-This is the frontend project for [thearchitecturelist.com](https://thearchitecturelist.com).
+> A crowdsourced worldwide list of architecture offices.
 
-## Project setup
+### 🏠 [Homepage](https://thearchitecturelist.com)
 
-```
+## Install
+
+```sh
 npm install
 ```
 
-### Compiles and hot-reloads for development
+## Author
 
-```
-npm run serve
-```
+👤 **Daniel da Rocha**
 
-### Compiles and minifies for production
+* Twitter: [@danrocc](https://twitter.com/danrocc)
+* Github: [@danrocha](https://github.com/danrocha)
 
-```
-npm run build
-```
+## Show your support
 
-### Run your tests
+Give a ⭐️ if this project helped you !
 
-```
-npm run test
-```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Run your unit tests
-
-```
-npm run test:unit
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
