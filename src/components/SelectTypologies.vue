@@ -72,10 +72,11 @@ export default {
       }
     `,
   },
+  created() {
+    this.checkedTypologies = this.originalTypologies.map(typology => typology.typology.id);
+    this.$emit('input', this.checkedTypologies);
+  },
   watch: {
-    originalTypologies() {
-      this.value = this.originalTypologies;
-    },
     checkedTypologies() {
       this.$emit('input', this.checkedTypologies);
     },

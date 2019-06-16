@@ -1,0 +1,8 @@
+#import "./OfficeDetailFragment.gql"
+mutation editOffice($input: EditOfficeInput!) {
+  editOffice(input: $input) {
+    office {
+      ...OfficeDetail
+    }
+  }
+}

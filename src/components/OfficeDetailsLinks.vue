@@ -98,7 +98,6 @@ export default {
           };
         }
       });
-
       return data;
     },
     cleanLinks(links) {
@@ -120,10 +119,10 @@ export default {
     },
     updateValue() {
       let editedLinks = { ...this.links };
-      console.log('dirty', editedLinks);
+      //console.log('dirty', editedLinks);
       this.cleanLinks(editedLinks);
-      console.log('clean', editedLinks);
-      this.$emit('input', editedLinks);
+      //console.log('clean', editedLinks);
+      this.$emit('input', Object.values(editedLinks));
     },
   },
 };

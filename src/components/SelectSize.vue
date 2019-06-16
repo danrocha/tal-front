@@ -18,12 +18,19 @@
   >
     <template slot-scope="{ result: { data }, isLoading }">
       <div v-if="isLoading">
-        <spinner/>
+        <spinner />
       </div>
       <div v-else-if="options">
         <ul>
           <li v-for="size in options" :key="size.id" class="flex items-center mb-1">
-            <input type="radio" name="size" class="mr-2" :value="size.id" @input="updateValue">
+            <input
+              type="radio"
+              name="size"
+              class="mr-2"
+              :value="size.id"
+              v-model="selectedSizeId"
+              @input="updateValue"
+            />
             {{ size.nameShort }} ({{ size.description }})
           </li>
         </ul>
@@ -52,7 +59,7 @@ export default {
     return {
       value: '',
       loading: true,
-      options: null,
+      selectedSizeId: this.originalSizeId,
     };
   },
   methods: {
@@ -73,17 +80,6 @@ export default {
 
     updateValue(event) {
       this.$emit('input', event.target.value);
-    },
-  },
-  watch: {
-    originalSizeId(newValue) {
-      if (newValue) {
-        return (this.value = this.options.find(option => {
-          return option.id === newValue;
-        }));
-      }
-
-      this.value = '';
     },
   },
 };

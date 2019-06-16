@@ -6,7 +6,7 @@
         >- Don't forget the "http://"</span
       >
     </div>
-    <div class="mb-4 flex items-center w-full">
+    <div class="flex items-center w-full">
       <span class="w-8">
         <font-awesome-icon icon="globe" class="text-yellow-500 mr-2"></font-awesome-icon>
       </span>
@@ -33,8 +33,10 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { url } from 'vuelidate/lib/validators';
+import formatUrl from '@/mixins/formatUrl';
+
 export default {
-  mixins: [validationMixin],
+  mixins: [formatUrl, validationMixin],
   props: {
     office: {
       type: Object,

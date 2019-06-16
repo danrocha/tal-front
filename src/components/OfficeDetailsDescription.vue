@@ -1,28 +1,30 @@
 <template>
-  <div v-if="!edit">
+  <div>
     <span class="hidden" id="temp"></span>
-    <div
-      v-if="descriptionText.length > 0"
-      v-html="description"
-      id="description"
-      :class="!readMore && showReadMore ? 'hide' : 'show'"
-    ></div>
-    <div class="text-right">
-      <button
-        v-if="!readMore && showReadMore"
-        class="link italic mt-2 text-sm text-gray-500"
-        @click="readMore = true"
-      >show more...</button>
-      <button
-        v-else-if="readMore && showReadMore"
-        class="link italic mt-2 text-sm text-gray-500"
-        @click="readMore = false"
-      >show less...</button>
+    <div v-if="!edit">
+      <div
+        v-if="descriptionText.length > 0"
+        v-html="description"
+        id="description"
+        :class="!readMore && showReadMore ? 'hide' : 'show'"
+      ></div>
+      <div class="text-right">
+        <button
+          v-if="!readMore && showReadMore"
+          class="link italic mt-2 text-sm text-gray-500"
+          @click="readMore = true"
+        >show more...</button>
+        <button
+          v-else-if="readMore && showReadMore"
+          class="link italic mt-2 text-sm text-gray-500"
+          @click="readMore = false"
+        >show less...</button>
+      </div>
     </div>
-  </div>
-  <div v-else>
-    <base-label for="description-textarea">Description</base-label>
-    <editor v-model="descriptionHtml" @input="updateValue"/>
+    <div v-else>
+      <base-label for="description-textarea">Description</base-label>
+      <editor v-model="descriptionHtml" @input="updateValue"/>
+    </div>
   </div>
 </template>
 
