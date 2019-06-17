@@ -19,7 +19,7 @@
       <base-button v-if="!edit" @click="edit = !edit">EDIT</base-button>
       <div v-else class="flex">
         <base-button @click="edit = !edit" base-type="secondary" class="mr-2">Cancel</base-button>
-        <office-details-edit-save-button :variables="variables" />
+        <office-details-edit-save-button :variables="variables" @done="edit = false" />
       </div>
     </div>
     <div id="office-details" class="ml-4 border-l border-gray-400 pl-4 pt-8 lg:w-2/3">
@@ -147,7 +147,7 @@ export default {
   data() {
     return {
       editLink: `${this.$route.path}/edit`,
-      edit: true,
+      edit: false,
       editForm: {
         id: null,
         name: null,
