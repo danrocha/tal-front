@@ -3,6 +3,9 @@
     :mutation="require('@/graphql/EditOffice.gql')"
     :variables="{ input: { ...variables } }"
     @done="onDone"
+    :refetchQueries="[
+      { query: require('@/graphql/LocationById.gql'), variables: { id: variables.id } },
+    ]"
   >
     <template slot-scope="{ mutate, loading, error }">
       <base-button @click="mutate()" :disabled="disableSave || loading">Save</base-button>
@@ -48,9 +51,8 @@ export default {
       }
       return true;
     },
-    onDone(result) {
-      console.log('done');
-      console.log(result);
+    onDone() {
+      this.$emit('done');
     },
   },
 };
