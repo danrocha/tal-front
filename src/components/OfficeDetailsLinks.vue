@@ -1,17 +1,26 @@
 <template>
   <div v-if="!edit">
-    <p
-      v-for="network in office.officeSocialNetworks.nodes"
-      :key="network.id"
-      class="mb-1 flex items-center"
-    >
-      <font-awesome-icon
-        :icon="['fab', network.socialNetwork.icon]"
-        class="text-yellow-500 mr-1"
-      ></font-awesome-icon>
+    <ul>
+      <li v-for="network in office.officeSocialNetworks.nodes" :key="network.id" class="mb-1">
+        <p class="flex items-center">
+          <font-awesome-icon
+            :icon="network.socialNetwork.icon ? ['fab', network.socialNetwork.icon] : 'link'"
+            class="text-yellow-500 mr-2"
+          ></font-awesome-icon>
 
-      <a :href="network.handle" class="link" target="_blank">{{ formatUrl(network.handle) }}</a>
-    </p>
+          <span class="text-gray-500 border-b-2 border-transparent mr-1"
+            >{{ formatUrl(network.socialNetwork.handlePrefix) }}/</span
+          >
+          <a
+            :href="`${network.socialNetwork.handlePrefix}/${network.handle}`"
+            class="link"
+            target="_blank"
+            >{{ formatUrl(network.handle) }}</a
+          >
+        </p>
+        <!-- <latest-social :network-name="network.socialNetwork.name" :handle="network.handle"/> -->
+      </li>
+    </ul>
   </div>
   <div v-else>
     <base-label>Social Links</base-label>
@@ -29,7 +38,7 @@
             v-for="network in data.socialNetworks.nodes"
             :key="network.id"
             :social-network-name="network.name"
-            :handle-prefix="formatUrl(network.url)"
+            :handle-prefix="formatUrl(network.handlePrefix)"
             :icon="network.icon"
             v-model="links[network.id].handle"
             @input="updateValue"
@@ -45,6 +54,7 @@ const groupBy = require('lodash.groupby');
 import Spinner from './Spinner.vue';
 import LinkInput from './LinkInput.vue';
 import formatUrl from '@/mixins/formatUrl';
+import LatestSocial from './LatestSocial';
 
 export default {
   name: 'OfficeDetailsLinks',
@@ -52,6 +62,7 @@ export default {
   components: {
     Spinner,
     LinkInput,
+    LatestSocial,
   },
   props: {
     office: {
@@ -103,18 +114,22 @@ export default {
     cleanLinks(links) {
       Object.keys(links).forEach(key => {
         if (!this.isModified(links[key])) {
-          delete links[key];
+          return delete links[key];
+        }
+        if (!links[key].handle) {
+          return (links[key].handle = null);
         }
       });
     },
     isModified(linkEntry) {
-      if (!linkEntry.handle) return false;
+      //if (!linkEntry.handle) return false;
       const originalValue = this.office.officeSocialNetworks.nodes.find(
         node => node.socialNetworkId === linkEntry.socialNetworkId
       );
       if (originalValue) {
         return originalValue.handle !== linkEntry.handle;
       }
+      if (!linkEntry.handle) return false;
       return true;
     },
     updateValue() {
