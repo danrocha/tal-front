@@ -18,7 +18,6 @@
             >{{ formatUrl(network.handle) }}</a
           >
         </p>
-        <!-- <latest-social :network-name="network.socialNetwork.name" :handle="network.handle"/> -->
       </li>
     </ul>
   </div>
@@ -54,7 +53,6 @@ const groupBy = require('lodash.groupby');
 import Spinner from './Spinner.vue';
 import LinkInput from './LinkInput.vue';
 import formatUrl from '@/mixins/formatUrl';
-import LatestSocial from './LatestSocial';
 
 export default {
   name: 'OfficeDetailsLinks',
@@ -62,7 +60,6 @@ export default {
   components: {
     Spinner,
     LinkInput,
-    LatestSocial,
   },
   props: {
     office: {
