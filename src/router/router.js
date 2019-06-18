@@ -95,12 +95,12 @@ const router = new Router({
     },
     {
       path: '/:country_iso/:city_name/:location_id/:office_name',
-      props: true,
       component: () => import(/* webpackChunkName: "OfficeDetails" */ '../views/OfficeDetails.vue'),
+      props: route => ({ ...route.params, edit: route.name === 'edit' || false }),
       children: [
         {
           path: 'edit',
-          props: { edit: true },
+          name: 'edit',
           beforeEnter: AuthGuard,
           component: () =>
             import(/* webpackChunkName: "OfficeDetails" */ '../views/OfficeDetails.vue'),

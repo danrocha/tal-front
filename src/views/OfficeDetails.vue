@@ -16,9 +16,9 @@
       </div>
     </div>
     <div id="office-edit" class="flex justify-end w-full items-start">
-      <base-button v-if="!edit" @click="edit = !edit">EDIT</base-button>
-      <div v-else class="flex">
-        <base-button @click="edit = !edit" base-type="secondary" class="mr-2">Cancel</base-button>
+      <router-link tag="base-button" v-if="!edit" :to="editLink">EDIT</router-link>
+      <div v-else class="flex items-center">
+        <router-link tag="a" class="link mr-4" v-if="edit" :to="officeLink">Cancel</router-link>
         <office-details-edit-save-button :variables="variables" @done="edit = false" />
       </div>
     </div>
@@ -143,11 +143,13 @@ export default {
       required: true,
       type: String,
     },
+    edit: {
+      type: Boolean,
+      defaul: false,
+    },
   },
   data() {
     return {
-      editLink: `${this.$route.path}/edit`,
-      edit: false,
       editForm: {
         id: null,
         name: null,
@@ -172,6 +174,12 @@ export default {
       user: state => state.user.user,
       location: state => state.location.selectedLocation,
     }),
+    officeLink() {
+      return `/${this.country_iso}/${this.city_name}/${this.location_id}/${this.office_name}`;
+    },
+    editLink() {
+      return `${this.officeLink}/edit`;
+    },
   },
   methods: {
     ...mapActions(['location/setLocation']),
