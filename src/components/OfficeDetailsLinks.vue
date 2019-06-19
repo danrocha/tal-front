@@ -1,6 +1,7 @@
 <template>
   <div v-if="!edit">
-    <ul>
+    <base-label>Links</base-label>
+    <ul v-if="office.officeSocialNetworks.totalCount > 0">
       <li v-for="network in office.officeSocialNetworks.nodes" :key="network.id" class="mb-1">
         <p class="flex items-center">
           <font-awesome-icon
@@ -8,9 +9,9 @@
             class="text-yellow-500 mr-2"
           ></font-awesome-icon>
 
-          <span class="text-gray-500 border-b-2 border-transparent mr-1"
-            >{{ formatUrl(network.socialNetwork.handlePrefix) }}/</span
-          >
+          <span class="text-gray-500 border-b-2 border-transparent mr-1">{{
+            formatUrl(network.socialNetwork.handlePrefix)
+          }}</span>
           <a
             :href="`${network.socialNetwork.handlePrefix}/${network.handle}`"
             class="link"
@@ -20,6 +21,7 @@
         </p>
       </li>
     </ul>
+    <edit-link v-else>add links...</edit-link>
   </div>
   <div v-else>
     <base-label>Social Links</base-label>
@@ -52,6 +54,7 @@
 const groupBy = require('lodash.groupby');
 import Spinner from './Spinner.vue';
 import LinkInput from './LinkInput.vue';
+import EditLink from './EditLink.vue';
 import formatUrl from '@/mixins/formatUrl';
 
 export default {
@@ -59,6 +62,7 @@ export default {
   mixins: [formatUrl],
   components: {
     Spinner,
+    EditLink,
     LinkInput,
   },
   props: {

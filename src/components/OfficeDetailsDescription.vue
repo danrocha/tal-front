@@ -2,40 +2,48 @@
   <div>
     <span class="hidden" id="temp"></span>
     <div v-if="!edit">
-      <div
-        v-if="descriptionText.length > 0"
-        v-html="description"
-        id="description"
-        :class="!readMore && showReadMore ? 'hide' : 'show'"
-      ></div>
-      <div class="text-right">
-        <button
-          v-if="!readMore && showReadMore"
-          class="link italic mt-2 text-sm text-gray-500"
-          @click="readMore = true"
-        >show more...</button>
-        <button
-          v-else-if="readMore && showReadMore"
-          class="link italic mt-2 text-sm text-gray-500"
-          @click="readMore = false"
-        >show less...</button>
+      <div v-if="descriptionText.length > 0">
+        <div
+          v-html="description"
+          id="description"
+          :class="!readMore && showReadMore ? 'hide' : 'show'"
+        ></div>
+        <div class="text-right">
+          <button
+            v-if="!readMore && showReadMore"
+            class="link italic mt-2 text-sm text-gray-500"
+            @click="readMore = true"
+          >
+            show more...
+          </button>
+          <button
+            v-else-if="readMore && showReadMore"
+            class="link italic mt-2 text-sm text-gray-500"
+            @click="readMore = false"
+          >
+            show less...
+          </button>
+        </div>
       </div>
+      <edit-link v-else>add a description...</edit-link>
     </div>
     <div v-else>
       <base-label for="description-textarea">Description</base-label>
-      <editor v-model="descriptionHtml" @input="updateValue"/>
+      <editor v-model="descriptionHtml" @input="updateValue" />
     </div>
   </div>
 </template>
 
 <script>
-import Editor from '../components/Editor.vue';
+import Editor from './Editor.vue';
+import EditLink from './EditLink.vue';
 
 const MAX_LENGTH = 450;
 export default {
   name: 'OfficeDetailsDescription',
   components: {
     Editor,
+    EditLink,
   },
   props: {
     description: {

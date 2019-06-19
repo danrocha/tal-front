@@ -1,34 +1,39 @@
 <template>
-  <div v-if="!edit">
-    <span v-if="office.yearFounded">{{ office.yearFounded }}</span>
-    <edit-link v-else>edit year...</edit-link>
-  </div>
-  <div v-else>
-    <div class="flex">
-      <base-label>Founded</base-label>
-      <span v-if="!$v.year.minLength || !$v.year.integer" class="ml-2 italic text-xs text-gray-500"
-        >- Year in the format YYYY</span
-      >
-      <!-- TODO: make maxYear dynamic -->
-      <span v-else-if="!$v.year.between" class="ml-2 italic text-xs text-gray-500"
-        >- Must be between 1800 and 2019</span
-      >
+  <div>
+    <base-label>Founded</base-label>
+
+    <div v-if="!edit">
+      <span v-if="office.yearFounded">{{ office.yearFounded }}</span>
+      <edit-link v-else>edit year founded...</edit-link>
     </div>
-    <base-input
-      type="text"
-      maxlength="4"
-      target-class="input-large w-24"
-      placeholder="YYYY"
-      v-model="$v.year.$model"
-      @input="updateValue"
-    />
+    <div v-else>
+      <div class="flex">
+        <span
+          v-if="!$v.year.minLength || !$v.year.integer"
+          class="ml-2 italic text-xs text-gray-500"
+          >- Year in the format YYYY</span
+        >
+        <!-- TODO: make maxYear dynamic -->
+        <span v-else-if="!$v.year.between" class="ml-2 italic text-xs text-gray-500"
+          >- Must be between 1800 and 2019</span
+        >
+      </div>
+      <base-input
+        type="text"
+        maxlength="4"
+        target-class="input-large w-24"
+        placeholder="YYYY"
+        v-model="$v.year.$model"
+        @input="updateValue"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import { validationMixin } from 'vuelidate';
 import { integer, between, maxLength, minLength } from 'vuelidate/lib/validators';
-import EditLink from '../components/EditLink.vue';
+import EditLink from './EditLink.vue';
 export default {
   name: 'OfficeDetailsYear',
   mixins: [validationMixin],
