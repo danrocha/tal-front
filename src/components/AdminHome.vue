@@ -5,7 +5,7 @@
       :query="
         gql =>
           gql`
-            {
+            query offices {
               offices {
                 totalCount
               }
@@ -21,7 +21,7 @@
       :query="
         gql =>
           gql`
-            {
+            query cities {
               cities {
                 totalCount
               }
