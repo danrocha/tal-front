@@ -19,7 +19,7 @@
       <router-link tag="base-button" v-if="!edit" :to="editLink">EDIT</router-link>
       <div v-else class="flex items-center">
         <router-link tag="a" class="link mr-4" v-if="edit" :to="officeLink">Cancel</router-link>
-        <office-details-edit-save-button :variables="variables" @done="edit = false" />
+        <office-details-edit-save-button :variables="variables" @done="$router.push(officeLink)" />
       </div>
     </div>
     <div id="office-details" class="ml-4 border-l border-gray-400 pl-4 pt-8 lg:w-2/3">
