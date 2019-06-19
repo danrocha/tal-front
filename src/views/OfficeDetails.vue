@@ -241,7 +241,7 @@ li {
   grid-area: details;
 }
 #office > #office-details > * + * {
-  @apply pt-8;
+  @apply pt-4;
 }
 #office > #office-locations {
   grid-area: locations;
