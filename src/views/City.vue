@@ -39,7 +39,7 @@
               <button class="btn" @click="clearFilters" base-type="secondary">clear filters</button>
             </p>
           </div>
-          <office-list-alt :locations="displayLocations" :pagination="false" :ordering="true" />
+          <office-list :locations="displayLocations" :pagination="false" :ordering="true" />
         </div>
         <div v-else class="no-result apollo">No result :(</div>
       </main>
@@ -51,7 +51,7 @@
 import CITIES from '../graphql/Cities.gql';
 import LOCATIONS from '../graphql/Locations.gql';
 import kebabCase from '../mixins/kebabCase';
-import OfficeListAlt from '../components/OfficeListAlt.vue';
+import OfficeList from '../components/OfficeList.vue';
 import OfficeListControls from '../components/OfficeListControls.vue';
 import { VclList } from 'vue-content-loading';
 import { mapState, mapActions } from 'vuex';
@@ -60,7 +60,7 @@ export default {
   name: 'City',
   mixins: [kebabCase],
   components: {
-    OfficeListAlt,
+    OfficeList,
     VclList,
     OfficeListControls,
   },
