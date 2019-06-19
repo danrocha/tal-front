@@ -150,6 +150,7 @@ export default {
   },
   data() {
     return {
+      location: null,
       editForm: {
         id: null,
         name: null,
@@ -163,16 +164,16 @@ export default {
       variables: null,
     };
   },
-  created() {
+  /* created() {
     if (this.location) {
       this.editForm.id = this.location.office.id;
       this.$apollo.queries.locationById.skip = true;
     }
-  },
+  }, */
   computed: {
     ...mapState({
       user: state => state.user.user,
-      location: state => state.location.selectedLocation,
+      //location: state => state.location.selectedLocation,
     }),
     officeLink() {
       return `/${this.country_iso}/${this.city_name}/${this.location_id}/${this.office_name}`;
@@ -182,7 +183,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['location/setLocation']),
+    //...mapActions(['location/setLocation']),
     cityPageUrl(city) {
       return `/${this.kebabCase(city.countryByCountryIsocode.iso)}/${this.kebabCase(city.name)}`;
     },
@@ -197,7 +198,7 @@ export default {
         return { id: Number(this.location_id) };
       },
       result({ data }) {
-        this['location/setLocation'](data.locationById);
+        this.location = data.locationById;
         this.editForm.id = data.locationById.office.id;
       },
     },
