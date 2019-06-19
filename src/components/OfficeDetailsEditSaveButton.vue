@@ -3,7 +3,7 @@
     :mutation="require('@/graphql/EditOffice.gql')"
     :variables="{ input: { ...variables } }"
     @done="onDone"
-    :refetchQueries="[
+    :refetchQueries="() => [
       { query: require('@/graphql/LocationById.gql'), variables: { id: variables.id } },
     ]"
   >
@@ -40,7 +40,11 @@ export default {
           if (this.isEmpty(obj[propName])) {
             delete obj[propName];
           }
-        } else if (obj[propName] === null || obj[propName] === undefined || !obj[propName]) {
+        } else if (
+          obj[propName] === null ||
+          obj[propName] === undefined ||
+          !obj[propName]
+        ) {
           delete obj[propName];
         }
       }
