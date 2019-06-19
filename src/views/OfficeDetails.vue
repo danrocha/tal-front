@@ -95,7 +95,7 @@
 
 <script>
 import { VclList } from 'vue-content-loading';
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import kebabCase from '@/mixins/kebabCase';
 import OfficeLogo from '@/components/OfficeLogo.vue';
 import OfficeDetailsDescription from '@/components/OfficeDetailsDescription.vue';
