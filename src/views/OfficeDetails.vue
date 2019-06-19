@@ -1,10 +1,10 @@
 <template>
   <div v-if="!location">
-    <vcl-list />
+    <vcl-list/>
   </div>
   <!-- START GRID -->
   <div v-else id="office">
-    <vue-headful :title="`${location.office.name} - The Architecture List`" />
+    <vue-headful :title="`${location.office.name} - The Architecture List`"/>
     <!-- LOGO -->
     <div id="office-logo" class="flex justify-end items-center">
       <div class="pr-4 border-r border-gray-400">
@@ -19,7 +19,7 @@
       <router-link tag="base-button" v-if="!edit" :to="editLink">EDIT</router-link>
       <div v-else class="flex items-center">
         <router-link tag="a" class="link mr-4" v-if="edit" :to="officeLink">Cancel</router-link>
-        <office-details-edit-save-button :variables="variables" @done="$router.push(officeLink)" />
+        <office-details-edit-save-button :variables="variables" @done="$router.push(officeLink)"/>
       </div>
     </div>
     <div id="office-details" class="ml-4 border-l border-gray-400 pl-4 pt-8 lg:w-2/3">
@@ -30,19 +30,21 @@
         :edit="edit"
         v-model="editForm.name"
       />
-
-      <office-details-website
-        id="office-website"
-        :office="location.office"
-        :edit="edit"
-        v-model="editForm.website"
-      />
-      <office-details-links
-        id="office-links"
-        :office="location.office"
-        :edit="edit"
-        v-model="editForm.links"
-      />
+      <div :class="edit ? '' : 'flex items-center'">
+        <office-details-website
+          id="office-website"
+          :office="location.office"
+          :edit="edit"
+          v-model="editForm.website"
+        />
+        <office-details-links
+          id="office-links"
+          :office="location.office"
+          :edit="edit"
+          v-model="editForm.links"
+          :class="edit?'pt-4':''"
+        />
+      </div>
       <!-- DESCRIPTION -->
       <office-details-description
         id="office-description"
@@ -87,8 +89,7 @@
         class="link text-sm my-6"
         tag="button"
         aria-label="back"
-        >&lt; back</router-link
-      >
+      >&lt; back</router-link>
     </div>
   </div>
 </template>
@@ -176,7 +177,9 @@ export default {
       //location: state => state.location.selectedLocation,
     }),
     officeLink() {
-      return `/${this.country_iso}/${this.city_name}/${this.location_id}/${this.office_name}`;
+      return `/${this.country_iso}/${this.city_name}/${this.location_id}/${
+        this.office_name
+      }`;
     },
     editLink() {
       return `${this.officeLink}/edit`;
@@ -185,7 +188,9 @@ export default {
   methods: {
     //...mapActions(['location/setLocation']),
     cityPageUrl(city) {
-      return `/${this.kebabCase(city.countryByCountryIsocode.iso)}/${this.kebabCase(city.name)}`;
+      return `/${this.kebabCase(
+        city.countryByCountryIsocode.iso
+      )}/${this.kebabCase(city.name)}`;
     },
     setInitialData(location) {
       this.office_id = location.office.id;

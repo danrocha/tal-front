@@ -1,38 +1,22 @@
 <template>
-  <div v-if="!edit">
-    <base-label>Links</base-label>
-    <ul v-if="office.officeSocialNetworks.totalCount > 0">
-      <li v-for="network in office.officeSocialNetworks.nodes" :key="network.id" class="mb-1">
-        <p class="flex items-center">
-          <font-awesome-icon
-            :icon="network.socialNetwork.icon ? ['fab', network.socialNetwork.icon] : 'link'"
-            class="text-yellow-500 mr-2"
-          ></font-awesome-icon>
-
-          <span class="text-gray-500 border-b-2 border-transparent mr-1">{{
-            formatUrl(network.socialNetwork.handlePrefix)
-          }}</span>
-          <a
-            :href="`${network.socialNetwork.handlePrefix}/${network.handle}`"
-            class="link"
-            target="_blank"
-            >{{ formatUrl(network.handle) }}</a
-          >
-        </p>
+  <div v-if="!edit" class="flex items-center">
+    <span class="ml-4 mr-6 text-gray-500">|</span>
+    <ul v-if="office.officeSocialNetworks.totalCount > 0" class="flex items-center">
+      <li v-for="network in office.officeSocialNetworks.nodes" :key="network.id" class="mr-2">
+        <social-link :link="network"/>
       </li>
     </ul>
     <edit-link v-else>add links...</edit-link>
   </div>
   <div v-else>
     <base-label>Social Links</base-label>
-
     <apollo-query
       :query="require('../graphql/SocialNetworks.gql')"
       :update="data => updateLinksList(data)"
     >
       <template slot-scope="{ result: { data, error }, isLoading }">
         <div v-if="isLoading">
-          <spinner />
+          <spinner/>
         </div>
         <div v-else-if="data">
           <link-input
@@ -56,6 +40,7 @@ import Spinner from './Spinner.vue';
 import LinkInput from './LinkInput.vue';
 import EditLink from './EditLink.vue';
 import formatUrl from '@/mixins/formatUrl';
+import SocialLink from './SocialLink';
 
 export default {
   name: 'OfficeDetailsLinks',
@@ -64,6 +49,7 @@ export default {
     Spinner,
     EditLink,
     LinkInput,
+    SocialLink,
   },
   props: {
     office: {
@@ -83,7 +69,10 @@ export default {
   },
   created() {
     if (this.hasSocial) {
-      const links = groupBy(this.office.officeSocialNetworks.nodes, 'socialNetworkId');
+      const links = groupBy(
+        this.office.officeSocialNetworks.nodes,
+        'socialNetworkId'
+      );
       const keys = Object.keys(links);
       for (const key of keys) {
         this.links[key] = (({ id, handle, socialNetworkId }) => ({
