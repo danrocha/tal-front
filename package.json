@@ -28,7 +28,7 @@
     "lodash.map": "^4.6.0",
     "lodash.uniqby": "^4.7.0",
     "lodash.upperfirst": "^4.3.1",
-    "mapbox-gl": "^0.53.1",
+    "mapbox-gl": "^1.10.0",
     "nprogress": "^0.2.0",
     "tiptap": "^1.14.0",
     "tiptap-extensions": "^1.14.0",
